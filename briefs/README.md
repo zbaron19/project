@@ -9,14 +9,17 @@ The brief is produced by the `data-center-news` subagent (see
 `.claude/agents/data-center-news.md`) and is intended to run once a day
 as a **scheduled trigger** on Claude Code on the web.
 
-Each daily run does three things:
-1. Writes the full brief to `briefs/YYYY-MM-DD.md`, commits, and pushes.
-2. Creates a compact HTML email digest (TL;DR + section headlines + source
+Each daily run does four things:
+1. Writes the full brief to `briefs/YYYY-MM-DD.md` for the dated archive.
+2. Overwrites `LATEST_BRIEF.md` at the **project root** with the same content,
+   so the latest brief is always one tap from the project home screen in the
+   Claude Code mobile app.
+3. Creates a compact HTML email digest (TL;DR + section headlines + source
    links + a link back to the full brief on GitHub) as a Gmail draft addressed
    to `Zbaron19@gmail.com`. The draft lands in your Gmail Drafts folder — open
    it to read, or hit Send to push it into your Inbox.
-3. Sends a push notification to your phone (via the Claude Code mobile app's
-   Remote Control feature) with a one-line summary of the day's top headlines.
+4. Sends a push notification to your phone with a one-line summary of the
+   day's top headlines. Commits and pushes both brief files to the branch.
 
 ### Phone push notification requirements
 

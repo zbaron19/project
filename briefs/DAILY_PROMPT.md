@@ -12,6 +12,9 @@ Produce today's daily data center news brief and email a digest.
    instructions. Use today's UTC date in the filename.
 2. Save the result to `briefs/YYYY-MM-DD.md` (e.g. `briefs/2026-05-16.md`).
    Overwrite if the file already exists for today.
+3. Also copy the same content to `LATEST_BRIEF.md` at the **project root**
+   (overwrite if it exists). This is the one-tap shortcut the user opens in
+   the Claude Code mobile app each morning.
 
 **Step 2 — Generate the email digest**
 
@@ -57,7 +60,7 @@ the email draft is the fallback. Just continue to Step 5.
 
 **Step 5 — Commit and push the brief**
 
-1. Commit the new brief file with the message:
+1. Commit both files (`briefs/YYYY-MM-DD.md` and `LATEST_BRIEF.md`) with the message:
 
        Add data center news brief for YYYY-MM-DD
 
