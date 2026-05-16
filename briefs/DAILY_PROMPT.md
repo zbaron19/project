@@ -42,7 +42,20 @@ The draft will land in the Drafts folder of that Gmail account. If Gmail auth
 has expired, surface the re-auth prompt and continue with Step 4 — the full
 brief still gets committed; the email can be re-sent manually.
 
-**Step 4 — Commit and push the brief**
+**Step 4 — Push notification to phone**
+
+Call the `PushNotification` tool with a one-line summary of today's brief:
+- Under 200 characters, one line, no markdown.
+- Lead with the most newsworthy 2–3 headlines (verb-first, comma-separated),
+  then a short pointer back. Example:
+  `Data center brief: NC moves to repeal tax exemption; FERC large-load order due June; BXDC trades May 14. Full digest in Gmail Drafts.`
+- If the brief is "Nothing notable," push: `Data center brief: quiet day — no material U.S. news in the last 24 hours.`
+- `status` is `"proactive"`.
+
+If Remote Control isn't connected (the tool returns "not sent"), don't retry —
+the email draft is the fallback. Just continue to Step 5.
+
+**Step 5 — Commit and push the brief**
 
 1. Commit the new brief file with the message:
 
@@ -56,5 +69,6 @@ brief still gets committed; the email can be re-sent manually.
 
 - If the subagent reports that no substantive news was found, still create
   the file with a short "Nothing notable in the last 24 hours" note, commit it,
-  and still send the email digest (it's useful to know it was a quiet day).
+  still send the email digest, and still push the notification — it's useful
+  to know it was a quiet day.
 - Do not open a pull request. Do not modify any files outside `briefs/`.
