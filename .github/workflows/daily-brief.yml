@@ -1,0 +1,55 @@
+name: Daily data center news brief
+
+on:
+  schedule:
+    # 11:00 UTC daily = 7:00 ET (winter) / 6:00 ET (summer DST adjusts +1)
+    - cron: "0 11 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-brief
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: claude/data-center-news-agent-UmgAm
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run brief generator
+        run: python3 scripts/daily_brief.py
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add LATEST_BRIEF.md briefs/ scripts/state/
+          if git diff --cached --quiet; then
+            echo "No changes — nothing to commit."
+            exit 0
+          fi
+          DATE_UTC=$(date -u +'%Y-%m-%d')
+          git commit -m "Add data center news brief for ${DATE_UTC}"
+          for i in 1 2 3 4; do
+            if git push origin HEAD:claude/data-center-news-agent-UmgAm; then
+              exit 0
+            fi
+            sleep $((2 ** i))
+          done
+          echo "Push failed after retries" >&2
+          exit 1

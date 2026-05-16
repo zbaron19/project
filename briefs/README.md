@@ -3,6 +3,18 @@
 Daily briefings on U.S. data center news with a commercial real estate / legal lens.
 Each file is named `YYYY-MM-DD.md` and covers the prior 24 hours.
 
+> **Two production paths run in parallel** so a failure in one doesn't kill the day's brief:
+> 1. **GitHub Actions cron (primary)** — `.github/workflows/daily-brief.yml` runs
+>    `scripts/daily_brief.py` at 11:00 UTC daily. RSS-based, deterministic, free,
+>    auto-emails the repo owner on failure. See `scripts/README.md` for details.
+> 2. **Claude Code Routine (secondary / richer)** — invokes the `data-center-news`
+>    subagent for LLM-curated commentary plus a Gmail draft and a phone push.
+>    Configured separately in claude.ai/code; prompt is just `/daily-brief`.
+>
+> Both write to `LATEST_BRIEF.md` at the project root and `briefs/YYYY-MM-DD.md`.
+> If both run on the same day, whichever runs second wins — that's intentional;
+> they're redundant by design.
+
 ## How it runs
 
 The brief is produced by the `data-center-news` subagent (see
