@@ -9,6 +9,13 @@ The brief is produced by the `data-center-news` subagent (see
 `.claude/agents/data-center-news.md`) and is intended to run once a day
 as a **scheduled trigger** on Claude Code on the web.
 
+Each daily run does two things:
+1. Writes the full brief to `briefs/YYYY-MM-DD.md`, commits, and pushes.
+2. Creates a compact HTML email digest (TL;DR + section headlines + source
+   links + a link back to the full brief on GitHub) as a Gmail draft addressed
+   to `Zbaron19@gmail.com`. The draft lands in your Gmail Drafts folder — open
+   it to read, or hit Send to push it into your Inbox.
+
 ### One-time setup: schedule the daily run
 
 1. Open this repo's environment on https://claude.ai/code.
@@ -28,6 +35,21 @@ Inside any Claude Code session in this repo, ask:
 or
 
 > Use the data-center-news agent — anything new on Loudoun County moratoriums?
+
+### Asking questions about the archive
+
+Because every brief is just a markdown file in `briefs/`, you can also open
+this repo in Claude Code on the web at any time and ask questions across the
+whole archive — Claude will read the dated files and answer. Examples:
+
+> Summarize Loudoun County zoning activity from the last 30 days.
+
+> What's pending at FERC right now?
+
+> Pull every tax-incentive item from the past 60 days and group by state.
+
+No special command — just open the repo, ask the question. Pair it with the
+`data-center-news` subagent if you also want fresh web research mixed in.
 
 ## Notes
 
