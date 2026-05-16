@@ -2,7 +2,7 @@ name: Daily data center news brief
 
 on:
   schedule:
-    # 11:00 UTC daily = 7:00 ET (winter) / 6:00 ET (summer DST adjusts +1)
+    # 11:00 UTC daily — 6:00 AM ET (Nov–Mar) / 7:00 AM EDT (Mar–Nov)
     - cron: "0 11 * * *"
   workflow_dispatch: {}
 
