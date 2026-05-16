@@ -21,10 +21,11 @@ Each daily run does two things:
 1. Open this repo's environment on https://claude.ai/code.
 2. Open the environment's **Triggers** panel and create a new **Schedule** trigger.
    - Frequency: daily (pick the time you want — early morning U.S. Eastern is a good default).
-   - Source: this repository, branch `claude/data-center-news-agent-UmgAm` (or wherever this agent lives).
-   - Prompt: paste the contents of `briefs/DAILY_PROMPT.md` below.
-3. Save. Claude Code will spin up a session at that time each day, produce the brief,
-   commit it to the branch, and push.
+   - Source: this repository, branch `claude/data-center-news-agent-UmgAm`.
+   - **Prompt (just type this — three words):** `/daily-brief`
+     - If slash commands don't work in the trigger prompt field, type this instead: `Follow briefs/DAILY_PROMPT.md`
+3. Save. Claude Code will spin up a session at that time each day, run the
+   command, produce the brief, draft the email, and push.
 
 ### Ad-hoc use
 
