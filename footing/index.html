@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Footing — rebuild your financial life, one day at a time</title>
+<style>
+  :root{
+    --paper:#FBF8F3; --card:#FFFFFF; --ink:#26332D; --ink-soft:#5C6B63;
+    --line:#E7E0D5; --sage:#2F6B4C; --sage-soft:#3E7C5A; --sage-bg:rgba(47,107,76,0.08);
+    --amber:#C2741B; --amber-bg:rgba(194,116,27,0.10);
+    --rose:#A4533B; --shadow:0 1px 2px rgba(38,51,45,0.04),0 6px 24px rgba(38,51,45,0.06);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased; padding-bottom:90px;
+  }
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px}
+  header.app{padding:26px 18px 10px; max-width:660px; margin:0 auto}
+  .brand{display:flex; align-items:center; gap:10px}
+  .mark{width:30px; height:30px; flex:0 0 auto}
+  h1.logo{font-size:21px; margin:0; letter-spacing:-0.3px; font-weight:700}
+  .tagline{color:var(--ink-soft); font-size:13.5px; margin:4px 0 0 40px}
+
+  /* nav */
+  nav{
+    position:fixed; bottom:0; left:0; right:0; background:rgba(251,248,243,0.94);
+    backdrop-filter:saturate(180%) blur(10px); border-top:1px solid var(--line);
+    display:flex; justify-content:center; gap:2px; padding:8px 6px calc(8px + env(safe-area-inset-bottom)); z-index:50;
+  }
+  .nav-btn{
+    flex:1; max-width:120px; border:none; background:transparent; color:var(--ink-soft);
+    font-size:11px; font-weight:600; padding:6px 4px; border-radius:12px; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:3px; transition:color .15s,background .15s;
+  }
+  .nav-btn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .nav-btn.active{color:var(--sage); background:var(--sage-bg)}
+
+  /* cards */
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px; margin:14px 0; box-shadow:var(--shadow)}
+  .card h2{margin:0 0 4px; font-size:17px; letter-spacing:-0.2px}
+  .card .sub{color:var(--ink-soft); font-size:13.5px; margin:0 0 14px}
+  .view{display:none; animation:fade .25s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* big number */
+  .bignum{font-size:38px; font-weight:700; letter-spacing:-1px; line-height:1.05}
+  .bignum.green{color:var(--sage)}
+  .muted{color:var(--ink-soft); font-size:13px}
+  .label{font-size:11px; text-transform:uppercase; letter-spacing:0.6px; color:var(--ink-soft); font-weight:700; margin-bottom:4px}
+
+  /* progress */
+  .bar{height:10px; border-radius:8px; background:var(--line); overflow:hidden; margin:10px 0}
+  .bar > i{display:block; height:100%; background:linear-gradient(90deg,var(--sage-soft),var(--sage)); border-radius:8px; transition:width .5s ease}
+
+  /* buttons / inputs */
+  button.btn{font:inherit; font-weight:600; cursor:pointer; border-radius:11px; border:1px solid var(--sage); background:var(--sage); color:#fff; padding:11px 16px; transition:filter .15s}
+  button.btn:hover{filter:brightness(1.05)}
+  button.ghost{background:transparent; color:var(--sage); border:1px solid var(--line)}
+  button.tiny{padding:6px 11px; font-size:12.5px; border-radius:9px}
+  button.danger{color:var(--rose); border-color:rgba(164,83,59,0.3); background:transparent}
+  input,select,textarea{font:inherit; width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:11px; background:#fff; color:var(--ink); margin-top:5px}
+  input:focus,select,textarea:focus{outline:none; border-color:var(--sage-soft)}
+  textarea{resize:vertical; min-height:60px}
+  .field{margin:11px 0}
+  .row{display:flex; gap:10px; flex-wrap:wrap}
+  .row > .field{flex:1; min-width:120px; margin:0}
+  .seg{display:flex; gap:6px; flex-wrap:wrap; margin-top:6px}
+  .seg label{flex:1; min-width:130px; border:1px solid var(--line); border-radius:12px; padding:10px 12px; cursor:pointer; transition:border-color .15s,background .15s}
+  .seg label.on{border-color:var(--sage); background:var(--sage-bg)}
+  .seg label input{display:none}
+  .seg .t{font-weight:600; font-size:13.5px; display:block}
+  .seg .d{color:var(--ink-soft); font-size:12px; display:block; margin-top:2px}
+
+  /* obligation rows */
+  .ob{display:flex; align-items:center; gap:12px; padding:13px 0; border-bottom:1px solid var(--line)}
+  .ob:last-child{border-bottom:none}
+  .ob .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:var(--sage)}
+  .ob .grow{flex:1; min-width:0}
+  .ob .name{font-weight:600; font-size:14.5px; display:flex; align-items:center; gap:7px}
+  .ob .meta{color:var(--ink-soft); font-size:12.5px; margin-top:1px}
+  .ob .amt{font-weight:700; font-size:15px; white-space:nowrap}
+  .pill{font-size:10px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:2px 7px; border-radius:6px; background:var(--sage-bg); color:var(--sage)}
+  .pill.amends{background:var(--amber-bg); color:var(--amber)}
+  .pill.done{background:rgba(47,107,76,0.14); color:var(--sage)}
+  .ob.cleared .name{text-decoration:line-through; color:var(--ink-soft)}
+
+  /* milestones */
+  .ms{display:flex; gap:13px; padding:13px 0; border-bottom:1px solid var(--line)}
+  .ms:last-child{border-bottom:none}
+  .ms .ring{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .ms.hit .ring{border-color:var(--sage); background:var(--sage); color:#fff}
+  .ms.hit .ring svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none}
+  .ms .mt{font-weight:600; font-size:14px}
+  .ms.hit .mt{color:var(--sage)}
+  .ms .md{color:var(--ink-soft); font-size:12.5px; margin-top:1px}
+
+  /* check-in */
+  .checkrow{display:flex; gap:10px; margin-top:10px}
+  .checkrow button{flex:1}
+  .streakwrap{display:flex; gap:18px; margin-top:6px}
+  .streak{flex:1; text-align:center; background:var(--sage-bg); border-radius:14px; padding:14px 8px}
+  .streak .n{font-size:26px; font-weight:700; color:var(--sage)}
+  .streak .l{font-size:11.5px; color:var(--ink-soft); font-weight:600}
+
+  .note{background:var(--sage-bg); border-radius:12px; padding:13px 15px; font-size:13.5px; color:var(--ink); border:1px solid rgba(47,107,76,0.12)}
+  .note.amber{background:var(--amber-bg); border-color:rgba(194,116,27,0.18)}
+  .empty{text-align:center; color:var(--ink-soft); padding:26px 10px; font-size:14px}
+  .quote{font-style:italic; color:var(--ink-soft); font-size:14px; border-left:3px solid var(--sage); padding-left:13px; margin:0}
+  a{color:var(--sage)}
+  .reslist a{display:block; padding:11px 0; border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink)}
+  .reslist a:last-child{border-bottom:none}
+  .reslist .rt{font-weight:600; font-size:14px; color:var(--sage)}
+  .reslist .rd{color:var(--ink-soft); font-size:12.5px}
+  .disc{font-size:11.5px; color:var(--ink-soft); line-height:1.5}
+  .hidden{display:none !important}
+  /* modal */
+  .scrim{position:fixed; inset:0; background:rgba(38,51,45,0.4); display:none; align-items:flex-end; justify-content:center; z-index:100}
+  .scrim.open{display:flex}
+  .sheet{background:var(--paper); width:100%; max-width:660px; border-radius:20px 20px 0 0; padding:20px 18px calc(20px + env(safe-area-inset-bottom)); max-height:92vh; overflow:auto; animation:rise .25s ease}
+  @keyframes rise{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+  .sheet h3{margin:0 0 2px; font-size:18px}
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 32 32" fill="none">
+      <path d="M5 27 L16 6 L27 27" stroke="#2F6B4C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9.5 27 H22.5" stroke="#C2741B" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="16" cy="20.5" r="2.2" fill="#2F6B4C"/>
+    </svg>
+    <h1 class="logo">Footing</h1>
+  </div>
+  <p class="tagline">Rebuild your financial life — privately, one day at a time.</p>
+</header>
+
+<main class="wrap">
+
+  <!-- ======================= TODAY ======================= -->
+  <section id="v-today" class="view active">
+    <div class="card" id="welcomeCard">
+      <h2>Welcome. You're already doing the hard part.</h2>
+      <p class="sub">Footing is a quiet, private place to face what's owed, make a real plan, and watch yourself climb back. No accounts. No judgment. Nothing leaves this device.</p>
+      <p class="quote">"The pressure does not lift because the debt vanishes. It lifts because you finally have a plan you can look at without flinching."</p>
+      <div style="margin-top:14px" class="row">
+        <button class="btn" onclick="openInventory()">Start my inventory</button>
+        <button class="ghost btn" onclick="dismissWelcome()">I've done this before</button>
+      </div>
+    </div>
+
+    <div class="card" id="todayProgress">
+      <div class="label">Total still owed</div>
+      <div class="bignum" id="t-owed">$0</div>
+      <div class="bar"><i id="t-bar" style="width:0%"></i></div>
+      <div class="muted"><span id="t-paid">$0</span> repaid of <span id="t-orig">$0</span> · <span id="t-pct">0%</span> of the way back</div>
+      <div id="t-free" class="note" style="margin-top:14px; display:none"></div>
+    </div>
+
+    <div class="card">
+      <h2>Today's check-in</h2>
+      <p class="sub" id="checkPrompt">Did you stay within your plan today? Honesty here is the whole point — a slip is information, not a verdict.</p>
+      <div id="checkDone" class="note hidden"></div>
+      <div class="checkrow" id="checkButtons">
+        <button class="btn" onclick="checkIn(true)">Yes — on plan</button>
+        <button class="ghost btn" onclick="checkIn(false)">Today was hard</button>
+      </div>
+      <div class="streakwrap">
+        <div class="streak"><div class="n" id="s-streak">0</div><div class="l">day streak</div></div>
+        <div class="streak"><div class="n" id="s-days">0</div><div class="l">days on plan</div></div>
+        <div class="streak"><div class="n" id="s-since">0</div><div class="l">days rebuilding</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= INVENTORY ======================= -->
+  <section id="v-inventory" class="view">
+    <div class="card">
+      <h2>The inventory</h2>
+      <p class="sub">A fearless, private list of everything owed — banks, cards, back taxes, and the people you mean to make whole. Naming the number is the first repair.</p>
+      <div class="bignum" id="i-total">$0</div>
+      <div class="muted" id="i-count">Nothing listed yet.</div>
+      <div style="margin-top:14px"><button class="btn" onclick="openInventory()">+ Add an obligation</button></div>
+    </div>
+    <div class="card" id="i-listCard">
+      <div id="i-list"></div>
+    </div>
+  </section>
+
+  <!-- ======================= PLAN ======================= -->
+  <section id="v-plan" class="view">
+    <div class="card">
+      <h2>Your plan</h2>
+      <p class="sub">How much can you steadily put toward what's owed each month, and in what order? This is your version of a Pressure Relief plan — a number you can actually keep.</p>
+      <div class="field">
+        <label class="label" for="p-budget">Monthly amount toward repayment</label>
+        <input id="p-budget" type="number" min="0" step="25" placeholder="e.g. 800" oninput="saveBudget(this.value)">
+      </div>
+      <div class="label" style="margin-top:6px">Order of repayment</div>
+      <div class="seg" id="p-strategy">
+        <label data-s="amends"><input type="radio" name="strat"><span class="t">People first</span><span class="d">Make amends to those you harmed, then the rest.</span></label>
+        <label data-s="snowball"><input type="radio" name="strat"><span class="t">Smallest first</span><span class="d">Quick wins for momentum (snowball).</span></label>
+        <label data-s="avalanche"><input type="radio" name="strat"><span class="t">Costliest first</span><span class="d">Highest interest first (saves the most).</span></label>
+      </div>
+    </div>
+    <div class="card" id="p-resultCard">
+      <div class="label">If you hold this plan</div>
+      <div class="bignum green" id="p-free">—</div>
+      <div class="muted" id="p-freesub">Add obligations and a monthly amount to see your path.</div>
+      <div id="p-order" style="margin-top:14px"></div>
+      <div id="p-warn" class="note amber hidden" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- ======================= MILESTONES ======================= -->
+  <section id="v-milestones" class="view">
+    <div class="card">
+      <h2>Milestones</h2>
+      <p class="sub">Financial recovery deserves the same chips that time does. Every one of these is real ground regained.</p>
+      <div id="m-list"></div>
+    </div>
+  </section>
+
+  <!-- ======================= MORE ======================= -->
+  <section id="v-more" class="view">
+    <div class="card">
+      <h2>Support &amp; guardrails</h2>
+      <p class="sub">You don't have to do the financial part alone, and you shouldn't try to.</p>
+      <div class="reslist">
+        <a href="https://www.gamblersanonymous.org/ga/" target="_blank" rel="noopener"><span class="rt">Gamblers Anonymous — Pressure Relief</span><span class="rd">The fellowship's process for building a budget &amp; repayment plan with trusted others. Footing is a companion to it, not a replacement.</span></a>
+        <a href="https://www.nfcc.org/" target="_blank" rel="noopener"><span class="rt">NFCC — nonprofit credit counseling</span><span class="rd">Free/low-cost help building a budget and negotiating with creditors. Find a counselor near you.</span></a>
+        <a href="https://www.consumerfinance.gov/consumer-tools/debt-collection/" target="_blank" rel="noopener"><span class="rt">CFPB — your rights with debt collectors</span><span class="rd">Know what collectors can and cannot do, and how to respond in writing.</span></a>
+        <a href="https://988lifeline.org/" target="_blank" rel="noopener"><span class="rt">988 — Suicide &amp; Crisis Lifeline</span><span class="rd">If the weight ever feels like too much, call or text 988. Money is never worth more than you are.</span></a>
+        <a href="https://www.annualcreditreport.com/" target="_blank" rel="noopener"><span class="rt">AnnualCreditReport.com</span><span class="rd">Pull your free reports so the inventory reflects everything — surprises usually hide here.</span></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your data stays yours</h2>
+      <p class="sub">Everything you enter lives only in this browser, on this device. No servers, no accounts, no tracking. Keep a backup, or move to a new device, with these:</p>
+      <div class="row">
+        <button class="ghost btn" onclick="exportData()">Export backup</button>
+        <button class="ghost btn" onclick="document.getElementById('importFile').click()">Import backup</button>
+      </div>
+      <input id="importFile" type="file" accept="application/json" class="hidden" onchange="importData(this.files[0])">
+      <div style="margin-top:12px"><button class="btn danger tiny" onclick="resetAll()">Erase everything</button></div>
+    </div>
+
+    <div class="card">
+      <h2>An honest note</h2>
+      <p class="disc">Footing is a private organizing and motivation tool. It is <b>not</b> financial, legal, tax, or therapeutic advice, and it does not talk to your banks. For real decisions — bankruptcy, settlements, tax debt, judgments — talk to a qualified professional and to people in your program. Recovery is the foundation; the money is what you rebuild on top of it. One day at a time.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= NAV ======================= -->
+<nav>
+  <button class="nav-btn active" data-v="today" onclick="show('today')">
+    <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>Today</button>
+  <button class="nav-btn" data-v="inventory" onclick="show('inventory')">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Inventory</button>
+  <button class="nav-btn" data-v="plan" onclick="show('plan')">
+    <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-8"/><path d="M21 8v5h-5"/></svg>Plan</button>
+  <button class="nav-btn" data-v="milestones" onclick="show('milestones')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5L7 21l5-3 5 3-1.5-8.5"/></svg>Milestones</button>
+  <button class="nav-btn" data-v="more" onclick="show('more')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>More</button>
+</nav>
+
+<!-- ======================= ADD/EDIT SHEET ======================= -->
+<div class="scrim" id="scrim">
+  <div class="sheet">
+    <h3 id="sheetTitle">Add an obligation</h3>
+    <p class="sub" style="color:var(--ink-soft);font-size:13px;margin:2px 0 12px">Be honest and complete. You can edit any of this later.</p>
+    <div class="field">
+      <label class="label">Who / what is owed</label>
+      <input id="f-name" placeholder="e.g. Chase Visa, the IRS, my brother">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label class="label">Amount owed</label>
+        <input id="f-amount" type="number" min="0" step="1" placeholder="0">
+      </div>
+      <div class="field">
+        <label class="label">Interest % (optional)</label>
+        <input id="f-apr" type="number" min="0" step="0.1" placeholder="0">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Type</label>
+      <select id="f-type">
+        <option value="card">Credit card</option>
+        <option value="loan">Loan</option>
+        <option value="tax">Back taxes</option>
+        <option value="legal">Legal / judgment</option>
+        <option value="person">A person I owe</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <label class="seg" style="display:block;margin-top:4px">
+      <label style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;cursor:pointer" id="amendsLabel">
+        <input type="checkbox" id="f-amends" style="width:auto;margin:0" onchange="document.getElementById('amendsLabel').classList.toggle('on',this.checked)">
+        <span><span class="t">This is an amends</span><span class="d">Someone I harmed and intend to make whole. The plan can prioritize these.</span></span>
+      </label>
+    </label>
+    <div class="field">
+      <label class="label">Notes (optional, private)</label>
+      <textarea id="f-notes" placeholder="Anything that helps — account #, the story, what 'made whole' means here."></textarea>
+    </div>
+    <div class="row" style="margin-top:6px">
+      <button class="btn" onclick="saveObligation()">Save</button>
+      <button class="ghost btn" onclick="closeSheet()">Cancel</button>
+      <button class="btn danger tiny hidden" id="f-delete" onclick="deleteObligation()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= PAYMENT SHEET ======================= -->
+<div class="scrim" id="payScrim">
+  <div class="sheet">
+    <h3>Log a payment</h3>
+    <p class="sub" style="color:var(--ink-soft);font-size:13px;margin:2px 0 12px" id="payToward"></p>
+    <div class="field">
+      <label class="label">Amount paid</label>
+      <input id="pay-amount" type="number" min="0" step="1" placeholder="0">
+    </div>
+    <div class="row">
+      <button class="btn" onclick="logPayment()">Record it</button>
+      <button class="ghost btn" onclick="closePay()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- state ---------------- */
+const KEY = "footing.v1";
+const today = () => new Date().toISOString().slice(0,10);
+const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
+const uid = () => Math.random().toString(36).slice(2,9);
+
+let S = load();
+function load(){
+  try{ const r = JSON.parse(localStorage.getItem(KEY)); if(r) return r; }catch(e){}
+  return { obligations:[], budget:null, strategy:"amends", checkins:{}, startDate:today(),
+           welcomeDone:false, milestonesHit:{} };
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+
+/* ---------------- nav ---------------- */
+function show(v){
+  document.querySelectorAll(".view").forEach(e=>e.classList.remove("active"));
+  document.getElementById("v-"+v).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active", b.dataset.v===v));
+  window.scrollTo({top:0,behavior:"smooth"});
+  render();
+}
+
+/* ---------------- obligation sheet ---------------- */
+let editingId = null;
+function openInventory(){ openSheet(null); }
+function openSheet(id){
+  editingId = id;
+  const o = id ? S.obligations.find(x=>x.id===id) : null;
+  document.getElementById("sheetTitle").textContent = o ? "Edit obligation" : "Add an obligation";
+  document.getElementById("f-name").value = o ? o.name : "";
+  document.getElementById("f-amount").value = o ? o.original : "";
+  document.getElementById("f-apr").value = o && o.apr ? o.apr : "";
+  document.getElementById("f-type").value = o ? o.type : "card";
+  document.getElementById("f-amends").checked = o ? !!o.amends : false;
+  document.getElementById("amendsLabel").classList.toggle("on", o ? !!o.amends : false);
+  document.getElementById("f-notes").value = o ? (o.notes||"") : "";
+  document.getElementById("f-delete").classList.toggle("hidden", !o);
+  document.getElementById("scrim").classList.add("open");
+}
+function closeSheet(){ document.getElementById("scrim").classList.remove("open"); }
+function saveObligation(){
+  const name = document.getElementById("f-name").value.trim();
+  const amount = parseFloat(document.getElementById("f-amount").value)||0;
+  if(!name || amount<=0){ alert("Add a name and an amount greater than zero."); return; }
+  const data = {
+    name, original:amount,
+    apr: parseFloat(document.getElementById("f-apr").value)||0,
+    type: document.getElementById("f-type").value,
+    amends: document.getElementById("f-amends").checked,
+    notes: document.getElementById("f-notes").value.trim(),
+  };
+  if(editingId){
+    const o = S.obligations.find(x=>x.id===editingId);
+    const paid = o.original - o.balance;
+    Object.assign(o, data);
+    o.balance = Math.max(0, data.original - paid);
+  }else{
+    S.obligations.push({ id:uid(), ...data, balance:amount, created:today(), clearedDate:null });
+  }
+  save(); closeSheet(); render();
+}
+function deleteObligation(){
+  if(!editingId) return;
+  if(!confirm("Remove this obligation from your inventory?")) return;
+  S.obligations = S.obligations.filter(x=>x.id!==editingId);
+  save(); closeSheet(); render();
+}
+
+/* ---------------- payments ---------------- */
+let payId = null;
+function openPay(id){
+  payId = id;
+  const o = S.obligations.find(x=>x.id===id);
+  document.getElementById("payToward").textContent = "Toward " + o.name + " — " + fmt(o.balance) + " remaining.";
+  document.getElementById("pay-amount").value = "";
+  document.getElementById("payScrim").classList.add("open");
+}
+function closePay(){ document.getElementById("payScrim").classList.remove("open"); }
+function logPayment(){
+  const amt = parseFloat(document.getElementById("pay-amount").value)||0;
+  if(amt<=0){ closePay(); return; }
+  const o = S.obligations.find(x=>x.id===payId);
+  o.balance = Math.max(0, o.balance - amt);
+  if(!S.firstPayment) S.firstPayment = today();
+  if(o.balance===0 && !o.clearedDate) o.clearedDate = today();
+  save(); closePay(); render();
+}
+
+/* ---------------- plan / budget ---------------- */
+function saveBudget(v){ S.budget = parseFloat(v)||0; save(); render(); }
+document.getElementById("p-strategy").addEventListener("click", e=>{
+  const lab = e.target.closest("label[data-s]"); if(!lab) return;
+  S.strategy = lab.dataset.s; save(); render();
+});
+
+function orderedObligations(){
+  const live = S.obligations.filter(o=>o.balance>0);
+  const by = {
+    amends:   (a,b)=> (b.amends-a.amends) || (a.balance-b.balance),
+    snowball: (a,b)=> a.balance-b.balance,
+    avalanche:(a,b)=> (b.apr-a.apr) || (a.balance-b.balance),
+  }[S.strategy] || ((a,b)=>0);
+  return live.slice().sort(by);
+}
+
+/* simulate payoff month-by-month; returns {months, perId:{id:monthIndex}, stuck} */
+function simulate(){
+  const order = orderedObligations();
+  if(!order.length || !S.budget || S.budget<=0) return null;
+  let bals = order.map(o=>({id:o.id, bal:o.balance, apr:o.apr||0}));
+  const perId = {}; let months=0; const MAX=1200;
+  while(bals.some(b=>b.bal>0.5) && months<MAX){
+    months++;
+    bals.forEach(b=>{ if(b.bal>0) b.bal += b.bal*(b.apr/100/12); });
+    let avail = S.budget;
+    for(const b of bals){
+      if(b.bal<=0 || avail<=0) continue;
+      const pay = Math.min(b.bal, avail);
+      b.bal -= pay; avail -= pay;
+      if(b.bal<=0.5 && !perId[b.id]) perId[b.id]=months;
+    }
+  }
+  return { months, perId, stuck: months>=MAX };
+}
+function monthsToDate(m){ const d=new Date(); d.setMonth(d.getMonth()+m); return d; }
+const dfmt = d => d.toLocaleDateString("en-US",{month:"short",year:"numeric"});
+
+/* ---------------- check-in ---------------- */
+function checkIn(onPlan){
+  S.checkins[today()] = { onPlan, ts:Date.now() };
+  save(); render();
+}
+function streakInfo(){
+  let streak=0; const d=new Date();
+  for(;;){ const k=d.toISOString().slice(0,10); const c=S.checkins[k];
+    if(c && c.onPlan){ streak++; d.setDate(d.getDate()-1);} else break; }
+  const days = Object.values(S.checkins).filter(c=>c.onPlan).length;
+  const since = Math.max(0, Math.round((Date.now()-new Date(S.startDate).getTime())/86400000));
+  return {streak, days, since};
+}
+
+/* ---------------- milestones ---------------- */
+function buildMilestones(){
+  const orig = S.obligations.reduce((s,o)=>s+o.original,0);
+  const bal  = S.obligations.reduce((s,o)=>s+o.balance,0);
+  const paid = orig-bal;
+  const sim = simulate();
+  const {streak,days,since} = streakInfo();
+  const cleared = S.obligations.filter(o=>o.clearedDate);
+  const amendsAll = S.obligations.filter(o=>o.amends);
+  const amendsDone = amendsAll.filter(o=>o.balance<=0);
+  const m = [];
+  m.push({ key:"face", t:"You faced the number", d: orig>0 ? "Listed "+fmt(orig)+" across "+S.obligations.length+" obligation"+(S.obligations.length!==1?"s":"")+"." : "Add your first obligation to begin.", hit: orig>0 });
+  m.push({ key:"plan", t:"You made a plan you can keep", d: S.budget>0 ? fmt(S.budget)+"/mo, "+stratLabel()+"." : "Set a monthly amount on the Plan tab.", hit: !!(S.budget>0 && S.obligations.length) });
+  m.push({ key:"first", t:"First payment made", d: S.firstPayment ? "On "+niceDate(S.firstPayment)+". It's begun." : "Log your first payment from the inventory.", hit: !!S.firstPayment });
+  m.push({ key:"d30", t:"30 days on plan", d: days>=30 ? "A full month of steady steps." : days+" of 30 check-ins on plan.", hit: days>=30 });
+  m.push({ key:"clear1", t:"First obligation cleared", d: cleared.length ? "Paid off: "+cleared[0].name+"." : "Pay any one obligation to zero.", hit: cleared.length>0 });
+  if(amendsAll.length){
+    m.push({ key:"amends", t:"First person made whole", d: amendsDone.length ? amendsDone[0].name+" — made right." : amendsDone.length+" of "+amendsAll.length+" amends complete.", hit: amendsDone.length>0 });
+  }
+  m.push({ key:"half", t:"Halfway back", d: orig>0 ? Math.round(paid/orig*100)+"% repaid ("+fmt(paid)+")." : "—", hit: orig>0 && paid>=orig/2 });
+  m.push({ key:"d90", t:"90 days on plan", d: days>=90 ? "A season of recovery." : days+" of 90 check-ins on plan.", hit: days>=90 });
+  m.push({ key:"free", t:"Debt-free", d: bal<=0 && orig>0 ? "Every obligation cleared. You did this." : (sim ? "Projected "+dfmt(monthsToDate(sim.months))+" if you hold the plan." : "Your finish line will appear here."), hit: orig>0 && bal<=0 });
+  // celebrate newly hit
+  m.forEach(x=>{ if(x.hit && !S.milestonesHit[x.key]){ S.milestonesHit[x.key]=today(); } });
+  return m;
+}
+function stratLabel(){ return {amends:"people first", snowball:"smallest first", avalanche:"costliest first"}[S.strategy]; }
+function niceDate(s){ return new Date(s+"T00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }
+
+/* ---------------- render ---------------- */
+function render(){
+  const orig = S.obligations.reduce((s,o)=>s+o.original,0);
+  const bal  = S.obligations.reduce((s,o)=>s+o.balance,0);
+  const paid = orig-bal;
+  const pct  = orig>0 ? Math.round(paid/orig*100) : 0;
+
+  // welcome
+  document.getElementById("welcomeCard").classList.toggle("hidden", S.welcomeDone || S.obligations.length>0);
+
+  // today
+  document.getElementById("t-owed").textContent = fmt(bal);
+  document.getElementById("t-bar").style.width = pct+"%";
+  document.getElementById("t-paid").textContent = fmt(paid);
+  document.getElementById("t-orig").textContent = fmt(orig);
+  document.getElementById("t-pct").textContent = pct+"%";
+  const sim = simulate();
+  const freeEl = document.getElementById("t-free");
+  if(bal<=0 && orig>0){ freeEl.style.display="block"; freeEl.textContent="You are debt-free. Whatever brought you here, you climbed all the way back. Keep the streak for the life you're building now."; }
+  else if(sim && !sim.stuck){ freeEl.style.display="block"; freeEl.innerHTML="At "+fmt(S.budget)+"/mo, your debt-free day is about <b>"+dfmt(monthsToDate(sim.months))+"</b> — "+sim.months+" month"+(sim.months!==1?"s":"")+" away."; }
+  else if(sim && sim.stuck){ freeEl.style.display="block"; freeEl.textContent="At this monthly amount the interest outpaces the payments. Even a small increase changes everything — try the Plan tab."; }
+  else { freeEl.style.display="none"; }
+
+  // check-in
+  const c = S.checkins[today()];
+  const done = document.getElementById("checkDone");
+  const btns = document.getElementById("checkButtons");
+  if(c){
+    btns.classList.add("hidden"); done.classList.remove("hidden");
+    done.classList.toggle("amber", !c.onPlan);
+    done.textContent = c.onPlan ? "Checked in — on plan today. That's the whole game: today, done well."
+                                : "Checked in — today was hard, and you still showed up here. That counts. Tomorrow you begin again.";
+  }else{ btns.classList.remove("hidden"); done.classList.add("hidden"); }
+  const si = streakInfo();
+  document.getElementById("s-streak").textContent = si.streak;
+  document.getElementById("s-days").textContent = si.days;
+  document.getElementById("s-since").textContent = si.since;
+
+  // inventory
+  document.getElementById("i-total").textContent = fmt(bal);
+  document.getElementById("i-count").textContent = S.obligations.length
+    ? S.obligations.length+" obligation"+(S.obligations.length!==1?"s":"")+" · "+fmt(paid)+" repaid so far"
+    : "Nothing listed yet.";
+  const list = document.getElementById("i-list");
+  document.getElementById("i-listCard").style.display = S.obligations.length ? "block":"none";
+  list.innerHTML = "";
+  orderForDisplay().forEach(o=>{
+    const cleared = o.balance<=0;
+    const div = document.createElement("div");
+    div.className = "ob"+(cleared?" cleared":"");
+    div.innerHTML =
+      '<div class="dot" style="background:'+(cleared?"var(--sage)":(o.amends?"var(--amber)":"var(--sage-soft)"))+'"></div>'+
+      '<div class="grow"><div class="name">'+esc(o.name)+
+        (o.amends?'<span class="pill amends">amends</span>':'')+
+        (cleared?'<span class="pill done">cleared</span>':'')+'</div>'+
+      '<div class="meta">'+typeLabel(o.type)+(o.apr?(" · "+o.apr+"% APR"):"")+
+        (cleared?(" · paid "+niceDate(o.clearedDate)):(" · "+fmt(o.original-o.balance)+" of "+fmt(o.original)+" repaid"))+'</div></div>'+
+      '<div style="text-align:right"><div class="amt">'+fmt(o.balance)+'</div>'+
+        (cleared?'':'<button class="ghost btn tiny" style="margin-top:5px" onclick="openPay(\''+o.id+'\')">Pay</button>')+'</div>';
+    div.querySelector(".grow").style.cursor="pointer";
+    div.querySelector(".grow").onclick=()=>openSheet(o.id);
+    list.appendChild(div);
+  });
+
+  // plan
+  document.getElementById("p-budget").value = S.budget || "";
+  document.querySelectorAll("#p-strategy label").forEach(l=>l.classList.toggle("on", l.dataset.s===S.strategy));
+  const order = orderedObligations();
+  const pfree = document.getElementById("p-free");
+  const pfsub = document.getElementById("p-freesub");
+  const warn = document.getElementById("p-warn");
+  warn.classList.add("hidden");
+  if(bal<=0 && orig>0){ pfree.textContent="Debt-free"; pfsub.textContent="Nothing left to plan. Well done."; }
+  else if(sim && !sim.stuck){ pfree.textContent=dfmt(monthsToDate(sim.months)); pfsub.textContent="Your projected debt-free month — "+sim.months+" months of holding this plan."; }
+  else if(sim && sim.stuck){ pfree.textContent="—"; pfsub.textContent="Payments don't yet outrun the interest."; warn.classList.remove("hidden"); warn.textContent="At "+fmt(S.budget)+"/mo the balances grow faster than you can pay. Raising the monthly amount — even a little — or starting with the costliest debt will break the loop."; }
+  else { pfree.textContent="—"; pfsub.textContent="Add obligations and a monthly amount to see your path."; }
+  const ord = document.getElementById("p-order");
+  ord.innerHTML="";
+  if(order.length && sim){
+    const head=document.createElement("div"); head.className="label"; head.textContent="Order &amp; projected payoff"; head.innerHTML="Order &amp; projected payoff";
+    ord.appendChild(head);
+    order.forEach((o,i)=>{
+      const mo = sim.perId[o.id];
+      const div=document.createElement("div"); div.className="ob";
+      div.innerHTML='<div class="dot" style="background:'+(o.amends?"var(--amber)":"var(--sage-soft)")+'"></div>'+
+        '<div class="grow"><div class="name">'+(i+1)+'. '+esc(o.name)+(o.amends?'<span class="pill amends">amends</span>':'')+'</div>'+
+        '<div class="meta">'+fmt(o.balance)+' left'+(o.apr?(" · "+o.apr+"%"):"")+'</div></div>'+
+        '<div class="amt" style="font-size:13px;color:var(--ink-soft)">'+(mo?("~"+dfmt(monthsToDate(mo))):"—")+'</div>';
+      ord.appendChild(div);
+    });
+  }
+
+  // milestones
+  const ms = buildMilestones();
+  const mEl = document.getElementById("m-list"); mEl.innerHTML="";
+  ms.forEach(x=>{
+    const div=document.createElement("div"); div.className="ms"+(x.hit?" hit":"");
+    div.innerHTML='<div class="ring">'+(x.hit?'<svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>':'')+'</div>'+
+      '<div><div class="mt">'+x.t+'</div><div class="md">'+x.d+'</div></div>';
+    mEl.appendChild(div);
+  });
+  save();
+}
+function orderForDisplay(){
+  return S.obligations.slice().sort((a,b)=>(a.balance<=0)-(b.balance<=0) || (b.amends-a.amends) || (a.balance-b.balance));
+}
+function typeLabel(t){ return {card:"Credit card",loan:"Loan",tax:"Back taxes",legal:"Legal / judgment",person:"Owed to a person",other:"Other"}[t]||"Other"; }
+function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function dismissWelcome(){ S.welcomeDone=true; save(); render(); }
+
+/* ---------------- data portability ---------------- */
+function exportData(){
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="footing-backup-"+today()+".json"; a.click();
+}
+function importData(file){
+  if(!file) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.obligations) throw 0; S=d; save(); render(); alert("Backup restored."); }catch(e){ alert("That file didn't look like a Footing backup."); } };
+  r.readAsText(file);
+}
+function resetAll(){
+  if(!confirm("Erase everything and start over? This cannot be undone. Consider exporting a backup first.")) return;
+  localStorage.removeItem(KEY); S=load(); render(); show("today");
+}
+
+render();
+</script>
+</body>
+</html>
