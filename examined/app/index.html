@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F5EFE3">
+<title>Examined — a lifelong conversation with yourself</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Examined">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --cream:#F5EFE3; --cream2:#EFE7D6; --paper:#FBF8F0; --card:#FFFDF7;
+    --ink:#1C1A18; --text:#211D1A; --sec:#6B6460; --ter:#A39B94;
+    --sep:rgba(60,50,40,0.12); --sep2:rgba(60,50,40,0.07);
+    --amber:#C8872E; --amberDeep:#A06A1E; --amberBg:rgba(200,135,46,0.10);
+    --green:#5E7355; --shadow:0 1px 2px rgba(40,30,20,.05),0 8px 28px rgba(40,30,20,.06);
+    --maxw:720px;
+  }
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--text);
+    line-height:1.6;font-size:16px;min-height:100dvh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px;
+    padding-top:env(safe-area-inset-top);}
+  h1,h2,h3,.serif{font-family:Fraunces,Georgia,serif;font-optical-sizing:auto;letter-spacing:-0.01em}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  a{color:var(--amberDeep)}
+  ::selection{background:var(--amberBg)}
+
+  /* ---- top bar ---- */
+  header.bar{position:sticky;top:0;z-index:30;background:rgba(245,239,227,.86);
+    backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--sep);
+    padding-top:env(safe-area-inset-top)}
+  .bar-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;
+    gap:12px;padding:13px 20px;}
+  .logo{font-family:Fraunces;font-weight:600;font-size:21px;letter-spacing:-0.02em;
+    display:flex;align-items:center;gap:9px}
+  .logo .mark{width:24px;height:24px;flex:none}
+  .logo small{font-family:Inter;font-weight:500;font-size:11px;color:var(--ter);
+    letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+  .bar-spacer{flex:1}
+  .icon-btn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+    color:var(--sec);transition:background .15s}
+  .icon-btn:hover{background:var(--cream2)}
+  .icon-btn svg{width:20px;height:20px}
+
+  /* ---- views ---- */
+  .view{display:none;animation:fade .35s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* ---- home ---- */
+  .hero{padding:46px 0 26px;text-align:center}
+  .hero .epi{font-family:Fraunces;font-style:italic;font-size:15px;color:var(--sec);
+    margin-bottom:18px}
+  .hero h1{font-size:clamp(30px,7vw,42px);font-weight:600;line-height:1.08;
+    letter-spacing:-0.025em;margin-bottom:14px}
+  .hero p{color:var(--sec);max-width:30em;margin:0 auto;font-size:16px}
+  .resume{margin:22px 0 6px;display:flex;justify-content:center}
+  .resume button{background:var(--ink);color:var(--paper);padding:11px 20px;
+    border-radius:11px;font-weight:600;font-size:14px;display:inline-flex;
+    align-items:center;gap:9px;box-shadow:var(--shadow)}
+  .group{margin:30px 0}
+  .group-h{display:flex;align-items:baseline;gap:10px;margin:0 0 12px 2px}
+  .group-h h2{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ter);font-family:Inter}
+  .group-h .line{flex:1;height:1px;background:var(--sep2)}
+  .cards{display:grid;gap:11px}
+  .ex{background:var(--card);border:1px solid var(--sep);border-radius:14px;
+    padding:16px 17px;text-align:left;transition:transform .12s,box-shadow .18s,border-color .18s;
+    display:block;width:100%}
+  .ex:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:rgba(200,135,46,.4)}
+  .ex .t{font-family:Fraunces;font-weight:600;font-size:18px;letter-spacing:-0.01em;margin-bottom:3px}
+  .ex .d{color:var(--sec);font-size:14px;line-height:1.5}
+  .ex .meta{margin-top:9px;font-size:12px;color:var(--ter);display:flex;gap:8px;align-items:center}
+  .dot{width:3px;height:3px;border-radius:50%;background:var(--ter)}
+  .freeform{border-style:dashed;background:transparent}
+
+  /* ---- session / chat ---- */
+  .sess-head{padding:20px 0 8px;border-bottom:1px solid var(--sep2);margin-bottom:6px}
+  .sess-head .theme{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--amberDeep)}
+  .sess-head h2{font-size:23px;font-weight:600;margin-top:4px;letter-spacing:-0.02em}
+  .thread{padding:18px 0 8px;display:flex;flex-direction:column;gap:22px}
+  .msg{max-width:100%}
+  .msg .who{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ter);
+    margin-bottom:6px;font-weight:600}
+  .msg.ai .body{font-family:Fraunces;font-size:20px;line-height:1.5;font-weight:400;color:var(--ink)}
+  .msg.ai .body.small{font-size:18px}
+  .msg.me{align-self:flex-end;max-width:88%}
+  .msg.me .who{text-align:right;color:var(--amberDeep)}
+  .msg.me .body{background:var(--card);border:1px solid var(--sep);border-radius:14px 14px 4px 14px;
+    padding:12px 15px;font-size:15.5px;white-space:pre-wrap;box-shadow:var(--shadow)}
+  .msg.ai .body p{margin-bottom:.6em}
+  .typing{display:inline-flex;gap:5px;align-items:center;padding:4px 0}
+  .typing span{width:7px;height:7px;border-radius:50%;background:var(--ter);animation:bd 1.2s infinite ease-in-out}
+  .typing span:nth-child(2){animation-delay:.18s}.typing span:nth-child(3){animation-delay:.36s}
+  @keyframes bd{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-4px)}}
+
+  /* composer */
+  .composer{position:sticky;bottom:0;background:linear-gradient(transparent,var(--cream) 22%);
+    padding:14px 0 calc(14px + env(safe-area-inset-bottom));z-index:20}
+  .composer-in{display:flex;gap:9px;align-items:flex-end;background:var(--card);
+    border:1px solid var(--sep);border-radius:16px;padding:8px 8px 8px 14px;box-shadow:var(--shadow)}
+  .composer textarea{flex:1;border:none;outline:none;resize:none;background:transparent;
+    font-family:Inter;font-size:16px;line-height:1.5;color:var(--text);max-height:160px;padding:5px 0}
+  .send{width:40px;height:40px;border-radius:11px;background:var(--ink);color:var(--paper);
+    display:grid;place-items:center;flex:none;transition:opacity .15s}
+  .send:disabled{opacity:.3}
+  .send svg{width:19px;height:19px}
+  .sess-tools{display:flex;gap:8px;justify-content:center;padding:2px 0 8px;flex-wrap:wrap}
+  .tbtn{font-size:12.5px;color:var(--sec);padding:7px 13px;border-radius:9px;border:1px solid var(--sep);
+    background:var(--card);font-weight:500;transition:all .15s}
+  .tbtn:hover{border-color:var(--amberDeep);color:var(--amberDeep)}
+
+  /* ---- archive ---- */
+  .pagehead{padding:28px 0 6px}
+  .pagehead h2{font-size:28px;font-weight:600;letter-spacing:-0.02em}
+  .pagehead p{color:var(--sec);margin-top:5px;font-size:15px}
+  .search{margin:16px 0;display:flex;align-items:center;gap:10px;background:var(--card);
+    border:1px solid var(--sep);border-radius:12px;padding:10px 14px}
+  .search input{flex:1;border:none;outline:none;background:transparent;font-family:Inter;font-size:15px;color:var(--text)}
+  .search svg{width:18px;height:18px;color:var(--ter)}
+  .entry{background:var(--card);border:1px solid var(--sep);border-radius:13px;padding:15px 16px;
+    margin-bottom:10px;width:100%;text-align:left;transition:border-color .15s}
+  .entry:hover{border-color:rgba(200,135,46,.4)}
+  .entry .top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+  .entry .et{font-family:Fraunces;font-weight:600;font-size:17px;letter-spacing:-0.01em}
+  .entry .ed{font-size:12px;color:var(--ter);white-space:nowrap}
+  .entry .ex-snip{color:var(--sec);font-size:14px;margin-top:5px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .empty{text-align:center;color:var(--ter);padding:60px 20px;font-family:Fraunces;font-style:italic;font-size:18px}
+
+  /* ---- synthesis ---- */
+  .syn{background:linear-gradient(170deg,var(--paper),#F4ECDB);border:1px solid var(--sep);
+    border-radius:18px;padding:26px 24px;margin:18px 0;box-shadow:var(--shadow)}
+  .syn .label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--amberDeep)}
+  .syn h2{font-family:Fraunces;font-size:25px;font-weight:600;margin:6px 0 14px;letter-spacing:-0.02em}
+  .syn-body{font-family:Fraunces;font-size:18px;line-height:1.62;color:var(--ink)}
+  .syn-body p{margin-bottom:.85em}
+  .syn-body em{color:var(--amberDeep)}
+  .syn-body strong{font-weight:600}
+
+  /* ---- modal / settings ---- */
+  .scrim{position:fixed;inset:0;background:rgba(28,26,24,.42);backdrop-filter:blur(3px);
+    display:none;place-items:center;z-index:50;padding:20px}
+  .scrim.on{display:grid}
+  .modal{background:var(--paper);border-radius:18px;max-width:440px;width:100%;
+    padding:26px 24px;box-shadow:0 24px 70px rgba(20,15,10,.3);max-height:88dvh;overflow:auto}
+  .modal h3{font-size:22px;font-weight:600;margin-bottom:6px}
+  .modal .sub{color:var(--sec);font-size:14px;margin-bottom:18px;line-height:1.5}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
+  .field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--sep);border-radius:11px;
+    font-family:Inter;font-size:15px;background:var(--card);color:var(--text);outline:none}
+  .field input:focus,.field select:focus{border-color:var(--amberDeep)}
+  .field .hint{font-size:12.5px;color:var(--ter);margin-top:6px;line-height:1.45}
+  .btn-row{display:flex;gap:10px;margin-top:22px}
+  .btn{flex:1;padding:12px;border-radius:11px;font-weight:600;font-size:14.5px;text-align:center}
+  .btn.primary{background:var(--ink);color:var(--paper)}
+  .btn.ghost{background:transparent;border:1px solid var(--sep);color:var(--sec)}
+  .btn.danger{color:#9a3b2e;border:1px solid rgba(154,59,46,.3);background:transparent}
+
+  /* ---- bottom nav ---- */
+  nav.tabs{position:sticky;bottom:0;z-index:25;background:rgba(245,239,227,.92);
+    backdrop-filter:blur(12px);border-top:1px solid var(--sep);display:none;
+    padding-bottom:env(safe-area-inset-bottom)}
+  nav.tabs.show{display:block}
+  .tabs-in{max-width:var(--maxw);margin:0 auto;display:flex}
+  nav.tabs button{flex:1;padding:11px 0 12px;display:flex;flex-direction:column;align-items:center;gap:3px;
+    color:var(--ter);font-size:10.5px;font-weight:600;letter-spacing:.02em}
+  nav.tabs button.on{color:var(--ink)}
+  nav.tabs svg{width:21px;height:21px}
+
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;background:var(--ink);
+    color:var(--paper);padding:11px 18px;border-radius:11px;font-size:13.5px;font-weight:500;
+    box-shadow:var(--shadow);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(-4px)}
+  .foot{text-align:center;color:var(--ter);font-size:12px;padding:30px 0 20px;line-height:1.6}
+  .foot a{color:var(--ter)}
+  .pad{height:30px}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-in">
+    <div class="logo">
+      <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="#C8872E" stroke-width="1.6"/><circle cx="12" cy="12" r="3.4" fill="#C8872E"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3" stroke="#C8872E" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>Examined</span>
+    </div>
+    <div class="bar-spacer"></div>
+    <button class="icon-btn" id="navArchive" title="Your archive" aria-label="Archive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M4 7v12a1 1 0 001 1h14a1 1 0 001-1V7M4 7l1.5-3h13L20 7M9 12h6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="icon-btn" id="navSettings" title="Settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5 1.6 1.6 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.6 1.6 0 00.3-1.8 1.6 1.6 0 00-1.5-1H3a2 2 0 110-4h.1a1.6 1.6 0 001.5-1 1.6 1.6 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.6 1.6 0 001.8.3H9a1.6 1.6 0 001-1.5V3a2 2 0 114 0v.1a1.6 1.6 0 001 1.5 1.6 1.6 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 00-.3 1.8V9a1.6 1.6 0 001.5 1H21a2 2 0 110 4h-.1a1.6 1.6 0 00-1.5 1z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <div class="epi">“The unexamined life is not worth living.” — Socrates</div>
+      <h1>A lifelong conversation with yourself.</h1>
+      <p>Not a chatbot that answers. A patient questioner that helps you find what <em>you</em> actually think — and keeps the record, so you can watch your mind change.</p>
+      <div class="resume" id="resumeSlot"></div>
+    </div>
+    <div id="exGroups"></div>
+    <div class="foot">
+      Your words stay on this device. Each session can be exported as plain text.<br>
+      <a href="#" id="aboutLink">What is this?</a>
+    </div>
+    <div class="pad"></div>
+  </section>
+
+  <!-- ============ SESSION ============ -->
+  <section class="view" id="view-session">
+    <div class="sess-head">
+      <div class="theme" id="sessTheme"></div>
+      <h2 id="sessTitle"></h2>
+    </div>
+    <div class="thread" id="thread"></div>
+    <div class="sess-tools" id="sessTools">
+      <button class="tbtn" id="btnReflect">↺ Reflect back what I've said</button>
+      <button class="tbtn" id="btnEnd">✓ Close &amp; save this session</button>
+    </div>
+    <div class="composer">
+      <div class="composer-in">
+        <textarea id="input" rows="1" placeholder="Take your time. Say it as messily as you need to…"></textarea>
+        <button class="send" id="send" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ARCHIVE ============ -->
+  <section class="view" id="view-archive">
+    <div class="pagehead">
+      <h2>Your examined life</h2>
+      <p id="archiveCount"></p>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>
+      <input id="searchBox" placeholder="Search what you've said…">
+    </div>
+    <div id="entryList"></div>
+    <div class="pad"></div>
+  </section>
+
+  <!-- ============ SYNTHESIS ============ -->
+  <section class="view" id="view-synthesis">
+    <div class="pagehead">
+      <h2>The long view</h2>
+      <p>A letter drawn from across everything you've examined — how your thinking has actually moved.</p>
+    </div>
+    <div id="synSlot"></div>
+    <div class="pad"></div>
+  </section>
+
+  <!-- ============ READING (one entry) ============ -->
+  <section class="view" id="view-read">
+    <div class="pagehead" style="padding-bottom:0">
+      <div class="theme" id="readTheme" style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--amberDeep)"></div>
+      <h2 id="readTitle" style="margin-top:4px"></h2>
+      <p id="readDate"></p>
+    </div>
+    <div class="thread" id="readThread"></div>
+    <div class="sess-tools">
+      <button class="tbtn" id="readExport">⬇ Export as text</button>
+      <button class="tbtn" id="readContinue">↳ Continue this examination</button>
+      <button class="tbtn danger-link" id="readDelete" style="color:#9a3b2e;border-color:rgba(154,59,46,.3)">Delete</button>
+    </div>
+    <div class="pad"></div>
+  </section>
+
+</div>
+
+<!-- bottom tabs (mobile) -->
+<nav class="tabs" id="tabs">
+  <div class="tabs-in">
+    <button data-go="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>Examine</button>
+    <button data-go="archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M5 7v12h14V7M9 11h6" stroke-linecap="round" stroke-linejoin="round"/></svg>Archive</button>
+    <button data-go="synthesis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V5M4 14l5-5 4 4 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>Long view</button>
+  </div>
+</nav>
+
+<!-- settings modal -->
+<div class="scrim" id="scrim">
+  <div class="modal">
+    <h3>Settings</h3>
+    <p class="sub">Examined talks to Claude directly from your browser — nothing passes through any server of ours. Your key and your words live only on this device.</p>
+    <div class="field">
+      <label for="key">Anthropic API key</label>
+      <input id="key" type="password" placeholder="sk-ant-…" autocomplete="off">
+      <div class="hint">Get one at <a href="https://console.anthropic.com/" target="_blank" rel="noopener">console.anthropic.com</a>. Stored locally in this browser only. You already know this pattern from your own apps.</div>
+    </div>
+    <div class="field">
+      <label for="model">Model</label>
+      <select id="model">
+        <option value="claude-sonnet-4-6">Claude Sonnet 4.6 — warm, fast, recommended</option>
+        <option value="claude-opus-4-8">Claude Opus 4.8 — deepest, slower</option>
+        <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 — quickest, lightest</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="name">What should it call you? (optional)</label>
+      <input id="name" type="text" placeholder="Your name">
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" id="saveSettings">Save</button>
+      <button class="btn ghost" id="closeSettings">Close</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn ghost" id="exportAll">Export everything</button>
+      <button class="btn danger" id="wipe">Erase all data</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   Examined — local-first Socratic thinking partner
+   No backend. Talks to the Anthropic API from the browser.
+   ============================================================ */
+
+const LS = {
+  key:'examined.key', model:'examined.model', name:'examined.name',
+  sessions:'examined.sessions', draft:'examined.draft', syn:'examined.synthesis'
+};
+const $ = s => document.querySelector(s);
+const el = (t,c)=>{const e=document.createElement(t); if(c)e.className=c; return e;};
+const now = ()=>new Date().toISOString();
+const fmtDate = iso => new Date(iso).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
+const fmtDay  = iso => new Date(iso).toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+function get(k,def){ try{const v=localStorage.getItem(k); return v==null?def:JSON.parse(v);}catch(e){return def;} }
+function set(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+function getRaw(k){ return localStorage.getItem(k)||''; }
+
+/* ---------- the Examinations: curated openings ---------- */
+const EXAMINATIONS = [
+  {g:'The work & the trade', items:[
+    {id:'hours', t:'The trade you\'re making', d:'You give your hours and get money back. What, underneath the money, are you actually trading them for?',
+      seed:'Set the money aside for a moment. When you spend a working day, what are you really hoping to receive in return for it — beyond the pay?'},
+    {id:'tuesday', t:'An ordinary Tuesday', d:'If money were fully handled, what would you be doing on a normal Tuesday in October?',
+      seed:'Imagine money is completely handled — never a worry again. Walk me through an ordinary Tuesday a year from now. Where are you, what are you doing by mid-morning?'},
+    {id:'free', t:'What you\'d do for free', d:'Some part of your work you\'d still do even if no one paid. What is it?',
+      seed:'Is there a part of what you do that you\'d keep doing even if it paid nothing? Tell me what that part is — and be specific about the moment it feels like that.'},
+    {id:'craft', t:'What you want to have made', d:'At the far end of all this, what do you want to be able to point at?',
+      seed:'When you\'re much older and you look back, what do you want to be able to point to and say "I made that"? Don\'t worry about whether it\'s realistic yet.'},
+  ]},
+  {g:'Freedom & enough', items:[
+    {id:'freedom', t:'What freedom actually means', d:'You use the word freedom. Made concrete, what does it look like at 2pm on a Wednesday?',
+      seed:'You reach for the word "freedom" a lot. Make it concrete for me: it\'s 2pm on a Wednesday and you are free. What is literally happening?'},
+    {id:'enough', t:'The number called enough', d:'What is "enough" — the number, and the life that number buys?',
+      seed:'People chase "more" because they never define "enough." So let\'s define it. What is the number that would be enough for you — and just as important, what life does that number actually buy?'},
+    {id:'afraid', t:'What you\'re afraid freedom would expose', d:'If the constraints fell away tomorrow, what are you quietly afraid you\'d find?',
+      seed:'Say every external constraint fell away tomorrow — no boss, no billable hour, total freedom. Part of you is afraid of something that would expose. What is it?'},
+    {id:'protect', t:'What money protects you from', d:'Money isn\'t only for buying. What is it guarding against?',
+      seed:'Money buys things, but it also protects us from things. When you think about wanting more of it, what is the fear or memory it\'s quietly protecting you from?'},
+  ]},
+  {g:'Time & the self', items:[
+    {id:'decade', t:'How to spend a decade', d:'Not a day, not a year — how do you actually want to spend the next ten years?',
+      seed:'Zoom out past the next deal or the next launch. How do you actually want to spend the next ten years of your one life? What would make that a decade well spent?'},
+    {id:'twenty', t:'The person you were at twenty', d:'What would the twenty-year-old version of you make of your life now?',
+      seed:'Picture yourself at twenty — the hopes you had then, before the world filed them down. What would that person admire about your life now, and what would disappoint them?'},
+    {id:'calendar', t:'Whose calendar you\'re living on', d:'Look at last week honestly. Whose priorities filled it?',
+      seed:'Think back honestly over last week. Whose priorities actually filled your hours — yours, or someone else\'s? Walk me through where the time really went.'},
+    {id:'belief', t:'A belief you\'ve never examined', d:'Name a conviction you hold but have never actually tested.',
+      seed:'Name one belief you live by but have never really put on trial — about work, success, what you owe people, how the world is. Let\'s pick it up and turn it over together.'},
+  ]},
+  {g:'Meaning & mortality', items:[
+    {id:'wellLived', t:'A life well-lived, by your own lights', d:'Forget what would impress others. By your own measure, what makes a life good?',
+      seed:'Forget what would impress anyone else — your parents, your peers, the internet. By your own private measure, what would make your life a good one? What\'s the actual standard?'},
+    {id:'tenYears', t:'Ten good years, then nothing', d:'Full health for ten years, then it stops. What changes on Monday?',
+      seed:'Suppose you knew you had ten years of complete health, and then it simply stops — no warning, no extension. Nothing else about your circumstances changes. What do you do differently starting Monday?'},
+    {id:'regret', t:'The regret you can still prevent', d:'Which future regret is still, today, within your power to avoid?',
+      seed:'Of all the regrets you might have at the end, which one is still — today — entirely within your power to prevent? What would preventing it actually require of you?'},
+    {id:'eulogy', t:'What they\'d say, what you\'d want said', d:'The gap between the two is worth looking at.',
+      seed:'If the people who know you best spoke honestly about you today, what would they say? And what do you wish they could say instead? Let\'s look at the gap between those two.'},
+  ]},
+  {g:'People & love', items:[
+    {id:'closeness', t:'The people you\'re actually close to', d:'Who really knows you — and are you letting them?',
+      seed:'Who actually knows you — the real interior of you, not the competent surface? And here\'s the harder half: are you letting them? Start with one person.'},
+    {id:'owe', t:'What you owe, what you don\'t', d:'Separate the obligations you truly hold from the ones you only inherited.',
+      seed:'Many of the obligations we carry were never really ours — we inherited them or assumed them. What do you genuinely owe the people in your life, and what have you just been carrying out of habit or guilt?'},
+  ]},
+];
+
+/* ---------- the Socratic system prompt ---------- */
+function systemPrompt(ex, name){
+  const youAre = name ? `The person you're speaking with is named ${name}. ` : '';
+  return `You are the questioner inside "Examined," a tool for the examined life. ${youAre}You are not an assistant and not a coach. You are a patient, perceptive thinking partner in the Socratic tradition — closer to a wise friend who happens to ask extraordinary questions than to anyone trying to be helpful.
+
+Your single discipline: help this person discover what THEY actually think, feel, and value. You draw their reasoning out of them; you do not pour yours in.
+
+How you behave:
+- Ask ONE question at a time. One. Then stop and genuinely listen.
+- Keep your turns short — usually one to four sentences. The person should be doing most of the talking.
+- Before a new question, often briefly reflect back what you heard, in their own terms, so they feel understood and can correct you. ("So what I'm hearing is… is that right?")
+- Follow the live thread. The best next question almost always comes from the exact words they just used, not from a script. Notice the word they lingered on, the thing they hedged, the contradiction they didn't notice.
+- Go for the specific and the concrete. When they answer in abstractions ("freedom," "success," "balance"), ask for the Tuesday, the moment, the number, the actual scene.
+- Welcome "I don't know." Treat it as the doorway, not the wall. ("That's an honest place to start. What makes it hard to answer?")
+- Be comfortable with discomfort and silence. You may gently name a tension you notice, but you never resolve it for them.
+
+What you NEVER do:
+- Never lecture, never give advice, never tell them what they should do or feel.
+- Never offer multiple questions, bullet lists, or summaries-of-options.
+- No therapy-speak, no life-coaching clichés, no "I'm here for you" filler, no praise inflation.
+- Don't perform wisdom or quote philosophers at them. Be plain and human.
+- If they ask you directly for your opinion or for advice, you may briefly offer a thought, but then hand the real question back to them: the point is their thinking, not yours.
+
+This is a conversation that may span years across many sessions. Treat it with the seriousness and warmth that deserves. The opening question for this session is about: "${ex.t}". Begin from there, but let it breathe.`;
+}
+
+/* ---------- state ---------- */
+let sessions = get(LS.sessions, []);   // [{id,exId,theme,title,started,updated,turns:[{role,text}]}]
+let current = null;                    // active session object
+let busy = false;
+let pendingContinue = null;
+
+/* ---------- view router ---------- */
+function show(view){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  $('#view-'+view).classList.add('active');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on', b.dataset.go===view));
+  $('#tabs').classList.toggle('show', ['home','archive','synthesis'].includes(view));
+  window.scrollTo({top:0,behavior:'instant'});
+  if(view==='archive') renderArchive();
+  if(view==='synthesis') renderSynthesis();
+  if(view==='home') renderHome();
+}
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2200); }
+
+/* ---------- markdown-lite for AI text ---------- */
+function md(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/(^|[^*])\*(?!\s)(.+?)\*/g,'$1<em>$2</em>')
+    .split(/\n{2,}/).map(p=>'<p>'+p.replace(/\n/g,'<br>')+'</p>').join('');
+}
+
+/* ---------- HOME ---------- */
+function renderHome(){
+  // resume button
+  const slot=$('#resumeSlot'); slot.innerHTML='';
+  const open = sessions.find(s=>!s.closed);
+  if(open){
+    const b=el('button'); b.innerHTML=`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z" stroke-linejoin="round"/></svg> Resume — ${open.title}`;
+    b.onclick=()=>openSession(open); slot.appendChild(b);
+  }
+  // groups
+  const c=$('#exGroups'); c.innerHTML='';
+  EXAMINATIONS.forEach(group=>{
+    const wrap=el('div','group');
+    const h=el('div','group-h'); h.innerHTML=`<h2>${group.g}</h2><div class="line"></div>`; wrap.appendChild(h);
+    const cards=el('div','cards');
+    group.items.forEach(ex=>{
+      const b=el('button','ex');
+      b.innerHTML=`<div class="t">${ex.t}</div><div class="d">${ex.d}</div>`;
+      b.onclick=()=>startSession(ex); cards.appendChild(b);
+    });
+    wrap.appendChild(cards); c.appendChild(wrap);
+  });
+  // freeform
+  const wrap=el('div','group');
+  const cards=el('div','cards');
+  const b=el('button','ex freeform');
+  b.innerHTML=`<div class="t">Bring your own question</div><div class="d">Something on your mind that isn't on this list. Start there.</div>`;
+  b.onclick=()=>startSession({id:'freeform', t:'Your own question', d:'', seed:null});
+  cards.appendChild(b); wrap.appendChild(cards); c.appendChild(wrap);
+}
+
+/* ---------- SESSION ---------- */
+function newSession(ex){
+  return { id:'s'+Date.now(), exId:ex.id, theme:groupOf(ex.id), title:ex.t,
+           started:now(), updated:now(), closed:false, turns:[] };
+}
+function groupOf(exId){
+  for(const g of EXAMINATIONS){ if(g.items.find(i=>i.id===exId)) return g.g; }
+  return 'Open question';
+}
+function exById(id){ for(const g of EXAMINATIONS){ const f=g.items.find(i=>i.id===id); if(f) return f; } return null; }
+
+function startSession(ex){
+  if(!getRaw(LS.key)){ openSettings(true); return; }
+  current = newSession(ex);
+  sessions.unshift(current); persist();
+  $('#sessTheme').textContent = current.theme;
+  $('#sessTitle').textContent = current.title;
+  $('#thread').innerHTML='';
+  show('session');
+  if(ex.seed){
+    addTurn('ai', ex.seed);   // curated opener, no API call needed
+  } else {
+    askAI(systemPromptFor(current), [{role:'user',content:'(I want to bring my own question to examine. Invite me to say what\'s on my mind, in one short, warm sentence.)'}]);
+  }
+  setTimeout(()=>$('#input').focus(),200);
+}
+function openSession(s){
+  current=s;
+  $('#sessTheme').textContent=s.theme; $('#sessTitle').textContent=s.title;
+  $('#thread').innerHTML='';
+  s.turns.forEach(t=>renderTurn(t.role,t.text));
+  show('session');
+}
+function systemPromptFor(s){ return systemPrompt(exById(s.exId)||{t:s.title}, getRaw(LS.name)? get(LS.name,''):''); }
+
+function addTurn(role,text){
+  current.turns.push({role,text}); current.updated=now(); persist();
+  renderTurn(role,text);
+}
+function renderTurn(role,text){
+  const m=el('div','msg '+(role==='ai'?'ai':'me'));
+  const who=el('div','who'); who.textContent = role==='ai'?'Examined':(get(LS.name,'')||'You');
+  const body=el('div','body'); if(role==='ai'){ body.classList.add(text.length>240?'small':''); body.innerHTML=md(text);} else body.textContent=text;
+  m.appendChild(who); m.appendChild(body);
+  $('#thread').appendChild(m);
+  m.scrollIntoView({behavior:'smooth',block:'end'});
+}
+function showTyping(){
+  const m=el('div','msg ai'); m.id='typing';
+  m.innerHTML='<div class="who">Examined</div><div class="typing"><span></span><span></span><span></span></div>';
+  $('#thread').appendChild(m); m.scrollIntoView({behavior:'smooth',block:'end'});
+}
+function hideTyping(){ const t=$('#typing'); if(t)t.remove(); }
+
+async function sendMessage(){
+  const inp=$('#input'); const text=inp.value.trim();
+  if(!text||busy) return;
+  if(!current) return;
+  inp.value=''; inp.style.height='auto';
+  addTurn('me',text);
+  const msgs = current.turns.map(t=>({role: t.role==='ai'?'assistant':'user', content:t.text}));
+  await askAI(systemPromptFor(current), msgs);
+}
+
+async function askAI(system, messages){
+  if(busy) return; busy=true; $('#send').disabled=true;
+  showTyping();
+  try{
+    const reply = await callClaude(system, messages, 700);
+    hideTyping();
+    addTurn('ai', reply.trim());
+  }catch(e){
+    hideTyping();
+    renderTurn('ai', '⚠︎ '+ (e.message||'Something went wrong reaching Claude.') + '\n\n(Check your API key and model in Settings.)');
+  }finally{ busy=false; $('#send').disabled=false; $('#input').focus(); }
+}
+
+/* ---------- the one network call ---------- */
+async function callClaude(system, messages, maxTokens){
+  const key=getRaw(LS.key); if(!key) throw new Error('No API key set.');
+  const model=get(LS.model,'claude-sonnet-4-6');
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{
+      'content-type':'application/json',
+      'x-api-key':key,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-direct-browser-access':'true'
+    },
+    body:JSON.stringify({ model, max_tokens:maxTokens||700, system, messages })
+  });
+  if(!res.ok){
+    let detail=''; try{const j=await res.json(); detail=j.error?.message||'';}catch(e){}
+    throw new Error(`API ${res.status}. ${detail}`);
+  }
+  const data=await res.json();
+  return (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+}
+
+/* ---------- session tools ---------- */
+async function reflectBack(){
+  if(!current||busy) return;
+  const msgs = current.turns.map(t=>({role:t.role==='ai'?'assistant':'user',content:t.text}));
+  msgs.push({role:'user',content:'(Pause. In 2-4 sentences, reflect back to me the through-line of what I\'ve actually been saying so far — in my own terms, not yours. Then ask if that\'s right. Do not give advice.)'});
+  await askAI(systemPromptFor(current), msgs);
+}
+function endSession(){
+  if(!current) return;
+  current.closed=true; persist();
+  toast('Saved to your archive');
+  current=null;
+  show('home');
+}
+
+/* ---------- ARCHIVE ---------- */
+function renderArchive(){
+  const closed = sessions.filter(s=>s.turns.length>0);
+  $('#archiveCount').textContent = closed.length
+    ? `${closed.length} session${closed.length>1?'s':''} · ${closed.reduce((n,s)=>n+s.turns.filter(t=>t.role==='me').length,0)} things you've said`
+    : 'Nothing yet. Your first examination will live here.';
+  const q=($('#searchBox').value||'').toLowerCase();
+  const list=$('#entryList'); list.innerHTML='';
+  const filtered = closed.filter(s=> !q || (s.title+' '+s.turns.map(t=>t.text).join(' ')).toLowerCase().includes(q));
+  if(!filtered.length){ list.innerHTML='<div class="empty">'+(closed.length?'Nothing matches that.':'“Know thyself.”')+'</div>'; return; }
+  filtered.forEach(s=>{
+    const b=el('button','entry');
+    const firstMe = s.turns.find(t=>t.role==='me');
+    b.innerHTML=`<div class="top"><span class="et">${s.title}</span><span class="ed">${fmtDate(s.started)}</span></div>
+      <div class="ex-snip">${(firstMe?firstMe.text:'Opened, not yet answered.').replace(/</g,'&lt;')}</div>`;
+    b.onclick=()=>openRead(s); list.appendChild(b);
+  });
+}
+
+/* ---------- READ one entry ---------- */
+let readingId=null;
+function openRead(s){
+  readingId=s.id;
+  $('#readTheme').textContent=s.theme; $('#readTitle').textContent=s.title;
+  $('#readDate').textContent=fmtDay(s.started)+(s.closed?'':' · still open');
+  const t=$('#readThread'); t.innerHTML='';
+  s.turns.forEach(turn=>{
+    const m=el('div','msg '+(turn.role==='ai'?'ai':'me'));
+    const who=el('div','who'); who.textContent=turn.role==='ai'?'Examined':(get(LS.name,'')||'You');
+    const body=el('div','body'); if(turn.role==='ai'){body.innerHTML=md(turn.text);} else body.textContent=turn.text;
+    m.appendChild(who); m.appendChild(body); t.appendChild(m);
+  });
+  show('read');
+}
+
+/* ---------- SYNTHESIS ---------- */
+function renderSynthesis(){
+  const slot=$('#synSlot'); slot.innerHTML='';
+  const saved=get(LS.syn,null);
+  const closed=sessions.filter(s=>s.turns.filter(t=>t.role==='me').length>0);
+  if(saved){
+    const card=el('div','syn');
+    card.innerHTML=`<div class="label">Generated ${fmtDate(saved.at)} · across ${saved.count} sessions</div>
+      <h2>${saved.title||'How your thinking has moved'}</h2>
+      <div class="syn-body">${md(saved.text)}</div>`;
+    slot.appendChild(card);
+  }
+  const btnWrap=el('div'); btnWrap.style.textAlign='center'; btnWrap.style.margin='10px 0 4px';
+  const b=el('button','btn primary'); b.style.maxWidth='320px'; b.style.margin='0 auto'; b.style.display='inline-block';
+  if(closed.length<2){
+    b.className='btn ghost'; b.textContent='Examine at least 2 things first'; b.disabled=true; b.style.opacity=.6;
+  }else{
+    b.textContent = saved ? 'Write a new long view' : 'Write my long view';
+    b.onclick=generateSynthesis;
+  }
+  btnWrap.appendChild(b); slot.appendChild(btnWrap);
+  if(closed.length<2 && !saved){
+    const note=el('div','empty'); note.textContent='The long view reads across your sessions and reflects how your mind is changing. Come back once you\'ve sat with a few questions.';
+    slot.appendChild(note);
+  }
+}
+async function generateSynthesis(){
+  const closed=sessions.filter(s=>s.turns.filter(t=>t.role==='me').length>0);
+  if(closed.length<2){ toast('Examine a couple of things first'); return; }
+  const slot=$('#synSlot');
+  slot.innerHTML='<div class="syn"><div class="typing"><span></span><span></span><span></span></div></div>';
+  // build a transcript of the user's own words across sessions
+  const corpus = closed.map(s=>{
+    const said = s.turns.filter(t=>t.role==='me').map(t=>'— '+t.text).join('\n');
+    return `## ${s.title}  (${fmtDate(s.started)})\n${said}`;
+  }).join('\n\n');
+  const name=get(LS.name,'');
+  const sys = `You are the reflective voice of "Examined." You have just re-read everything ${name||'this person'} has said across all of their examined-life sessions. Write them a short letter — a "long view" — in the spirit of a perceptive friend who has been listening for a long time.
+
+Read for movement and pattern, not summary:
+- The thread that keeps reappearing across different questions, even when the topic changed.
+- Where their thinking seems to have shifted, softened, or hardened over time.
+- A tension or contradiction they're holding (name it gently, do not resolve it).
+- The question that keeps going unanswered — the one they circle but don't land.
+- One question, just one, for them to sit with next.
+
+Voice: warm, plain, unsentimental, a little literary. Second person ("you"). 4–7 short paragraphs. Use **bold** sparingly for the one or two truest lines, and *italics* for a phrase of theirs worth holding up. Quote their own words back to them where it lands. Never give advice or instructions. Never flatter. This should feel like being truly seen.`;
+  try{
+    const text = await callClaude(sys, [{role:'user', content:`Here is everything I've said, by session:\n\n${corpus}`}], 1100);
+    const saved={ text:text.trim(), at:now(), count:closed.length, title:'How your thinking has moved' };
+    set(LS.syn, saved);
+    renderSynthesis();
+    toast('Your long view is ready');
+  }catch(e){
+    slot.innerHTML='<div class="empty">'+(e.message||'Could not reach Claude.')+'</div>';
+    renderSynthesis();
+  }
+}
+
+/* ---------- export ---------- */
+function sessionToMd(s){
+  let out=`# ${s.title}\n\n*${s.theme} · ${fmtDay(s.started)}*\n\n`;
+  s.turns.forEach(t=>{ out += (t.role==='ai'?'**Q.** ':'**'+(get(LS.name,'')||'Me')+'.** ')+t.text+'\n\n'; });
+  out+='\n---\n*Examined — the unexamined life is not worth living.*\n';
+  return out;
+}
+function download(name, text){
+  const blob=new Blob([text],{type:'text/markdown'}); const url=URL.createObjectURL(blob);
+  const a=el('a'); a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url);
+}
+function exportAll(){
+  if(!sessions.length){ toast('Nothing to export yet'); return; }
+  let out=`# Examined — my examined life\n\n*Exported ${fmtDay(now())}*\n\n`;
+  const syn=get(LS.syn,null);
+  if(syn){ out+=`## The long view (${fmtDate(syn.at)})\n\n${syn.text}\n\n---\n\n`; }
+  sessions.filter(s=>s.turns.length).forEach(s=>{ out+=sessionToMd(s)+'\n\n'; });
+  download('examined-life.md', out);
+  toast('Exported as Markdown');
+}
+
+/* ---------- persist ---------- */
+function persist(){ set(LS.sessions, sessions); }
+
+/* ---------- settings ---------- */
+function openSettings(firstRun){
+  $('#key').value=getRaw(LS.key);
+  $('#model').value=get(LS.model,'claude-sonnet-4-6');
+  $('#name').value=get(LS.name,'');
+  $('#scrim').classList.add('on');
+  if(firstRun) toast('Add your API key to begin');
+}
+function closeSettings(){ $('#scrim').classList.remove('on'); }
+function saveSettings(){
+  set(LS.key, $('#key').value.trim());
+  set(LS.model, $('#model').value);
+  set(LS.name, $('#name').value.trim());
+  closeSettings(); toast('Saved'); renderHome();
+}
+
+/* ---------- wiring ---------- */
+$('#navSettings').onclick=()=>openSettings(false);
+$('#navArchive').onclick=()=>show('archive');
+$('#aboutLink').onclick=(e)=>{e.preventDefault(); openAbout();};
+$('#saveSettings').onclick=saveSettings;
+$('#closeSettings').onclick=closeSettings;
+$('#exportAll').onclick=exportAll;
+$('#wipe').onclick=()=>{ if(confirm('Erase every session, your long view, and your key from this device? This cannot be undone.')){ Object.values(LS).forEach(k=>localStorage.removeItem(k)); sessions=[]; current=null; closeSettings(); show('home'); toast('Everything erased'); } };
+$('#scrim').onclick=(e)=>{ if(e.target===$('#scrim')) closeSettings(); };
+
+$('#send').onclick=sendMessage;
+$('#input').addEventListener('input',function(){ this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,160)+'px'; });
+$('#input').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey&&!matchMedia('(pointer:coarse)').matches){ e.preventDefault(); sendMessage(); } });
+$('#btnReflect').onclick=reflectBack;
+$('#btnEnd').onclick=endSession;
+
+$('#searchBox').addEventListener('input',renderArchive);
+
+document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>show(b.dataset.go));
+
+$('#readExport').onclick=()=>{ const s=sessions.find(x=>x.id===readingId); if(s) download((s.title.toLowerCase().replace(/[^a-z0-9]+/g,'-'))+'.md', sessionToMd(s)); };
+$('#readContinue').onclick=()=>{ const s=sessions.find(x=>x.id===readingId); if(s){ s.closed=false; persist(); openSession(s); } };
+$('#readDelete').onclick=()=>{ if(confirm('Delete this session permanently?')){ sessions=sessions.filter(x=>x.id!==readingId); persist(); show('archive'); toast('Deleted'); } };
+
+function openAbout(){
+  $('#scrim').classList.remove('on');
+  alert(`Examined\n\nMost tools want to answer you. This one only asks.\n\nPick a question. Speak plainly, even messily — there's no one to perform for. Examined listens and asks the next true question, one at a time, until you've heard yourself think.\n\nEvery session is saved on this device only. When you've sat with a few, open "The long view" and Examined will read across all of it and write you a letter about how your mind is actually changing.\n\nThe unexamined life is not worth living. The examined one is worth keeping.`);
+}
+
+/* ---------- boot ---------- */
+(function boot(){
+  renderHome();
+  show('home');
+  if(!getRaw(LS.key)) setTimeout(()=>openSettings(true), 600);
+})();
+</script>
+</body>
+</html>
