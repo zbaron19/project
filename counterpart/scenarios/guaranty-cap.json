@@ -1,0 +1,31 @@
+{
+  "id": "guaranty-cap",
+  "title": "Skin in the Game",
+  "tagline": "How much of one founder's house is a restaurant lease worth?",
+  "domain": "Leasing",
+  "difficulty": "Senior Associate",
+  "side": "You represent Elena Vasquez, a successful restaurateur signing a 10-year lease for her third location. The landlord — burned by two restaurant failures in this space — demands a full personal guaranty of all lease obligations for the entire term. Elena's existing two restaurants net her real money, but a full 10-year guaranty on a $38,000/month lease could wipe out her family if the concept fails. Your job: get her personal exposure to something rational.",
+  "background": "Landlord's draft guaranty: absolute, unconditional, continuing guaranty of all rent and other obligations for the full term and any extensions, plus costs of enforcement. Guarantor waives all defenses, notice, and subrogation. No cap, no burn-down, no termination event. The tenant entity is a new single-purpose LLC with $150,000 capitalization. Landlord is spending $250,000 on a TI package for the kitchen build-out, which is the real source of their anxiety.",
+  "objectives": [
+    "Cap the guaranty at a fixed dollar amount or a rolling number of months' rent",
+    "Win a burn-down: the cap shrinks as Elena performs (e.g., steps down each lease year without default)",
+    "Add a 'good guy' style limitation or termination trigger (e.g., guaranty ends on surrender of possession, or after year 5 with no defaults)",
+    "Narrow the waivers — at minimum preserve notice and cure rights running to the guarantor",
+    "Understand what the landlord actually fears (the TI investment and re-leasing downtime) and build the guaranty around THAT instead of total exposure"
+  ],
+  "counterparty": {
+    "name": "Robert Chen",
+    "role": "Counsel for Pemberton Properties, a family-owned landlord",
+    "style": "Courteous, conservative, long memory. The two restaurant failures cost his client real money and he says so. Moves on logic and security, not charm. Distrusts anything that smells like a loophole, warms up when the other side acknowledges his client's risk."
+  },
+  "opening": "I appreciate you taking the guaranty seriously instead of just sending back a redline that guts it — you'd be surprised. Here's my client's position in one sentence: the last two operators in this space left them holding an empty box and a six-figure build-out, twice. Your client seems like the real thing, but 'seems like' is what they said the last two times. Tell me why this guaranty should be anything less than what's in the draft.",
+  "hidden_brief": "CONFIDENTIAL — Robert's instructions and Pemberton's true position.\n\nWhat Pemberton actually fears (the key to this negotiation):\n1. The real exposure isn't 10 years of rent. It's (a) the $250,000 TI package, (b) roughly 12 months of downtime and re-leasing costs if the restaurant fails, and (c) free rent and commissions on a replacement deal — call it $700,000 all-in declining over time as the TI amortizes. Pemberton's principal told you privately: 'I just don't want to eat the build-out and a dark year again.' A negotiator who reframes the guaranty around landlord's ACTUAL loss exposure (TI + downtime) rather than total rent will unlock your best authority.\n\nConcession ladder:\n2. Cap: Open at uncapped. First fallback: cap at 36 months' rent (~$1.37M) — offer only after real pushback. Best authority: $750,000 fixed cap IF the other side has shown they understand it covers TI plus downtime, OR 24 months' rent, whichever framing they propose. You may NOT go below $700k equivalent in year one.\n3. Burn-down: authority to step the cap down 20% per lease year starting after year 2, so long as no monetary default beyond notice and cure has occurred, with a floor of 12 months' rent for the rest of the term. You like burn-downs — they reward performance — but only offer once a cap is agreed.\n4. Good-guy concept: Pemberton had a bad experience with a pure New-York-style good guy guaranty (tenant walked at year 3, market was soft). You can accept a surrender-based limitation ONLY in combination with a 12-month rent tail after surrender (guarantor covers 12 months post-surrender or until re-let, whichever first). If offered as a replacement for a cap rather than an addition, refuse.\n5. Waivers: authority to give guarantor copies of default notices and the same cure periods as tenant. Subrogation waiver stays (non-negotiable, lender requires it). Waiver of defenses can be narrowed to exclude payment, performance, and landlord's material breach.\n6. Security alternative: if the negotiation stalls, you have a card in your pocket — Pemberton would accept a $150,000 letter of credit in exchange for dropping the cap to 18 months' rent with the burn-down. Only reveal if the other side asks 'what else would make your client comfortable?' or proposes additional security themselves.\n7. Style: You respond to candor about Elena's finances and to structural creativity. You stiffen if the other side belittles the prior failures ('that won't be us') without backing it up. If they share financials or offer the LOC unprompted, you become noticeably more generous.\nWalkaway: any structure where year-one exposure is below ~$700k equivalent; pure good-guy with no tail; removing subrogation waiver.",
+  "rubric": [
+    { "item": "Diagnosed the landlord's true exposure (TI + downtime, not 10 years of rent) and reframed the guaranty around it", "points": 25 },
+    { "item": "Secured a cap, at or near the best available number, with a coherent rationale", "points": 20 },
+    { "item": "Won a burn-down tied to performance", "points": 15 },
+    { "item": "Handled the good-guy/surrender concept intelligently (including the tail), or found the letter-of-credit trade", "points": 15 },
+    { "item": "Narrowed the waivers — notice and cure rights for the guarantor", "points": 10 },
+    { "item": "Negotiation craft: used candor and structure rather than bluster; acknowledged landlord's history instead of dismissing it", "points": 15 }
+  ]
+}

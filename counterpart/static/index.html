@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Counterpart — the negotiation dojo</title>
+<style>
+  :root{
+    --ink:#14161a; --ink2:#1d2026; --ink3:#262a32; --line:#343a45;
+    --paper:#ece6d9; --paper-dim:#b9b2a3; --muted:#7e8694;
+    --accent:#c8553d; --accent-soft:#e08568;
+    --gold:#c9a227; --green:#7da87b; --red:#c4564f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--paper);font-family:var(--sans);
+       font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--accent);color:#fff}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+  header{display:flex;align-items:baseline;justify-content:space-between;
+         padding:28px 0 18px;border-bottom:1px solid var(--line);margin-bottom:28px}
+  .brand{font-family:var(--serif);font-size:30px;letter-spacing:.5px;cursor:pointer}
+  .brand em{color:var(--accent);font-style:normal}
+  .brand small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:3px;
+               text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .beltchip{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--paper-dim);
+            border:1px solid var(--line);border-radius:999px;padding:7px 16px;white-space:nowrap}
+  .beltchip b{color:var(--gold)}
+
+  h2{font-family:var(--serif);font-weight:500;font-size:21px;margin:34px 0 14px;color:var(--paper)}
+  h2 span{color:var(--muted);font-size:14px;font-family:var(--sans);margin-left:10px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .card{background:var(--ink2);border:1px solid var(--line);border-radius:10px;
+        padding:18px 18px 16px;cursor:pointer;transition:border-color .15s,transform .15s;
+        display:flex;flex-direction:column;gap:8px}
+  .card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .card .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .tag{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+  .diff{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;
+        border-radius:999px;border:1px solid var(--line);color:var(--paper-dim);white-space:nowrap}
+  .diff.Associate{border-color:#5a7d5a;color:#9dc09b}
+  .diff.Senior{border-color:#8a7430;color:#d4bb56}
+  .diff.Partner{border-color:#8a4538;color:var(--accent-soft)}
+  .card h3{font-family:var(--serif);font-weight:500;font-size:18.5px;line-height:1.3}
+  .card p{color:var(--paper-dim);font-size:13.5px}
+  .card .best{margin-top:auto;padding-top:8px;font-size:12px;color:var(--muted)}
+  .card .best b{color:var(--gold)}
+
+  button{font-family:var(--sans);font-size:14px;border:none;border-radius:8px;
+         cursor:pointer;padding:10px 20px;transition:opacity .15s}
+  button:disabled{opacity:.4;cursor:default}
+  .btn-primary{background:var(--accent);color:#fff;font-weight:600}
+  .btn-ghost{background:transparent;color:var(--paper-dim);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--paper-dim);color:var(--paper)}
+
+  /* table (negotiation room) */
+  .room{display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start}
+  @media(max-width:880px){.room{grid-template-columns:1fr}}
+  .brief{background:var(--ink2);border:1px solid var(--line);border-radius:10px;
+         padding:18px;font-size:13.5px;position:sticky;top:16px;
+         max-height:calc(100vh - 40px);overflow-y:auto}
+  .brief h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-soft);
+            margin:16px 0 6px}
+  .brief h4:first-child{margin-top:0}
+  .brief p,.brief li{color:var(--paper-dim)}
+  .brief ul{padding-left:18px;display:flex;flex-direction:column;gap:5px}
+  .opp{display:flex;flex-direction:column;gap:2px;margin-bottom:4px}
+  .opp .nm{font-family:var(--serif);font-size:17px;color:var(--paper)}
+
+  .chatcol{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .chat{display:flex;flex-direction:column;gap:14px;min-height:300px}
+  .msg{max-width:82%;padding:12px 16px;border-radius:12px;white-space:pre-wrap;font-size:14.5px}
+  .msg.them{background:var(--ink3);border:1px solid var(--line);align-self:flex-start;
+            border-bottom-left-radius:3px}
+  .msg.me{background:#3a3328;border:1px solid #57503f;align-self:flex-end;
+          border-bottom-right-radius:3px}
+  .msg .who{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;
+            color:var(--muted);margin-bottom:5px}
+  .thinking{align-self:flex-start;color:var(--muted);font-size:13px;padding:6px 2px;
+            font-style:italic}
+  .composer{display:flex;gap:10px;align-items:flex-end}
+  textarea{flex:1;background:var(--ink2);border:1px solid var(--line);border-radius:10px;
+           color:var(--paper);font-family:var(--sans);font-size:14.5px;padding:12px 14px;
+           resize:vertical;min-height:88px;line-height:1.5}
+  textarea:focus{outline:none;border-color:var(--accent)}
+  .roombar{display:flex;justify-content:space-between;align-items:center;gap:10px;
+           flex-wrap:wrap;margin-bottom:6px}
+  .roombar .title{font-family:var(--serif);font-size:22px}
+  .roombar .actions{display:flex;gap:8px}
+
+  /* debrief */
+  .debrief{max-width:860px;margin:0 auto}
+  .scorehead{display:flex;gap:26px;align-items:center;background:var(--ink2);
+             border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:22px}
+  .scorenum{font-family:var(--serif);font-size:64px;line-height:1;color:var(--gold)}
+  .scorenum small{font-size:20px;color:var(--muted)}
+  .gradechip{font-family:var(--serif);font-size:30px;border:2px solid var(--gold);
+             border-radius:12px;padding:8px 18px;color:var(--gold)}
+  .headline{font-family:var(--serif);font-size:19px;color:var(--paper);flex:1;line-height:1.4}
+  table.rub{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:13.5px}
+  table.rub td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top;
+               color:var(--paper-dim)}
+  table.rub td.pts{white-space:nowrap;font-family:var(--mono);color:var(--paper);width:70px}
+  table.rub td.pts.good{color:var(--green)} table.rub td.pts.bad{color:var(--red)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.cols{grid-template-columns:1fr}}
+  .panel{background:var(--ink2);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .panel h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  .panel.win h4{color:var(--green)} .panel.loss h4{color:var(--red)}
+  .panel ul{padding-left:18px;display:flex;flex-direction:column;gap:7px;
+            color:var(--paper-dim);font-size:13.5px}
+  .reveal{border-left:3px solid var(--accent);background:var(--ink2);border-radius:0 10px 10px 0;
+          padding:16px 18px;margin-top:14px}
+  .reveal h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-soft);
+             margin-bottom:8px}
+  .reveal p{color:var(--paper-dim);font-size:14px;white-space:pre-wrap}
+  .technote{display:flex;gap:10px;font-size:13.5px;color:var(--paper-dim);padding:6px 0}
+  .technote .k{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;
+               border-radius:999px;height:fit-content;white-space:nowrap;margin-top:2px}
+  .k.strength{background:#27392b;color:var(--green)} .k.weakness{background:#3c2826;color:var(--red)}
+
+  /* drill */
+  .drillbox{max-width:860px;margin:0 auto}
+  .clause{background:var(--ink2);border:1px solid var(--line);border-radius:10px;padding:20px;
+          font-family:var(--serif);font-size:15px;color:var(--paper-dim);line-height:1.75;
+          margin:14px 0;white-space:pre-wrap}
+
+  /* history */
+  .hist{width:100%;border-collapse:collapse;font-size:13.5px}
+  .hist td{padding:9px 12px;border-top:1px solid var(--line);color:var(--paper-dim)}
+  .hist td.sc{font-family:var(--mono);color:var(--gold);text-align:right}
+
+  .note{color:var(--muted);font-size:13px;margin:8px 0}
+  .warn{background:#3c2c20;border:1px solid #6b4a2a;color:#e9b87a;border-radius:8px;
+        padding:12px 16px;margin-bottom:18px;font-size:13.5px}
+  .fade{animation:fade .25s ease} @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+  .center{text-align:center;padding:50px 0;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand" onclick="go('home')">Counter<em>part</em><small>the negotiation dojo</small></div>
+    <div class="beltchip" id="beltchip"></div>
+  </header>
+  <div id="view"></div>
+</div>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const view = () => $("view");
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const S = {
+  scenarios: [], drills: [], progress: [], health: {},
+  scenario: null, messages: [], busy: false,
+  drill: null,
+};
+
+const BELTS = [
+  ["White Belt", 0], ["Blue Belt", 200], ["Purple Belt", 450],
+  ["Brown Belt", 750], ["Black Belt", 1200],
+];
+
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || ("HTTP " + r.status));
+  return j;
+}
+const post = (path, body) => api(path, {method:"POST",
+  headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+
+function totalPoints() { return S.progress.reduce((a,e)=>a+(e.score||0),0); }
+function beltInfo() {
+  const pts = totalPoints();
+  let cur = BELTS[0], next = null;
+  for (const b of BELTS) { if (pts >= b[1]) cur = b; else { next = b; break; } }
+  return {pts, cur, next};
+}
+function renderBelt() {
+  const {pts, cur, next} = beltInfo();
+  $("beltchip").innerHTML = `<b>${cur[0]}</b> &nbsp;·&nbsp; ${pts} pts` +
+    (next ? ` &nbsp;·&nbsp; ${next[1]-pts} to ${next[0]}` : " &nbsp;·&nbsp; mastery");
+}
+function bestScore(type, id) {
+  const e = S.progress.filter(p=>p.type===type && p.id===id);
+  return e.length ? Math.max(...e.map(p=>p.score||0)) : null;
+}
+
+/* ---------------- home ---------------- */
+function go(where) {
+  if (where === "home") { S.scenario = null; S.drill = null; renderHome(); }
+}
+function renderHome() {
+  renderBelt();
+  const keyWarn = S.health.key === false ?
+    `<div class="warn">ANTHROPIC_API_KEY isn't set on the server — export it and restart, then the table opens.</div>` : "";
+  const cards = S.scenarios.map(s => {
+    const best = bestScore("scenario", s.id);
+    const diffClass = s.difficulty.split(" ")[0];
+    return `<div class="card fade" onclick="openScenario('${s.id}')">
+      <div class="top"><span class="tag">${esc(s.domain)}</span>
+        <span class="diff ${diffClass}">${esc(s.difficulty)}</span></div>
+      <h3>${esc(s.title)}</h3><p>${esc(s.tagline)}</p>
+      <div class="best">${best!==null ? `best <b>${best}</b>/100 · rematch?` : "never played"}</div>
+    </div>`;}).join("");
+  const drills = S.drills.map(d => {
+    const best = bestScore("drill", d.id);
+    return `<div class="card fade" onclick="openDrill('${d.id}')">
+      <div class="top"><span class="tag">${esc(d.domain)}</span>
+        <span class="diff">Drill</span></div>
+      <h3>${esc(d.title)}</h3><p>${esc(d.prompt)}</p>
+      <div class="best">${best!==null ? `best <b>${best}</b>/100` : "never attempted"}</div>
+    </div>`;}).join("");
+  const hist = S.progress.slice().reverse().slice(0,12).map(e =>
+    `<tr><td>${new Date(e.ts*1000).toLocaleDateString()}</td>
+     <td>${esc(e.title)}</td><td>${e.type}</td>
+     <td class="sc">${e.score} · ${esc(e.grade||"")}</td></tr>`).join("");
+  view().innerHTML = `${keyWarn}
+    <h2>Take a seat at the table <span>full negotiations against a counterparty with a hidden brief</span></h2>
+    <div class="grid">${cards}</div>
+    <h2>Drills <span>five-minute issue-spotting reps</span></h2>
+    <div class="grid">${drills}</div>
+    ${hist ? `<h2>Recent bouts</h2><table class="hist">${hist}</table>` : ""}`;
+  window.scrollTo(0,0);
+}
+
+/* ---------------- negotiation room ---------------- */
+function openScenario(id) {
+  S.scenario = S.scenarios.find(s=>s.id===id);
+  S.messages = [{role:"assistant", content:S.scenario.opening}];
+  renderRoom();
+}
+function renderRoom() {
+  const s = S.scenario;
+  view().innerHTML = `
+   <div class="roombar fade">
+     <div class="title">${esc(s.title)}</div>
+     <div class="actions">
+       <button class="btn-ghost" onclick="go('home')">Leave the table</button>
+       <button class="btn-primary" id="closeBtn" onclick="debrief()">End bout &amp; get the debrief</button>
+     </div>
+   </div>
+   <div class="room">
+     <aside class="brief">
+       <h4>Across the table</h4>
+       <div class="opp"><span class="nm">${esc(s.counterparty.name)}</span>
+         <span style="color:var(--muted)">${esc(s.counterparty.role)}</span></div>
+       <h4>Your side</h4><p>${esc(s.side)}</p>
+       <h4>Background</h4><p>${esc(s.background)}</p>
+       <h4>Your objectives</h4>
+       <ul>${s.objectives.map(o=>`<li>${esc(o)}</li>`).join("")}</ul>
+       <h4>You'll be scored on</h4>
+       <ul>${s.rubric.map(r=>`<li>${esc(r.item)}</li>`).join("")}</ul>
+     </aside>
+     <div class="chatcol">
+       <div class="chat" id="chat"></div>
+       <div class="composer">
+         <textarea id="say" placeholder="Speak as counsel… (Cmd/Ctrl+Enter to send)"></textarea>
+         <button class="btn-primary" id="sendBtn" onclick="send()">Send</button>
+       </div>
+       <div class="note">The other side has confidential instructions: a walkaway, a concession ladder, and pressures you can discover. End the bout any time — the coach sees everything.</div>
+     </div>
+   </div>`;
+  $("say").addEventListener("keydown", e => {
+    if ((e.metaKey||e.ctrlKey) && e.key==="Enter") send();
+  });
+  renderChat();
+  $("say").focus();
+}
+function renderChat(thinking) {
+  const s = S.scenario;
+  $("chat").innerHTML = S.messages.map(m =>
+    `<div class="msg ${m.role==="user"?"me":"them"} fade">
+       <div class="who">${m.role==="user"?"You":esc(s.counterparty.name)}</div>${esc(m.content)}</div>`
+  ).join("") + (thinking?`<div class="thinking fade">${esc(s.counterparty.name)} is considering…</div>`:"");
+  window.scrollTo(0, document.body.scrollHeight);
+}
+async function send() {
+  if (S.busy) return;
+  const box = $("say"), text = box.value.trim();
+  if (!text) return;
+  S.busy = true; box.value = ""; $("sendBtn").disabled = true;
+  S.messages.push({role:"user", content:text});
+  renderChat(true);
+  try {
+    const r = await post("/api/chat", {scenario_id:S.scenario.id, messages:S.messages});
+    S.messages.push({role:"assistant", content:r.reply});
+  } catch (e) {
+    S.messages.pop();
+    box.value = text;
+    alert("The table went quiet: " + e.message);
+  }
+  S.busy = false; $("sendBtn").disabled = false;
+  renderChat(); $("say").focus();
+}
+async function debrief() {
+  if (S.busy) return;
+  if (!S.messages.some(m=>m.role==="user")) { alert("Say something first — the coach needs a bout to grade."); return; }
+  S.busy = true;
+  const btn = $("closeBtn"); btn.disabled = true; btn.textContent = "Coach is reviewing the tape…";
+  try {
+    const d = await post("/api/debrief", {scenario_id:S.scenario.id, messages:S.messages});
+    await post("/api/log", {type:"scenario", id:S.scenario.id, title:S.scenario.title,
+                            score:d.overall_score, grade:d.grade});
+    S.progress = await api("/api/progress");
+    renderDebrief(d);
+  } catch (e) {
+    alert("Debrief failed: " + e.message);
+    btn.disabled = false; btn.textContent = "End bout & get the debrief";
+  }
+  S.busy = false;
+}
+function renderDebrief(d) {
+  renderBelt();
+  const s = S.scenario;
+  const rub = d.rubric.map(r => {
+    const cls = r.points_earned >= r.points_possible*0.7 ? "good" :
+                r.points_earned <= r.points_possible*0.3 ? "bad" : "";
+    return `<tr><td class="pts ${cls}">${r.points_earned}/${r.points_possible}</td>
+      <td><b style="color:var(--paper)">${esc(r.item)}</b><br>${esc(r.comment)}</td></tr>`;
+  }).join("");
+  const li = a => a.length ? a.map(x=>`<li>${esc(x)}</li>`).join("") : "<li>—</li>";
+  view().innerHTML = `<div class="debrief fade">
+    <div class="scorehead">
+      <div class="scorenum">${d.overall_score}<small>/100</small></div>
+      <div class="gradechip">${esc(d.grade)}</div>
+      <div class="headline">${esc(d.headline)}</div>
+    </div>
+    <table class="rub">${rub}</table>
+    <div class="cols" style="margin-top:14px">
+      <div class="panel win"><h4>What you won</h4><ul>${li(d.what_you_won)}</ul></div>
+      <div class="panel loss"><h4>Left on the table</h4><ul>${li(d.what_you_left)}</ul></div>
+    </div>
+    <div class="panel loss" style="margin-top:14px"><h4>Never saw it</h4><ul>${li(d.missed_issues)}</ul></div>
+    <div class="panel" style="margin-top:14px"><h4 style="color:var(--paper-dim)">Technique</h4>
+      ${d.technique.map(t=>`<div class="technote"><span class="k ${t.kind}">${t.kind}</span><span>${esc(t.note)}</span></div>`).join("")}
+    </div>
+    <div class="reveal"><h4>What ${esc(s.counterparty.name)} was holding</h4><p>${esc(d.counterparty_reveal)}</p></div>
+    <div class="reveal" style="border-color:var(--gold)"><h4 style="color:var(--gold)">Train this next</h4><p>${esc(d.next_drill)}</p></div>
+    <div style="display:flex;gap:10px;margin-top:24px">
+      <button class="btn-primary" onclick="openScenario('${s.id}')">Rematch</button>
+      <button class="btn-ghost" onclick="go('home')">Back to the dojo</button>
+    </div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+/* ---------------- drills ---------------- */
+function openDrill(id) {
+  S.drill = S.drills.find(d=>d.id===id);
+  const d = S.drill;
+  view().innerHTML = `<div class="drillbox fade">
+    <div class="roombar"><div class="title">${esc(d.title)}</div>
+      <button class="btn-ghost" onclick="go('home')">Back</button></div>
+    <p class="note">${esc(d.prompt)}</p>
+    <div class="clause">${esc(d.clause)}</div>
+    <textarea id="answer" style="width:100%;min-height:160px" placeholder="List every issue you'd flag — substance matters, phrasing doesn't."></textarea>
+    <div style="margin-top:12px"><button class="btn-primary" id="gradeBtn" onclick="gradeDrill()">Submit for grading</button></div>
+    <div id="drillResult"></div>
+  </div>`;
+  $("answer").focus();
+}
+async function gradeDrill() {
+  const ans = $("answer").value.trim();
+  if (!ans) return;
+  const btn = $("gradeBtn"); btn.disabled = true; btn.textContent = "Partner is reading…";
+  try {
+    const r = await post("/api/drill", {drill_id:S.drill.id, answer:ans});
+    await post("/api/log", {type:"drill", id:S.drill.id, title:S.drill.title,
+                            score:r.score, grade:""});
+    S.progress = await api("/api/progress"); renderBelt();
+    const li = a => a.length ? a.map(x=>`<li>${esc(x)}</li>`).join("") : "<li>—</li>";
+    $("drillResult").innerHTML = `<div class="fade" style="margin-top:20px">
+      <div class="scorehead"><div class="scorenum">${r.score}<small>/100</small></div>
+        <div class="headline">${esc(r.coaching)}</div></div>
+      <div class="cols">
+        <div class="panel win"><h4>Caught</h4><ul>${li(r.caught)}</ul></div>
+        <div class="panel loss"><h4>Missed</h4><ul>${li(r.missed)}</ul></div>
+      </div>
+      ${r.bonus.length?`<div class="panel" style="margin-top:14px"><h4 style="color:var(--gold)">Beyond the answer key</h4><ul>${li(r.bonus)}</ul></div>`:""}
+    </div>`;
+    btn.textContent = "Submitted";
+  } catch (e) {
+    alert("Grading failed: " + e.message);
+    btn.disabled = false; btn.textContent = "Submit for grading";
+  }
+}
+
+/* ---------------- boot ---------------- */
+(async function boot() {
+  try {
+    [S.scenarios, S.drills, S.progress, S.health] = await Promise.all([
+      api("/api/scenarios"), api("/api/drills"), api("/api/progress"), api("/api/health"),
+    ]);
+    renderHome();
+  } catch (e) {
+    view().innerHTML = `<div class="center">Couldn't reach the dojo server: ${esc(e.message)}</div>`;
+  }
+})();
+</script>
+</body>
+</html>

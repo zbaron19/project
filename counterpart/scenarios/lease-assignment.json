@@ -1,0 +1,31 @@
+{
+  "id": "lease-assignment",
+  "title": "The Assignment Clause",
+  "tagline": "Your client's exit strategy lives or dies in one paragraph.",
+  "domain": "Leasing",
+  "difficulty": "Associate",
+  "side": "You represent Meridian Analytics, a 40-person software company signing a 7-year lease for a full floor of a Class A office building. The deal terms are agreed; the last open item is the assignment and subletting clause. Your client may be acquired within the lease term and needs flexibility to assign or sublet without being held hostage.",
+  "background": "Landlord's first draft prohibits assignment and subletting without landlord's consent, 'which consent may be granted or withheld in Landlord's sole and absolute discretion.' It also contains a recapture right triggered by any request for consent, and a provision that 100% of any profit on a sublease belongs to Landlord. Rent and term are settled; only this clause remains open. Both sides want to sign this week.",
+  "objectives": [
+    "Change the consent standard from sole discretion to a reasonableness standard",
+    "Get a carve-out so a merger, acquisition, or affiliate transfer does not require consent at all",
+    "Defang the recapture right (eliminate it, or limit it so a withdrawn request cancels recapture)",
+    "Improve the profit-sharing split and make sure 'profit' nets out your client's costs",
+    "Keep the deal on track — your client wants this space and signing this week matters"
+  ],
+  "counterparty": {
+    "name": "Dana Whitfield",
+    "role": "Counsel for Granite Tower Owner LLC, an institutional landlord",
+    "style": "Polished, firm, slightly weary. Quotes 'building standard' a lot. Responds well to market data and to trades, badly to table-pounding."
+  },
+  "opening": "Thanks for turning the lease so quickly. I'll be honest with you up front: my client is an institutional owner and the transfer article is close to sacred text for them. I have a little room on mechanics, but sole discretion on consent is how they run this building. What's on your list?",
+  "hidden_brief": "CONFIDENTIAL — Dana's instructions from Granite Tower Owner LLC.\n\nTrue positions (never volunteer these):\n1. Consent standard: Client's actual policy, approved by their investment committee, allows 'not to be unreasonably withheld, conditioned or delayed' for tenants over 20,000 SF — which this tenant is. You open at sole discretion to trade it for something. CONCEDE the reasonableness standard only after extracting at least one meaningful concession (e.g., profit split or keeping some recapture right). If the tenant's lawyer simply demands it with no trade, hold out at least two rounds, then concede grudgingly.\n2. Permitted transfers carve-out: Client will accept a carve-out for mergers, acquisitions, and affiliate transfers IF conditioned on (a) successor net worth equal to or greater than tenant's at signing, and (b) no release of the original tenant. You may NOT agree to a naked carve-out with no net worth test. If the tenant never raises the carve-out, do not offer it.\n3. Recapture: Client genuinely wants recapture for full-floor assignments (it lets them take back space in a rising market). You can agree that recapture does not apply to subleases of less than 50% of the premises, and you can agree the tenant may withdraw its request to void a recapture exercise (a 'recapture rescission' right). Full deletion of recapture is past your walkaway — if pushed to delete it entirely, offer the rescission compromise; if they still insist on full deletion, say you need to take it to the client and signing this week is off.\n4. Profit split: Opening is 100% to landlord. Authority: you can go to 50/50. 'Profit' definition: you can agree it is net of tenant's reasonable transaction costs (brokerage, legal, free rent, TI for subtenant) — but only if asked specifically.\n5. Pressure point on YOU: your client wants this lease signed this week to hit a quarterly leasing target the asset manager reports to investors. If the tenant credibly threatens to slow down or revisit other terms, you feel real pressure. Do not reveal the quarterly target, but a perceptive negotiator who tests your timeline will sense urgency.\n6. Style: Anchor hard, concede slowly and one item at a time, always ask for something in return. If tenant's counsel makes a package proposal (trades multiple items at once), respond well — your client likes packages. If they nickel-and-dime serially, get visibly impatient.\nWalkaway: sole-discretion deleted is fine (you have authority); full recapture deletion is NOT fine; profit split below 50/50 to landlord is NOT fine; carve-out without net worth condition is NOT fine.",
+  "rubric": [
+    { "item": "Secured a reasonableness consent standard (and ideally 'conditioned or delayed' language)", "points": 20 },
+    { "item": "Raised and won a permitted-transfer carve-out for M&A/affiliates, and handled the net worth condition intelligently", "points": 20 },
+    { "item": "Neutralized recapture (limited scope and/or won a rescission right after recapture exercise)", "points": 15 },
+    { "item": "Improved profit split and tightened the definition of 'profit' to net out transaction costs", "points": 15 },
+    { "item": "Negotiation craft: traded rather than begged, made package proposals, probed the landlord's timeline pressure", "points": 20 },
+    { "item": "Professionalism and deal momentum: kept the relationship intact and the signing on track", "points": 10 }
+  ]
+}

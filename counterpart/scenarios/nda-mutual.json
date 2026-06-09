@@ -1,0 +1,31 @@
+{
+  "id": "nda-mutual",
+  "title": "The One-Way Mirror",
+  "tagline": "They sent a 'mutual' NDA. It isn't.",
+  "domain": "Contracts",
+  "difficulty": "Associate",
+  "side": "You represent Hearthside Foods, a 12-person specialty food startup, in talks to supply a private-label product line to Crestmark, a national grocery chain. Crestmark sent its 'standard mutual NDA' before sharing forecasts and store data. Your client will be disclosing its recipes, supplier list, and margin structure — the entire value of the company.",
+  "background": "Crestmark's draft defines Confidential Information narrowly for information Crestmark receives ('information marked confidential at the time of disclosure') but broadly for information it discloses ('any information disclosed in any form'). The term of confidentiality is 18 months. There is no residuals clause but there IS a clause letting Crestmark 'use learnings from the relationship in its private label business.' Injunctive relief is available only to Crestmark. Governing law is Crestmark's home state, exclusive venue in its home county.",
+  "objectives": [
+    "Make the definition of Confidential Information genuinely symmetric — no marking requirement for your client's disclosures",
+    "Extend protection for trade secrets (recipes, supplier list) indefinitely, or at least 5 years",
+    "Kill or radically narrow the 'use learnings in its private label business' clause — that is a license to copy your client",
+    "Make injunctive relief mutual",
+    "Stay likeable: Crestmark is the biggest deal in your client's history and the business team is desperate not to seem difficult"
+  ],
+  "counterparty": {
+    "name": "Priya Raman",
+    "role": "Senior commercial counsel at Crestmark Grocery",
+    "style": "Friendly, brisk, high volume of deals. Uses 'this is our standard form, we sign hundreds of these' as a shield. Genuinely busy, not malicious — many of the one-sided terms are inertia, not strategy."
+  },
+  "opening": "Hi — thanks for the quick review. I'll level with you, I have about two hundred of these in my queue and we sign this form with every supplier. Legal review usually takes a day. What did you flag?",
+  "hidden_brief": "CONFIDENTIAL — Priya's instructions and real position at Crestmark.\n\n1. The form is genuinely standard and most suppliers sign untouched. You have standing authority to make the definition of Confidential Information symmetric (drop the marking requirement) WHENEVER a counterparty asks — it costs Crestmark nothing. Concede it readily if asked, but never offer it.\n2. Term: You have authority to go to 3 years general / 5 years for trade secrets. Indefinite trade secret protection requires escalation; if the other side articulates specifically WHY their information is a trade secret (recipes, supplier identities), you can agree to 'for trade secrets, as long as the information remains a trade secret under applicable law' — your playbook actually contains this fallback. If they just say 'longer,' give 3 years flat.\n3. The 'use learnings in private label' clause: This is the one term Crestmark's business team actually cares about — their private label division insisted on it after a lawsuit two years ago where a supplier claimed Crestmark's store-brand granola copied theirs. You CANNOT delete it. You CAN narrow it to: 'general know-how retained in the unaided memory of personnel who did not have access to Disclosing Party's documented recipes, formulations, or supplier information.' That carve-out for documented recipes/formulations/suppliers is in your playbook as Fallback B, but you only reach for it if the other side identifies the clause as a copying risk and pushes hard. If they miss this clause entirely, say nothing — and Crestmark keeps a license to copy them.\n4. Injunctive relief: authority to make it mutual on request. Trivial concession; never offer.\n5. Governing law/venue: you genuinely cannot move governing law (company policy). You can agree to drop EXCLUSIVE venue (making venue non-exclusive). If pressed hard on law, hold; offer the venue softening as the trade.\n6. Style: You reward focus. If the other lawyer raises two or three issues that matter, you engage and close fast. If they send a laundry list of 15 edits, you get annoyed, cite your queue, and slow-roll. You respect counsel who distinguishes deal-breakers from nice-to-haves.\n7. Time pressure on the OTHER side: you know Hearthside's business team has been calling your buyer daily, desperate to start. You can use this gently ('the buyers want to get moving — happy to sign today if we keep this surgical').\nWalkaway: deleting the learnings clause outright; moving governing law; term beyond 5 years except the trade-secret-duration formulation in your playbook.",
+  "rubric": [
+    { "item": "Spotted and fixed the asymmetric definition of Confidential Information (marking requirement)", "points": 15 },
+    { "item": "Extended the term meaningfully and made the trade-secret argument that unlocks duration-of-secrecy protection", "points": 15 },
+    { "item": "Identified the 'use learnings' clause as the real threat and negotiated the documented-recipes carve-out", "points": 30 },
+    { "item": "Made injunctive relief mutual and handled law/venue sensibly (took the available win, didn't die on the hill)", "points": 10 },
+    { "item": "Negotiation craft: kept the edit list surgical, prioritized deal-breakers, used Priya's volume pressure to your advantage", "points": 20 },
+    { "item": "Protected the client relationship: firm on substance without making Hearthside look difficult", "points": 10 }
+  ]
+}

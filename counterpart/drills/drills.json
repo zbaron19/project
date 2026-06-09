@@ -1,0 +1,91 @@
+[
+  {
+    "id": "drill-nda",
+    "title": "The Friendly NDA",
+    "domain": "Contracts",
+    "prompt": "Opposing counsel says this is their 'completely standard, totally mutual' NDA. You have five minutes before the call. List every problem you'd flag.",
+    "clause": "1. Confidential Information. \"Confidential Information\" means (a) with respect to information disclosed by Recipient Company, any and all information disclosed in any form or medium, and (b) with respect to information disclosed by Vendor, information that is marked \"Confidential\" in writing at the time of disclosure. 2. Obligations. Each party shall protect the other's Confidential Information using reasonable care. The obligations in this Agreement expire eighteen (18) months from the Effective Date. 3. Permitted Use. Recipient Company may use general learnings, concepts, and know-how derived from the relationship in the conduct of its business. 4. Remedies. Vendor acknowledges that breach of this Agreement will cause Recipient Company irreparable harm, entitling Recipient Company to injunctive relief without bond. 5. Disputes. This Agreement is governed by the laws of the State of Delaware, with exclusive venue in the state and federal courts located in New Castle County, and VENDOR WAIVES ALL RIGHT TO TRIAL BY JURY.",
+    "planted_issues": [
+      { "issue": "Asymmetric definition: Recipient Company's disclosures are protected in any form; Vendor's only if marked confidential in writing at disclosure", "why": "Oral disclosures, demos, and anything unmarked from Vendor get zero protection — a trap in live diligence conversations." },
+      { "issue": "18-month term is far too short and has no trade secret carve-out", "why": "Trade secrets (recipes, source code, supplier lists) should be protected for as long as they remain secret; a fixed short term effectively licenses them after expiry." },
+      { "issue": "The 'general learnings and know-how' clause is a residuals clause — a license to copy", "why": "It lets the counterparty use everything it learned in its own business; needs deletion or narrowing to unaided-memory general skills excluding documented materials." },
+      { "issue": "Injunctive relief is one-way (only Recipient Company gets it)", "why": "The party most likely to need emergency relief is the one disclosing the crown jewels — remedies should be mutual." },
+      { "issue": "One-way jury trial waiver (only Vendor waives)", "why": "Asymmetric procedural waivers signal a form drafted to be enforced against you, not with you." },
+      { "issue": "No return/destruction obligation and no standard exclusions (independently developed, publicly known, rightfully received)", "why": "Missing boilerplate that protects both sides; its absence in a 'standard form' is a tell." }
+    ]
+  },
+  {
+    "id": "drill-assignment",
+    "title": "The Transfer Article",
+    "domain": "Leasing",
+    "prompt": "You represent the tenant, a growing company that may be acquired. What's wrong with this assignment clause?",
+    "clause": "Tenant shall not assign this Lease or sublet all or any portion of the Premises, or permit any transfer of any interest in Tenant, by operation of law or otherwise, without Landlord's prior written consent. Any request for consent shall entitle Landlord, at its option, to terminate this Lease as to the space affected. If Landlord consents to any assignment or sublease, one hundred percent (100%) of all rent and other consideration received by Tenant in excess of the Rent payable hereunder shall be paid to Landlord. Consent by Landlord to one transfer shall not be deemed consent to any subsequent transfer. No assignment or sublease shall release Tenant from liability hereunder.",
+    "planted_issues": [
+      { "issue": "No consent standard at all — silence means sole discretion in most jurisdictions", "why": "Without 'not to be unreasonably withheld, conditioned or delayed,' the landlord can refuse for any reason or no reason — or demand a ransom." },
+      { "issue": "'Any transfer of any interest in Tenant' captures stock sales, mergers, and reorganizations", "why": "A change-of-control trigger with no carve-out means the client's acquisition requires landlord consent — a deal-killer hiding in a lease." },
+      { "issue": "Recapture is triggered by the mere REQUEST for consent", "why": "Asking permission lets the landlord take the space back — punishing the tenant for following the lease. Needs deletion or a right to withdraw the request." },
+      { "issue": "100% of transfer profit goes to landlord, with no deduction of tenant's costs", "why": "Market is a 50/50 split of profit NET of brokerage, legal, free rent, and TI costs; 100% gross removes any incentive or ability to mitigate." },
+      { "issue": "No permitted-transfer carve-out for affiliates, mergers, or asset sales", "why": "Routine corporate housekeeping (an affiliate restructure) shouldn't need consent; sophisticated leases exempt these transfers entirely, usually with a net worth test." }
+    ]
+  },
+  {
+    "id": "drill-indemnity",
+    "title": "The Kitchen-Sink Indemnity",
+    "domain": "Contracts",
+    "prompt": "Your client is the Service Provider. The customer's master services agreement contains this indemnity. Flag everything.",
+    "clause": "Provider shall indemnify, defend, and hold harmless Customer and its affiliates, officers, directors, employees, and agents from and against any and all claims, damages, losses, liabilities, costs, and expenses (including attorneys' fees) arising out of or relating in any way to (a) the Services, (b) any breach or alleged breach of this Agreement by Provider, (c) any act or omission of Provider, or (d) any claim that the Services infringe any intellectual property right. Provider's indemnification obligations are not subject to any limitation of liability set forth elsewhere in this Agreement. Customer shall have sole control of the defense and settlement of any claim, and Provider shall reimburse Customer for all costs upon demand.",
+    "planted_issues": [
+      { "issue": "Entirely one-way — no reciprocal indemnity from Customer", "why": "Customer-caused claims (their data, their misuse, their content) land on Provider; a mutual structure or Customer indemnity for Customer-side risks is standard." },
+      { "issue": "'Arising out of or relating in any way to the Services' plus 'any act or omission' covers everything, with no fault requirement", "why": "This indemnifies Customer even against claims caused by Customer's own negligence — the broadest possible trigger with no negligence/breach nexus." },
+      { "issue": "'Alleged breach' triggers the indemnity", "why": "A meritless allegation triggers defense and payment duties; indemnity should turn on actual breach or at minimum third-party claims." },
+      { "issue": "Indemnity is carved out of the liability cap entirely", "why": "An uncapped indemnity this broad swallows the entire limitation of liability; at most, carve-outs should be narrow (e.g., IP infringement, confidentiality)." },
+      { "issue": "IP indemnity has no standard exclusions or remedies", "why": "Missing carve-outs for Customer modifications, combinations, and use after notice — and no right to procure a license or replace the infringing service." },
+      { "issue": "Customer gets sole control of defense AND settlement while Provider pays on demand", "why": "The indemnifying party should control the defense (or at least settlement consent) — otherwise Customer can settle generously with Provider's money." },
+      { "issue": "No notice requirement or cooperation duty on Customer", "why": "Provider can be billed for a claim it never knew existed and had no chance to defend or mitigate." }
+    ]
+  },
+  {
+    "id": "drill-remedies",
+    "title": "The Double-Dip Deposit",
+    "domain": "Purchase & Sale",
+    "prompt": "You represent the buyer under this purchase and sale agreement. What's wrong with the default and remedies section?",
+    "clause": "If Buyer defaults in its obligation to close, Seller shall be entitled to retain the Earnest Money as liquidated damages, the parties agreeing that Seller's actual damages would be difficult to ascertain, and Seller may additionally pursue any and all other remedies available at law or in equity, including specific performance and consequential damages. If Seller defaults, Buyer's sole and exclusive remedy shall be the return of the Earnest Money, whereupon this Agreement shall terminate and neither party shall have any further rights or obligations hereunder. In no event shall Seller be liable for any costs or expenses incurred by Buyer in connection with this Agreement, including due diligence and financing costs.",
+    "planted_issues": [
+      { "issue": "Classic double-dip: liquidated damages PLUS all other remedies against Buyer", "why": "Liquidated damages must be the sole and exclusive remedy to be enforceable as such — and to make economic sense. 'Additionally' guts the bargain and may invalidate the LD clause itself." },
+      { "issue": "Grossly asymmetric remedies: Seller gets everything, Buyer gets only its own deposit back", "why": "Return of buyer's own money is no remedy at all — the seller can breach for free. Buyer needs specific performance at minimum (the standard buyer remedy for unique real property)." },
+      { "issue": "No specific performance right for Buyer", "why": "Real property is legally unique; specific performance is the buyer's core protection against a seller who gets a better offer and walks." },
+      { "issue": "No reimbursement of Buyer's pursuit costs as an alternative remedy", "why": "Where specific performance is impractical (e.g., seller conveyed to a third party), buyers typically negotiate deposit return PLUS out-of-pocket costs (diligence, financing, legal) up to a cap." },
+      { "issue": "No notice and cure period before either party's default ripens", "why": "A wire that lands a day late shouldn't forfeit $700k; both sides need notice and a short cure window for non-willful defaults." }
+    ]
+  },
+  {
+    "id": "drill-guaranty",
+    "title": "The Everything Guaranty",
+    "domain": "Leasing",
+    "prompt": "Your client is being asked to sign this personal guaranty for their company's office lease. Flag every term you'd negotiate.",
+    "clause": "Guarantor absolutely, unconditionally, and irrevocably guarantees the full payment and performance of all obligations of Tenant under the Lease, as the Lease may be amended, extended, or modified from time to time, whether or not Guarantor has notice of or consented to such amendment. This is a continuing guaranty of payment and not of collection. Guarantor waives all defenses, setoffs, and counterclaims of every kind, all notices of default, presentment, and demand, all rights of subrogation and reimbursement, and any obligation of Landlord to proceed first against Tenant or any security. The obligations of Guarantor shall survive the expiration or earlier termination of the Lease and shall continue until all obligations are indefeasibly satisfied. If there is more than one Guarantor, their liability shall be joint and several.",
+    "planted_issues": [
+      { "issue": "Guaranty automatically covers all future amendments without guarantor notice or consent", "why": "Tenant and landlord can double the rent or extend the term ten years, and the guarantor is bound — the single most dangerous term in any guaranty. Cap exposure at the lease as it exists at signing, or require guarantor consent to material amendments." },
+      { "issue": "No cap on the amount guaranteed", "why": "Exposure should be limited to a fixed sum or a rolling number of months' rent — uncapped personal exposure on a long lease can be financially fatal." },
+      { "issue": "No burn-down or termination trigger", "why": "Good payment history should earn reduction (step-downs by lease year) or release (e.g., after year 5 with no defaults, or a good-guy surrender mechanic)." },
+      { "issue": "Waiver of ALL defenses, including payment and landlord's own breach", "why": "As written, the guarantor must pay even if tenant already paid or landlord materially breached; at minimum preserve payment, performance, and landlord-breach defenses." },
+      { "issue": "Guarantor waives all notices — no notice of default or opportunity to cure", "why": "The guarantor should get copies of default notices and the same cure rights as tenant, so a fixable default doesn't silently ripen into personal liability." },
+      { "issue": "'Guaranty of payment, not collection' plus no duty to proceed against tenant or security first", "why": "Landlord can sue the guarantor first, ignoring the tenant entity and the security deposit; worth negotiating exhaustion or at least application of the deposit." }
+    ]
+  },
+  {
+    "id": "drill-saas",
+    "title": "The Click-Through You Actually Read",
+    "domain": "Founder Life",
+    "prompt": "Your startup is about to sign this vendor's SaaS terms for a tool your whole team will depend on. What would you flag?",
+    "clause": "1. Term. This Agreement automatically renews for successive twelve (12) month terms unless either party provides notice of non-renewal at least ninety (90) days prior to the end of the then-current term. Pricing for renewal terms shall be Vendor's then-current list pricing. 2. Modifications. Vendor may modify these terms, including pricing, service levels, and acceptable use policies, by posting revised terms to its website, effective upon posting. Continued use constitutes acceptance. 3. Customer Content; Feedback. Customer grants Vendor a perpetual, irrevocable, worldwide, royalty-free license to use Customer Content to improve Vendor's products and services, and to use, without restriction or compensation, any suggestions, ideas, or feedback provided by Customer. 4. Termination; Data. Upon termination, Customer's access ceases immediately. Vendor may delete Customer Content thirty (30) days after termination. Vendor shall have no obligation to provide Customer Content in any particular format. 5. Liability. VENDOR'S TOTAL LIABILITY SHALL NOT EXCEED THE FEES PAID BY CUSTOMER IN THE ONE (1) MONTH PRECEDING THE CLAIM.",
+    "planted_issues": [
+      { "issue": "Auto-renewal with a 90-day notice window and uncapped repricing to 'then-current list'", "why": "Miss one calendar reminder and you're locked for a year at whatever the vendor decides to charge; negotiate a shorter notice window and a renewal price cap (e.g., CPI or 5%)." },
+      { "issue": "Unilateral amendment by website posting, effective immediately", "why": "The contract you signed isn't the contract you'll have; require notice of material changes and a right to terminate without penalty if you object." },
+      { "issue": "Perpetual irrevocable license to Customer Content 'to improve products' — likely includes training models on your data", "why": "Your company's data becomes the vendor's asset forever, surviving termination; limit to providing the service to YOU, with no model training without opt-in." },
+      { "issue": "Unrestricted feedback assignment", "why": "Describe your roadmap on a support call and the vendor owns the idea; acceptable if narrowed, dangerous for a startup whose product overlaps the vendor's." },
+      { "issue": "Immediate access cutoff with no transition period and no export format obligation", "why": "No wind-down access and no machine-readable export means a hostage situation at renewal time — exactly when you need leverage most." },
+      { "issue": "Liability cap of ONE MONTH of fees", "why": "A data breach destroying your customer trust nets you one month's subscription back; push for 12 months of fees and carve-outs for breach of confidentiality/data obligations." }
+    ]
+  }
+]

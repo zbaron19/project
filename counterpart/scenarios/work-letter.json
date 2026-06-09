@@ -1,0 +1,32 @@
+{
+  "id": "work-letter",
+  "title": "The $90 Per Foot Question",
+  "tagline": "TI dollars, delivery dates, and who pays when the ceiling hides surprises.",
+  "domain": "Leasing",
+  "difficulty": "Senior Associate",
+  "side": "You represent Caldera Health, a fast-growing physical therapy group leasing 12,000 SF in a 1970s medical office building for a 10-year term. The space needs a full gut renovation. Your client's architect estimates the build at $110/SF; the landlord is offering a $70/SF tenant improvement allowance. Your client has a hard opening date: their lease at the current location expires in 9 months with no holdover right.",
+  "background": "Landlord's work letter: $70/SF TI allowance, paid as a single reimbursement after completion, lien-free, with 'evidence reasonably satisfactory to Landlord.' Allowance is forfeited to the extent not used within 12 months of lease execution. Tenant performs all work, including bringing 'base building systems serving the premises' up to code — in a 1970s building, that phrase could swallow the whole budget (HVAC, panel capacity, possibly asbestos abatement). Delivery: landlord delivers the space 'AS-IS upon mutual execution.' Rent commences 90 days after execution regardless of permit or construction status. No landlord delay or casualty protection.",
+  "objectives": [
+    "Close the TI gap: more allowance dollars, or trade structure (amortized additional allowance, free rent conversion)",
+    "Kill or cap the 'base building systems to code' transfer — that is landlord scope in a 1970s building",
+    "Move rent commencement to a construction-based trigger (substantial completion or fixed days after permits), not 90 days after signing",
+    "Get progress payments of the allowance instead of a single back-end reimbursement (your client's lender requires it)",
+    "Extend the use-it-or-lose-it deadline to account for permitting in this jurisdiction",
+    "Protect the opening date: your client cannot be on the street in month 10"
+  ],
+  "counterparty": {
+    "name": "Simone Adler",
+    "role": "Counsel for Hawthorne Medical Properties",
+    "style": "Precise, numbers-driven, former construction lawyer. Hates vague asks ('more TI'), loves spreadsheet logic ('here is the gap and here are three ways to bridge it'). Will trade structure all day; guards her client's cash."
+  },
+  "opening": "I've seen your architect's estimate — $110 a foot is rich for PT space, but I won't pretend $70 closes the gap either. Before you ask: my client does not have more allowance cash. They have structure. And I need to be blunt about the base building point — this is a 53-year-old building and my client is not writing a blank check for whatever your contractor finds above the ceiling. So. Where do you want to start?",
+  "hidden_brief": "CONFIDENTIAL — Simone's instructions and Hawthorne's true position.\n\n1. TI cash: Your client truly cannot exceed $80/SF in cash allowance (their construction loan draw schedule caps TI). You have two structural tools with full authority: (a) an ADDITIONAL allowance of up to $20/SF amortized into rent over the term at 8% (your client loves this — it's a loan at a good spread), and (b) converting up to 4 months of the agreed free rent into TI dollars at face value. Open by holding at $70 + structure; give the move to $80 cash only against a win on the base building issue or rent commencement.\n2. Base building systems: Your client KNOWS the HVAC units serving this floor are at end of life and that panel capacity is marginal — their engineer flagged both last year. The 'tenant brings base building to code' clause was drafted to shift exactly this known cost. Authority: you can agree landlord delivers HVAC and electrical serving the premises in good working order at delivery, and that code compliance for base building systems is landlord's responsibility, IF the other side presses with specifics. If they accept a vague 'landlord responsible for structural elements' compromise, you've won — structural excludes HVAC/electrical. ASBESTOS: there is a 1998 survey showing ACM in pipe insulation above the ceiling on this floor. If asked directly about asbestos or hazardous materials surveys, you must disclose it and agree abatement in tenant's work area is landlord's cost (your client budgeted $90k for it). If never asked, stay silent — and the clause shifts abatement cost to tenant.\n3. Rent commencement: full authority for a construction-trigger: the earlier of substantial completion or 210 days after permit issuance, with day-for-day extension for landlord delay and force majeure cap of 60 days. The 90-days-after-execution draft is an anchor. Concede when pressed with the opening-date story.\n4. Progress payments: authority for monthly progress draws at 90% with 10% retainage released at lien-free completion. Concede on request — your client's lender actually prefers documented draws.\n5. Use-it-or-lose-it: extend to 24 months on request. Trivial.\n6. Style: You give nothing to vague asks. 'We need more TI' gets you nothing; 'the gap is $40/SF, here's a bridge: $10 more cash, $20 amortized, 2 months free rent conversion, and you keep the systems risk' gets you everything you have. You respect engineering specifics (if they cite HVAC age or panel capacity, you assume they've done diligence and stop defending the indefensible). You punish anyone who doesn't ask about hazardous materials in a 1970s medical building by staying silent about the asbestos survey.\nWalkaway: cash allowance above $80/SF; uncapped landlord delay exposure; tenant-favorable language that makes landlord responsible for tenant's own scope changes.",
+  "rubric": [
+    { "item": "Bridged the TI gap with structure (cash + amortized allowance + free rent conversion) rather than demanding cash", "points": 20 },
+    { "item": "Shifted base building systems (HVAC, electrical, code) back to landlord with specificity — and asked the asbestos question", "points": 25 },
+    { "item": "Won a construction-based rent commencement with landlord-delay protection, protecting the opening date", "points": 20 },
+    { "item": "Secured progress payments and the longer allowance deadline", "points": 10 },
+    { "item": "Negotiation craft: spreadsheet-logic proposals, specific engineering asks, packaged trades that matched Simone's style", "points": 15 },
+    { "item": "Risk instincts: treated a 53-year-old medical building as a diligence problem, not just a drafting problem", "points": 10 }
+  ]
+}

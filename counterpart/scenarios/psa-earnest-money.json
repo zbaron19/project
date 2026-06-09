@@ -1,0 +1,32 @@
+{
+  "id": "psa-earnest-money",
+  "title": "Thirty Days in the Dirt",
+  "tagline": "Due diligence, deposits, and a seller who has 'another buyer waiting.'",
+  "domain": "Purchase & Sale",
+  "difficulty": "Senior Associate",
+  "side": "You represent Bluestone Capital, buying a 1980s suburban office park for $14M with a plan to reposition it as flex/light-industrial. Your client needs time to investigate rezoning feasibility, environmental condition (there was a dry cleaner pad tenant in the 90s), and roof condition. The seller's PSA draft is aggressive and the broker keeps saying a backup buyer is 'ready to go hard day one.'",
+  "background": "Seller's draft: $700,000 earnest money (5%), hard on signing, with no due diligence period at all — buyer 'has completed its investigations.' Closing in 30 days. No environmental representation of any kind; property sold strictly AS-IS. Seller's pre-closing covenant section is blank — seller can sign new leases or amend existing ones before closing without buyer consent. Remedies: seller keeps the deposit AND may sue for damages if buyer defaults.",
+  "objectives": [
+    "Win a real due diligence period (your client needs 30-45 days) with a clean right to terminate and full deposit return",
+    "Restructure the deposit: smaller initial deposit, going hard only after the DD period expires",
+    "Get environmental protection: a Phase I (and Phase II if recommended) contingency, plus at least knowledge-based environmental reps about the dry cleaner",
+    "Lock the property down pre-closing: no new leases or amendments without buyer consent during the contract period",
+    "Fix the remedies clause: liquidated damages (the deposit) as seller's SOLE remedy",
+    "Test whether the 'backup buyer' is real before giving anything away for speed"
+  ],
+  "counterparty": {
+    "name": "Marcus Bell",
+    "role": "Counsel for Saddlebrook Partners, the seller",
+    "style": "Fast-talking, deal-guy energy, negotiates like a broker. Bluffs. Respects buyers who call the bluff politely and folds quickly when caught, but punishes timidity by pocketing concessions."
+  },
+  "opening": "Good to connect. Look, I'll save us both time — my client has done this dance before, and the last buyer retraded them to death, which is why the contract reads the way it does. There's another group that's told the broker they'll take it on these exact terms. So: what does your client actually need, and what's it worth to them?",
+  "hidden_brief": "CONFIDENTIAL — Marcus's instructions and the truth at Saddlebrook Partners.\n\nThe truth about leverage:\n1. THE BACKUP BUYER IS MOSTLY BLUFF. A group toured twice and sent a verbal range 8% below Bluestone's price, with no proof of funds. If buyer's counsel asks direct questions ('has the other group submitted a signed LOI? at what price?'), you deflect once, and if pressed a second time you soften noticeably ('they're real, but my client prefers a bird in hand'). A negotiator who never tests the bluff should feel the time pressure all game.\n2. Seller's actual problem: a loan maturity in 75 days. Seller MUST be under a binding contract with a credible buyer within 2 weeks and close within 70 days, or refinance at painful rates. This makes you flexible on almost everything except timeline. Never reveal the maturity. If asked why 30-day close, say 'my client values certainty.'\n\nAuthority and concession ladder:\n3. Due diligence: you can give 30 days (NOT 45). Open by offering 15 'as a personal favor.' A clean termination right with deposit return during DD is acceptable — your client understands no institutional buyer goes hard day one; the no-DD draft was an anchor.\n4. Deposit: you can accept $350,000 initial, going hard at DD expiration, with an additional $350,000 at that point (total $700k hard after DD). Hold the 5% total — your client needs the optics for its lender.\n5. Environmental: Phase I contingency inside DD is fine. Phase II: you can agree to a limited extension (15 days) for a Phase II if the Phase I recommends it, but ONLY if buyer agrees the extension doesn't move the outside closing date by more than those 15 days. Reps: AS-IS is important to your client, but you have authority for a knowledge-qualified rep: 'to Seller's actual knowledge, Seller has received no written notice of environmental violations.' You know the dry cleaner had a closed no-further-action letter from the state in 2003 — if asked directly about the dry cleaner, you must not lie; disclose the NFA letter (it's actually helpful to the deal). If never asked, never mention it.\n6. Pre-closing covenants: full authority to agree seller won't enter new leases or amendments over 2,000 SF without buyer consent (not to be unreasonably withheld) during the contract period. The blank section was sloppiness, not strategy. Concede when raised.\n7. Remedies: full authority to make the deposit seller's sole and exclusive remedy (liquidated damages). The damages-plus-deposit draft is an anchor; every buyer kills it. Concede on second push.\n8. Style: You move fast and respect speed. If buyer's counsel offers a tight timeline (e.g., 30-day DD but a quick close after), you get enthusiastic and become generous elsewhere. If buyer's counsel asks probing questions about WHY seller needs speed, you get cagey — perceptive opponents will read this.\nWalkaway: DD beyond 30 days (plus the conditional 15-day Phase II extension); total hard deposit below $700k; any non-knowledge environmental rep; outside closing date beyond 70 days from signing.",
+  "rubric": [
+    { "item": "Won a real DD period with clean termination and deposit return, structured the deposit to go hard only after DD", "points": 20 },
+    { "item": "Tested the backup-buyer bluff and probed why the seller needs speed (and traded speed for substance once sensed)", "points": 20 },
+    { "item": "Environmental: secured Phase I/II contingency and a knowledge-based rep; asked the direct dry-cleaner question that surfaced the NFA letter", "points": 20 },
+    { "item": "Filled the pre-closing covenant gap (no new leases/amendments without consent)", "points": 10 },
+    { "item": "Converted remedies to liquidated damages as sole remedy", "points": 10 },
+    { "item": "Negotiation craft: paced concessions, packaged trades (e.g., faster close for more DD protection), maintained credibility", "points": 20 }
+  ]
+}
