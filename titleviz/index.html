@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TitleViz — Title Commitment Review for CRE Professionals</title>
+<meta name="description" content="Upload a title commitment, pick your perspective, and get a plain-English review of every Schedule B exception with risk ratings and recommended actions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">TV</span>
+    <span class="brand-name">TitleViz</span>
+  </div>
+  <nav class="topnav">
+    <button type="button" id="nav-demo" class="link-btn">See a sample review</button>
+    <button type="button" id="nav-settings" class="link-btn">Settings</button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============ SCREEN: HOME / INTAKE ============ -->
+  <section id="screen-home" class="screen">
+    <div class="hero">
+      <h1>Read the title commitment <em>before</em> the title commitment reads you.</h1>
+      <p class="hero-sub">Upload a commitment, choose your perspective, and get a plain-English
+      review of every Schedule B‑I requirement and B‑II exception — risk‑rated, with
+      recommended actions. Built by a commercial real estate attorney.</p>
+    </div>
+
+    <div class="intake card">
+      <div class="intake-row">
+        <div class="field">
+          <span class="field-label">1 · Reviewing as</span>
+          <div class="seg" role="radiogroup" aria-label="Perspective">
+            <button type="button" class="seg-btn active" data-perspective="buyer">Buyer / Purchaser</button>
+            <button type="button" class="seg-btn" data-perspective="lender">Lender</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="deal-context">2 · Deal context <span class="muted">(optional)</span></label>
+          <input type="text" id="deal-context" placeholder="e.g. $12M multifamily acquisition in King County, WA — closing 7/15">
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">3 · The commitment</span>
+        <div class="src-tabs">
+          <button type="button" class="src-tab active" data-src="pdf">Upload PDF</button>
+          <button type="button" class="src-tab" data-src="text">Paste text</button>
+        </div>
+
+        <div id="src-pdf" class="src-panel">
+          <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload title commitment PDF">
+            <div class="dz-inner">
+              <div class="dz-icon">⇪</div>
+              <p><strong>Drop the title commitment PDF here</strong> or click to browse</p>
+              <p class="muted small">Up to 100 pages / 30 MB. Scanned and hyperlinked commitments both work.</p>
+            </div>
+            <input type="file" id="file-input" accept="application/pdf" hidden>
+          </div>
+          <div id="file-chip" class="file-chip" hidden>
+            <span id="file-chip-name"></span>
+            <button type="button" id="file-clear" class="chip-x" aria-label="Remove file">✕</button>
+          </div>
+        </div>
+
+        <div id="src-text" class="src-panel" hidden>
+          <textarea id="text-input" rows="10" placeholder="Paste the full text of the commitment — at minimum Schedule A, Schedule B‑I (Requirements), and Schedule B‑II (Exceptions)."></textarea>
+        </div>
+      </div>
+
+      <div class="intake-actions">
+        <button type="button" id="btn-analyze" class="btn-primary" disabled>Review this commitment</button>
+        <p class="privacy-note">Your document goes directly from this browser to the Claude API —
+        no middleman server, nothing stored. Your API key never leaves this device.</p>
+      </div>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-item"><strong>Every exception, explained.</strong> Each B‑II item translated into plain English with a High / Medium / Low risk badge.</div>
+      <div class="trust-item"><strong>Perspective-aware.</strong> A reciprocal easement reads differently to a lender than to a buyer. Pick your side; the analysis follows.</div>
+      <div class="trust-item"><strong>Closes the loop.</strong> Priority items, curative steps, and ready-to-send questions for the title officer. Export it all as a memo.</div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: SETTINGS ============ -->
+  <section id="screen-settings" class="screen" hidden>
+    <div class="card narrow">
+      <h2>Settings</h2>
+      <div class="field">
+        <label class="field-label" for="api-key">Anthropic API key</label>
+        <input type="password" id="api-key" placeholder="sk-ant-…" autocomplete="off">
+        <p class="muted small">Stored only in this browser (localStorage). Get a key at
+        <span class="mono">console.anthropic.com</span>. A typical review costs about a dollar in API usage.</p>
+      </div>
+      <div class="field">
+        <label class="field-label"><input type="checkbox" id="remember-key" checked> Remember key on this device</label>
+      </div>
+      <div class="intake-actions">
+        <button type="button" id="btn-save-settings" class="btn-primary">Save</button>
+        <button type="button" id="btn-forget-key" class="link-btn">Forget stored key</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: WORKING ============ -->
+  <section id="screen-working" class="screen" hidden>
+    <div class="working">
+      <div class="spinner" aria-hidden="true"></div>
+      <h2 id="working-title">Reading the commitment…</h2>
+      <p class="muted" id="working-detail">Walking Schedule B item by item. Long commitments can take a couple of minutes.</p>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: ERROR ============ -->
+  <section id="screen-error" class="screen" hidden>
+    <div class="card narrow error-card">
+      <h2>Something went wrong</h2>
+      <pre id="error-message" class="error-detail"></pre>
+      <div class="intake-actions">
+        <button type="button" id="btn-retry" class="btn-primary">Try again</button>
+      <button type="button" id="btn-error-home" class="link-btn">Start over</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: REPORT ============ -->
+  <section id="screen-report" class="screen" hidden>
+    <div class="report-head">
+      <div>
+        <p class="report-kicker" id="rpt-perspective"></p>
+        <h2 id="rpt-property"></h2>
+        <p class="muted" id="rpt-meta"></p>
+      </div>
+      <div class="report-head-right">
+        <div id="rpt-risk-badge" class="risk-gauge"></div>
+        <div class="report-actions no-print">
+          <button type="button" id="btn-copy-memo" class="btn-secondary">Copy as memo</button>
+          <button type="button" id="btn-download-memo" class="btn-secondary">Download .md</button>
+          <button type="button" id="btn-print" class="btn-secondary">Print / PDF</button>
+          <button type="button" id="btn-new-review" class="link-btn">New review</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card headline-card"><p id="rpt-headline"></p></div>
+
+    <div id="rpt-priority-wrap">
+      <h3>Deal with these first</h3>
+      <ol id="rpt-priority" class="priority-list"></ol>
+    </div>
+
+    <div class="exceptions-head">
+      <h3>Schedule B‑II — Exceptions</h3>
+      <div class="seg small no-print" role="radiogroup" aria-label="Filter by risk">
+        <button type="button" class="seg-btn active" data-filter="all">All</button>
+        <button type="button" class="seg-btn" data-filter="high">High</button>
+        <button type="button" class="seg-btn" data-filter="medium">Medium</button>
+        <button type="button" class="seg-btn" data-filter="low">Low</button>
+      </div>
+    </div>
+    <div id="rpt-exceptions" class="exception-grid"></div>
+
+    <h3>Schedule B‑I — Requirements</h3>
+    <div id="rpt-requirements" class="req-list"></div>
+
+    <h3>Questions for the title officer</h3>
+    <ul id="rpt-questions" class="question-list"></ul>
+
+    <p class="disclaimer">TitleViz output is an AI-assisted first pass to organize and accelerate review.
+    It is not legal advice, may contain errors, and is not a substitute for review of the underlying
+    exception documents by a qualified attorney.</p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>TitleViz</span>
+  <span class="muted">AI-assisted title commitment review · your documents never touch our servers, because we don't have any</span>
+</footer>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="demo.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
