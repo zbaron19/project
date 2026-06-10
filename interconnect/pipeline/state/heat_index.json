@@ -1,0 +1,62 @@
+{
+ "Atlanta south metro, GA": {
+  "note": "Open for business; water questions",
+  "score": 3
+ },
+ "Central Ohio": {
+  "note": "AEP tariff adds cost certainty, less speed",
+  "score": 4
+ },
+ "Central Washington": {
+  "note": "Hydro spoken for; PUD rate design",
+  "score": 6
+ },
+ "Cheyenne, WY": {
+  "note": "Land + gas; watch project pauses",
+  "score": 3
+ },
+ "Council Bluffs / Omaha": {
+  "note": "Utility capacity is the gate",
+  "score": 4
+ },
+ "Culpeper County, VA": {
+  "note": "Approving, with conditions",
+  "score": 4
+ },
+ "DFW north, TX": {
+  "note": "Aggressive incentives",
+  "score": 3
+ },
+ "Fauquier County, VA": {
+  "note": "Posture forming; watch comp plan",
+  "score": 6
+ },
+ "Frederick County, MD": {
+  "note": "Zoning rewrite in progress",
+  "score": 5
+ },
+ "Loudoun County, VA": {
+  "note": "Functionally built out; politics hardening",
+  "score": 9
+ },
+ "Memphis, TN": {
+  "note": "Air permits and MLGW capacity",
+  "score": 5
+ },
+ "Phoenix metro, AZ": {
+  "note": "Power available, water politics rising",
+  "score": 5
+ },
+ "Prince William County, VA": {
+  "note": "Digital Gateway litigation overhang",
+  "score": 8
+ },
+ "San Antonio, TX": {
+  "note": "ERCOT speed; SB 6 curtailment rules",
+  "score": 3
+ },
+ "Umatilla / Morrow, OR": {
+  "note": "Incentive renegotiation risk",
+  "score": 4
+ }
+}
