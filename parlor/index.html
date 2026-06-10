@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Parlor — a tiny daily mystery</title>
+<meta name="description" content="A new five-minute drawing-room murder mystery every day. Read the clues, fill the grid, accuse the killer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #16120e;
+    --card: #221b14;
+    --card-edge: #3a2e21;
+    --ink: #e8dcc8;
+    --ink-dim: #a8967a;
+    --accent: #d9a441;
+    --accent-dim: #8a6a2f;
+    --blood: #a8392e;
+    --good: #5f8f5a;
+    --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --body: Georgia, "Times New Roman", serif;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    background-image: radial-gradient(ellipse 80% 50% at 50% -10%, #2b2115 0%, var(--bg) 70%);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.5;
+    padding: 0 14px calc(40px + env(safe-area-inset-bottom));
+  }
+  .wrap { max-width: 560px; margin: 0 auto; }
+
+  header { text-align: center; padding: 26px 0 10px; }
+  .brand {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 38px;
+    letter-spacing: 0.14em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .brand .flame { font-size: 28px; vertical-align: 6px; }
+  .issue {
+    color: var(--ink-dim);
+    font-size: 14px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .rule {
+    border: none; height: 1px; margin: 14px auto;
+    background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-edge);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 14px 0;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.35);
+  }
+  .card h2 {
+    font-family: var(--serif);
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+  .story { font-style: italic; color: var(--ink); }
+  .coroner {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px dashed var(--card-edge);
+    color: var(--accent);
+  }
+
+  /* cast legend */
+  .cast { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; font-size: 15px; }
+  .cast div { color: var(--ink-dim); }
+  .cast b { color: var(--ink); font-weight: 500; }
+
+  /* clues */
+  ol.clues { margin: 0; padding-left: 22px; }
+  ol.clues li {
+    margin: 7px 0; cursor: pointer; user-select: none;
+    transition: opacity 0.15s;
+  }
+  ol.clues li.done { opacity: 0.32; text-decoration: line-through; }
+  .hint { color: var(--ink-dim); font-size: 13px; margin-top: 10px; font-style: italic; }
+
+  /* grids */
+  .grid-block { margin-bottom: 18px; }
+  .grid-title {
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-dim); margin-bottom: 6px;
+  }
+  table.lgrid { border-collapse: collapse; margin: 0 auto; }
+  table.lgrid th {
+    font-size: 20px; font-weight: 400; padding: 4px;
+    width: 52px; height: 40px; text-align: center;
+  }
+  table.lgrid th.rowhead { width: 44px; }
+  table.lgrid td { padding: 2px; }
+  .cell {
+    width: 52px; height: 44px; border-radius: 7px;
+    border: 1px solid var(--card-edge);
+    background: #1b1510;
+    color: var(--ink-dim);
+    font-size: 19px; line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.1s;
+  }
+  .cell:active { background: #2a211734; }
+  .cell.x { color: #7a6852; }
+  .cell.yes { color: var(--accent); border-color: var(--accent-dim); background: #2a2113; }
+
+  /* accusation */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 12px; }
+  .chip {
+    border: 1px solid var(--card-edge); border-radius: 999px;
+    background: #1b1510; color: var(--ink);
+    padding: 7px 13px; font-size: 15px; font-family: var(--body);
+    cursor: pointer;
+  }
+  .chip.sel { border-color: var(--accent); background: #2a2113; color: var(--accent); }
+  .btn {
+    display: block; width: 100%;
+    background: var(--blood); color: #f3e6d8;
+    font-family: var(--serif); font-size: 17px; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none; border-radius: 9px; padding: 13px;
+    cursor: pointer;
+  }
+  .btn:disabled { opacity: 0.35; cursor: default; }
+  .btn.gold { background: var(--accent-dim); }
+  .attempts { text-align: center; color: var(--ink-dim); font-size: 14px; margin-top: 10px; letter-spacing: 0.2em; }
+
+  /* verdict */
+  #verdict { display: none; text-align: center; }
+  #verdict.show { display: block; }
+  #verdict .headline { font-family: var(--serif); font-size: 26px; margin: 4px 0 8px; }
+  #verdict .reveal { font-style: italic; color: var(--ink-dim); margin-bottom: 14px; }
+  #verdict .stats { color: var(--ink-dim); font-size: 14px; margin-top: 12px; }
+  .wrong-flash { animation: shake 0.35s; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-7px); } 75% { transform: translateX(7px); }
+  }
+
+  /* modal */
+  .modal-back {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+    display: none; align-items: center; justify-content: center; padding: 20px; z-index: 50;
+  }
+  .modal-back.show { display: flex; }
+  .modal { max-width: 440px; max-height: 80vh; overflow-y: auto; }
+  .modal p { margin: 8px 0; font-size: 15.5px; }
+  .linklike {
+    background: none; border: none; color: var(--ink-dim);
+    font-family: var(--body); font-size: 14px;
+    text-decoration: underline; cursor: pointer; padding: 6px;
+  }
+  .topbar { text-align: center; }
+  .timer { color: var(--ink-dim); font-size: 14px; letter-spacing: 0.1em; }
+  footer { text-align: center; color: #6b5a44; font-size: 13px; margin-top: 26px; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="brand"><span class="flame">🕯️</span> PARLOR</h1>
+    <div class="issue" id="issue">No. — </div>
+    <div class="topbar">
+      <button class="linklike" id="howBtn">how to play</button>
+      <span class="timer" id="timer"></span>
+    </div>
+    <hr class="rule">
+  </header>
+
+  <div class="card">
+    <h2>The Scene</h2>
+    <div class="story" id="story"></div>
+    <div class="coroner" id="coroner"></div>
+  </div>
+
+  <div class="card">
+    <h2>The Guests</h2>
+    <div class="cast" id="cast"></div>
+  </div>
+
+  <div class="card">
+    <h2>Testimony</h2>
+    <ol class="clues" id="clues"></ol>
+    <div class="hint">Tap a statement to cross it off once you've used it.</div>
+  </div>
+
+  <div class="card">
+    <h2>Your Deductions</h2>
+    <div id="grids"></div>
+    <div class="hint">Tap a square to cycle: blank → ✕ impossible → ● confirmed. Confirming auto-crosses the row and column.</div>
+  </div>
+
+  <div class="card" id="accuseCard">
+    <h2>The Accusation</h2>
+    <div class="grid-title">Who?</div>
+    <div class="chips" id="chipS"></div>
+    <div class="grid-title">With what?</div>
+    <div class="chips" id="chipW"></div>
+    <div class="grid-title">Where?</div>
+    <div class="chips" id="chipR"></div>
+    <button class="btn" id="accuseBtn" disabled>Make the Accusation</button>
+    <div class="attempts" id="attempts"></div>
+  </div>
+
+  <div class="card" id="verdict">
+    <div class="headline" id="vHead"></div>
+    <div class="reveal" id="vReveal"></div>
+    <button class="btn gold" id="shareBtn">Share Result</button>
+    <div class="stats" id="vStats"></div>
+  </div>
+
+  <footer>A new mystery arrives at midnight.</footer>
+</div>
+
+<div class="modal-back" id="howModal">
+  <div class="card modal">
+    <h2>How to Play</h2>
+    <p>Someone was murdered last night. Four guests, four items, four rooms — each guest carried exactly one item and stayed in exactly one room.</p>
+    <p>Read the testimony, then fill in the three deduction grids. A <b>●</b> means a pairing is certain; a <b>✕</b> means it's impossible. Every puzzle has exactly one logical solution — no guessing needed.</p>
+    <p>The coroner tells you which room the murder happened in. Work out who was in that room, and what they were carrying.</p>
+    <p>You get <b>three accusations</b>. Choose wisely, detective.</p>
+    <button class="btn gold" id="howClose">Begin</button>
+  </div>
+</div>
+
+<script src="puzzle.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var qd = new URLSearchParams(location.search).get("d");
+  var dateStr = /^\d{4}-\d{2}-\d{2}$/.test(qd || "") ? qd : Parlor.todayStr();
+  var P = Parlor.generate(dateStr);
+  var KEY = "parlor-" + dateStr;
+  var MAX_TRIES = 3;
+
+  // grids: 0 = S×W, 1 = S×R, 2 = W×R  (rows × cols, marks 0/1/2 = blank/✕/●)
+  var GRID_DEFS = [
+    { title: "Guest × Item", rows: P.suspects, cols: P.weapons },
+    { title: "Guest × Room", rows: P.suspects, cols: P.rooms },
+    { title: "Item × Room", rows: P.weapons, cols: P.rooms },
+  ];
+
+  var state = load() || {
+    marks: [emptyGrid(), emptyGrid(), emptyGrid()],
+    struck: [],
+    tries: [],            // array of booleans (true = correct)
+    pick: [null, null, null],
+    start: null,
+    end: null,
+  };
+
+  function emptyGrid() {
+    return [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
+  }
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; }
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function touch() {
+    if (!state.start && !state.end) { state.start = Date.now(); }
+    save();
+  }
+  function over() { return state.end !== null && state.end !== undefined; }
+  function won() { return over() && state.tries[state.tries.length - 1] === true; }
+
+  // ---------------------------------------------------------------- header
+  document.getElementById("issue").textContent =
+    "No. " + P.number + " — " + new Date(dateStr + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
+  document.getElementById("story").textContent = Parlor.story(P);
+  document.getElementById("coroner").textContent = "🩸 " + Parlor.coroner(P);
+
+  var castEl = document.getElementById("cast");
+  [["Guests", P.suspects], ["Items", P.weapons], ["Rooms", P.rooms]].forEach(function (group) {
+    group[1].forEach(function (e) {
+      var d = document.createElement("div");
+      d.innerHTML = e.emoji + " <b>" + e.name + "</b>";
+      castEl.appendChild(d);
+    });
+  });
+
+  // ----------------------------------------------------------------- clues
+  var cluesEl = document.getElementById("clues");
+  P.clues.forEach(function (c, i) {
+    var li = document.createElement("li");
+    li.textContent = Parlor.clueText(P, c);
+    if (state.struck.indexOf(i) !== -1) li.classList.add("done");
+    li.addEventListener("click", function () {
+      li.classList.toggle("done");
+      var at = state.struck.indexOf(i);
+      if (at === -1) state.struck.push(i); else state.struck.splice(at, 1);
+      touch();
+    });
+    cluesEl.appendChild(li);
+  });
+
+  // ----------------------------------------------------------------- grids
+  var gridsEl = document.getElementById("grids");
+  var cellEls = [[], [], []];
+
+  GRID_DEFS.forEach(function (def, g) {
+    var block = document.createElement("div");
+    block.className = "grid-block";
+    var title = document.createElement("div");
+    title.className = "grid-title";
+    title.textContent = def.title;
+    block.appendChild(title);
+
+    var table = document.createElement("table");
+    table.className = "lgrid";
+    var head = document.createElement("tr");
+    head.appendChild(document.createElement("th"));
+    def.cols.forEach(function (c) {
+      var th = document.createElement("th");
+      th.textContent = c.emoji;
+      th.title = c.name;
+      head.appendChild(th);
+    });
+    table.appendChild(head);
+
+    def.rows.forEach(function (r, ri) {
+      var tr = document.createElement("tr");
+      var th = document.createElement("th");
+      th.className = "rowhead";
+      th.textContent = r.emoji;
+      th.title = r.name;
+      tr.appendChild(th);
+      def.cols.forEach(function (c, ci) {
+        var td = document.createElement("td");
+        var cell = document.createElement("div");
+        cell.className = "cell";
+        cell.setAttribute("role", "button");
+        cell.setAttribute("aria-label", r.name + " / " + c.name);
+        cell.addEventListener("click", function () { cycle(g, ri, ci); });
+        td.appendChild(cell);
+        tr.appendChild(td);
+        cellEls[g][ri * 4 + ci] = cell;
+      });
+      table.appendChild(tr);
+    });
+    block.appendChild(table);
+    gridsEl.appendChild(block);
+  });
+
+  function cycle(g, ri, ci) {
+    if (over()) return;
+    var idx = ri * 4 + ci;
+    var next = (state.marks[g][idx] + 1) % 3;
+    state.marks[g][idx] = next;
+    if (next === 2) {
+      // a confirmed pairing rules out the rest of its row and column
+      for (var k = 0; k < 4; k++) {
+        if (k !== ci && state.marks[g][ri * 4 + k] !== 2) state.marks[g][ri * 4 + k] = 1;
+        if (k !== ri && state.marks[g][k * 4 + ci] !== 2) state.marks[g][k * 4 + ci] = 1;
+      }
+    }
+    touch();
+    paintGrid(g);
+  }
+
+  function paintGrid(g) {
+    for (var i = 0; i < 16; i++) {
+      var m = state.marks[g][i];
+      var el = cellEls[g][i];
+      el.classList.toggle("x", m === 1);
+      el.classList.toggle("yes", m === 2);
+      el.textContent = m === 1 ? "✕" : m === 2 ? "●" : "";
+    }
+  }
+  [0, 1, 2].forEach(paintGrid);
+
+  // ------------------------------------------------------------ accusation
+  var chipGroups = [
+    { el: document.getElementById("chipS"), items: P.suspects },
+    { el: document.getElementById("chipW"), items: P.weapons },
+    { el: document.getElementById("chipR"), items: P.rooms },
+  ];
+  var accuseBtn = document.getElementById("accuseBtn");
+
+  chipGroups.forEach(function (grp, gi) {
+    grp.items.forEach(function (item, ii) {
+      var b = document.createElement("button");
+      b.className = "chip";
+      b.textContent = item.emoji + " " + item.name;
+      b.addEventListener("click", function () {
+        if (over()) return;
+        state.pick[gi] = state.pick[gi] === ii ? null : ii;
+        touch();
+        paintChips();
+      });
+      grp.el.appendChild(b);
+    });
+  });
+
+  function paintChips() {
+    chipGroups.forEach(function (grp, gi) {
+      Array.prototype.forEach.call(grp.el.children, function (b, ii) {
+        b.classList.toggle("sel", state.pick[gi] === ii);
+      });
+    });
+    accuseBtn.disabled = over() || state.pick.some(function (p) { return p === null; });
+    paintAttempts();
+  }
+
+  function paintAttempts() {
+    var dots = "";
+    for (var i = 0; i < MAX_TRIES; i++) {
+      dots += i < state.tries.length ? (state.tries[i] ? "✅" : "❌") : "🔍";
+    }
+    document.getElementById("attempts").textContent = dots;
+  }
+
+  accuseBtn.addEventListener("click", function () {
+    if (over() || state.pick.some(function (p) { return p === null; })) return;
+    var sol = P.solution;
+    var correct =
+      state.pick[0] === sol.guilty &&
+      state.pick[1] === sol.W[sol.guilty] &&
+      state.pick[2] === sol.R[sol.guilty];
+    state.tries.push(correct);
+    if (correct || state.tries.length >= MAX_TRIES) {
+      state.end = Date.now();
+      recordStats(correct);
+    } else {
+      var card = document.getElementById("accuseCard");
+      card.classList.remove("wrong-flash");
+      void card.offsetWidth;
+      card.classList.add("wrong-flash");
+      state.pick = [null, null, null];
+    }
+    touch();
+    paintChips();
+    render();
+  });
+
+  // --------------------------------------------------------------- verdict
+  function elapsedStr() {
+    if (!state.start || !state.end) return "—";
+    var s = Math.max(1, Math.round((state.end - state.start) / 1000));
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+
+  function stats() {
+    try { return JSON.parse(localStorage.getItem("parlor-stats")) || {}; } catch (e) { return {}; }
+  }
+  function recordStats(win) {
+    var st = stats();
+    st.played = (st.played || 0) + 1;
+    if (win) {
+      st.won = (st.won || 0) + 1;
+      var yest = new Date(dateStr + "T12:00:00");
+      yest.setDate(yest.getDate() - 1);
+      var yestStr = Parlor.todayStr(yest);
+      st.streak = st.lastWin === yestStr ? (st.streak || 0) + 1 : 1;
+      st.maxStreak = Math.max(st.maxStreak || 0, st.streak);
+      st.lastWin = dateStr;
+    } else {
+      st.streak = 0;
+    }
+    try { localStorage.setItem("parlor-stats", JSON.stringify(st)); } catch (e) {}
+  }
+
+  function shareText() {
+    var marks = state.tries.map(function (t) { return t ? "✅" : "❌"; }).join("");
+    var line = won() ? marks + " in " + elapsedStr() : marks + " — the killer walked free";
+    return "🕯️ Parlor No. " + P.number + "\n" + line;
+  }
+
+  function render() {
+    paintChips();
+    if (!over()) return;
+    var v = document.getElementById("verdict");
+    v.classList.add("show");
+    var g = P.solution.guilty;
+    var truth = P.suspects[g].name + ", with " + P.weapons[P.solution.W[g]].name +
+      ", in the " + P.rooms[P.solution.R[g]].name + ".";
+    document.getElementById("vHead").textContent = won() ? "Case Closed" : "The Killer Walked Free";
+    document.getElementById("vReveal").textContent = won()
+      ? "It was " + truth + " Justice is served."
+      : "It was " + truth;
+    var st = stats();
+    document.getElementById("vStats").textContent =
+      "Solved " + (st.won || 0) + " of " + (st.played || 0) +
+      " · streak " + (st.streak || 0) + " · best " + (st.maxStreak || 0);
+    document.getElementById("accuseBtn").disabled = true;
+  }
+
+  document.getElementById("shareBtn").addEventListener("click", function () {
+    var text = shareText();
+    if (navigator.share) {
+      navigator.share({ text: text }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () {
+        document.getElementById("shareBtn").textContent = "Copied!";
+        setTimeout(function () {
+          document.getElementById("shareBtn").textContent = "Share Result";
+        }, 1500);
+      });
+    }
+  });
+
+  // ----------------------------------------------------------------- timer
+  var timerEl = document.getElementById("timer");
+  setInterval(function () {
+    if (!state.start) { timerEl.textContent = ""; return; }
+    var end = state.end || Date.now();
+    var s = Math.max(0, Math.round((end - state.start) / 1000));
+    timerEl.textContent = "⏱ " + Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }, 1000);
+
+  // ----------------------------------------------------------------- modal
+  var modal = document.getElementById("howModal");
+  document.getElementById("howBtn").addEventListener("click", function () {
+    modal.classList.add("show");
+  });
+  document.getElementById("howClose").addEventListener("click", function () {
+    modal.classList.remove("show");
+    try { localStorage.setItem("parlor-seen-how", "1"); } catch (e) {}
+  });
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) modal.classList.remove("show");
+  });
+  var seenHow = false;
+  try { seenHow = !!localStorage.getItem("parlor-seen-how"); } catch (e) {}
+  if (!seenHow) modal.classList.add("show");
+
+  render();
+})();
+</script>
+</body>
+</html>
