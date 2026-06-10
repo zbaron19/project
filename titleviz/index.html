@@ -168,6 +168,18 @@
     </div>
     <div id="rpt-exceptions" class="exception-grid"></div>
 
+    <div id="rpt-endorsements-wrap">
+      <h3>Endorsement request list</h3>
+      <p class="muted small">Consolidated from the exception analysis — availability varies by state and underwriter.</p>
+      <ul id="rpt-endorsements" class="endorse-list"></ul>
+    </div>
+
+    <div id="rpt-doclinks-wrap">
+      <h3>Other linked documents</h3>
+      <p class="muted small">Hyperlinks found in the commitment that couldn't be tied to a specific exception number.</p>
+      <ul id="rpt-doclinks" class="question-list"></ul>
+    </div>
+
     <h3>Schedule B‑I — Requirements</h3>
     <div id="rpt-requirements" class="req-list"></div>
 
@@ -188,6 +200,7 @@
 
 <div id="toast" class="toast" hidden></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="demo.js"></script>
 <script src="app.js"></script>
 </body>

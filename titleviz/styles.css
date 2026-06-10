@@ -261,6 +261,35 @@ input:focus, textarea:focus { outline: 2px solid var(--navy); outline-offset: 1p
 .exc-row .lbl { font-weight: 700; color: var(--navy); }
 .exc-removal { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.5rem; }
 
+.exc-links a { color: var(--accent-dark); text-underline-offset: 3px; }
+
+.endorse-list li { margin-bottom: 0.4rem; }
+
+/* deep-dive */
+.deep-dive { margin-top: 0.8rem; }
+.dd-status { font-size: 0.9rem; color: var(--ink-soft); }
+.dd-status.dd-error {
+  background: var(--high-bg); border: 1px solid var(--high); border-radius: 8px;
+  padding: 0.6rem 0.8rem; white-space: pre-wrap; word-break: break-word;
+}
+.dd-card {
+  margin-top: 0.7rem; padding: 0.9rem 1.1rem;
+  background: var(--paper-deep); border: 1px solid var(--line); border-radius: 8px;
+  font-size: 0.93rem;
+}
+.dd-card .lbl { font-weight: 700; color: var(--navy); margin: 0.5rem 0 0.15rem; }
+.dd-card ul { margin: 0.2rem 0 0.4rem; padding-left: 1.2rem; }
+.dd-card li { margin-bottom: 0.25rem; }
+.dd-kicker {
+  margin: 0 0 0.4rem; font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent-dark);
+}
+.dd-match { color: var(--high); font-weight: 600; }
+.dd-effect { font-weight: 700; margin-bottom: 0; }
+.dd-effect.raises { color: var(--high); }
+.dd-effect.confirms { color: var(--ink-soft); }
+.dd-effect.lowers { color: var(--low); }
+
 .req-list { display: grid; gap: 0.6rem; }
 .req-item {
   display: flex; gap: 0.8rem; align-items: baseline;

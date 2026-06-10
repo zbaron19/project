@@ -32,6 +32,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Have escrow prorate as usual and add a line to the closing instructions making any exemption recapture a seller charge. Ask the title officer to confirm the current-year amounts.",
       removal_outlook: "stays_on_policy",
+      suggested_endorsements: [],
     },
     {
       number: "2",
@@ -44,6 +45,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Accept as to residential tenants under the rent roll, but ask title to limit the exception to 'tenants in possession under unrecorded residential leases, as tenants only' once the seller delivers the certified rent roll and owner's affidavit.",
       removal_outlook: "possibly_removable",
+      suggested_endorsements: [],
     },
     {
       number: "3",
@@ -56,6 +58,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Order the ALTA/NSPS survey immediately and ask title to delete this exception (or replace it with specific survey-shown matters) on receipt.",
       removal_outlook: "likely_removable",
+      suggested_endorsements: ["ALTA 25-06 — same as survey"],
     },
     {
       number: "4",
@@ -66,6 +69,7 @@ window.TITLEVIZ_DEMO = {
         "Standard. The survey plus the seller's affidavit about unrecorded agreements is the cure.",
       recommended_action: "Request deletion with extended coverage based on the survey and owner's affidavit.",
       removal_outlook: "likely_removable",
+      suggested_endorsements: [],
     },
     {
       number: "5",
@@ -78,6 +82,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Have the seller provide lien waivers from the roofing contractor and an indemnity in the owner's affidavit; title should then delete the exception under extended coverage.",
       removal_outlook: "likely_removable",
+      suggested_endorsements: [],
     },
     {
       number: "6",
@@ -89,6 +94,7 @@ window.TITLEVIZ_DEMO = {
         "Typical perimeter utility easement; buildings appear to predate it without conflict. Only matters if your capital plan adds structures along the south line.",
       recommended_action: "Confirm on the survey that no improvements encroach into the strip; otherwise accept.",
       removal_outlook: "stays_on_policy",
+      suggested_endorsements: [],
     },
     {
       number: "7",
@@ -101,6 +107,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Locate the actual facilities on the survey, then ask title for an endorsement insuring against forced removal of improvements (ALTA 28-series) or get the utility to execute a partial release / location agreement.",
       removal_outlook: "possibly_removable",
+      suggested_endorsements: ["ALTA 28.1-06 — encroachments over easements (forced-removal coverage)"],
     },
     {
       number: "8",
@@ -113,6 +120,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Obtain and read the declaration. Confirm the height limit doesn't constrain the planned rooftop amenity, and get an estoppel from the northern parcel owner on pond cost-sharing if the documents provide for one.",
       removal_outlook: "stays_on_policy",
+      suggested_endorsements: ["ALTA 9.1-06 — covenants, conditions and restrictions (owner's)"],
     },
     {
       number: "9",
@@ -125,6 +133,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Demand the seller and title company trace the 2014 loan now: payoff letter, recorded release, or recorded assignment chain into Meridian. If it was paid off in the 2019 refinance, the original lender records a release; do not waive this or accept an indemnity from the seller alone without title's sign-off.",
       removal_outlook: "likely_removable",
+      suggested_endorsements: [],
     },
     {
       number: "10",
@@ -135,6 +144,7 @@ window.TITLEVIZ_DEMO = {
       perspective_concerns: "Same issue as B-II 9 — it must be released together with the deed of trust.",
       recommended_action: "Include this instrument expressly in the payoff/release demand so it isn't orphaned.",
       removal_outlook: "likely_removable",
+      suggested_endorsements: [],
     },
     {
       number: "11",
@@ -147,6 +157,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Obtain and read the full agreement — confirm the days, stall locations, and termination rights. Quantify the impact on the parking ratio, then decide: negotiate a termination with the church before closing, or reprice. Ask the city whether the licensed stalls were counted in any parking covenant.",
       removal_outlook: "stays_on_policy",
+      suggested_endorsements: [],
     },
     {
       number: "12",
@@ -159,6 +170,7 @@ window.TITLEVIZ_DEMO = {
       recommended_action:
         "Get the underlying lease, check the termination-on-sale and buyout provisions, and price the buyout into the deal if your plan includes in-unit laundry.",
       removal_outlook: "stays_on_policy",
+      suggested_endorsements: [],
     },
   ],
   requirements: [

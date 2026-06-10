@@ -9,8 +9,18 @@ plain-English review of the whole document:
 - **Every Schedule B-I requirement** — what has to happen before the policy issues, who
   handles it, and a flag when a "routine" requirement hides a real problem.
 - **Priority items** — the 3–6 things to act on first.
+- **Endorsement engine** — per-exception ALTA endorsement suggestions, consolidated into
+  a ready-to-send endorsement request list.
+- **Linked underlying documents** — if the commitment hyperlinks its exceptions (most
+  e-delivered commitments do), TitleViz extracts every link with PDF.js and maps it to
+  its exception number, so each exception card links straight to the recorded instrument.
+- **Per-exception deep dive** — download an underlying document (REA, CC&Rs, easement
+  deed), upload it on the exception card, and get a focused review of the actual
+  instrument: key provisions, document-level risks, a recommended position, and whether
+  reading it raises, confirms, or lowers the initial risk rating.
 - **Ready-to-send questions** for the title officer.
-- **One-click export** — copy as a Markdown memo, download, or print to PDF.
+- **One-click export** — copy as a Markdown memo (deep dives included), download, or
+  print to PDF.
 
 Built from the spec in `claude-playbook/ideas/title-commitment-reviewer-app.md`.
 
@@ -53,6 +63,12 @@ Drag the `titleviz/` folder into Netlify and you have a URL to share.
   parses — no brittle "find the JSON in the prose" logic.
 - Response handling reads the raw body first, then parses, and surfaces the exact API error
   with a retry button (per the original spec's lessons).
+- **Link extraction is local and best-effort.** PDF.js (CDN) reads the PDF's link
+  annotations in the browser and associates each with the nearest exception number printed
+  above it. County-records links open in a new tab rather than being auto-fetched — most
+  of those systems block cross-origin downloads (CORS), per the lesson in
+  `ideas/title-exception-extractor-html-tool.md`. Download the document, then upload it to
+  the exception's deep-dive button.
 
 ## Honest limitations
 

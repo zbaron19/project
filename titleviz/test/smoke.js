@@ -145,5 +145,32 @@ try {
   check("pdf media type", content2[0].source.media_type === "application/pdf");
 } catch (e) { check("request body shape", false, e.message); }
 
+/* ---- 6. link-to-exception mapping (pure functions) ---- */
+try {
+  // synthetic page: "7." anchor at y=700, "8." anchor at y=500, link at y=650 → exception 7
+  const item = (str, x, y) => ({ str, transform: [1, 0, 0, 1, x, y] });
+  const items = [
+    item("SCHEDULE B - PART II", 50, 760),
+    item("7.", 50, 700), item("Easement recorded under", 70, 700), item("No. 1962-0414", 240, 700),
+    item("8.", 50, 500), item("Declaration of covenants", 70, 500),
+  ];
+  const anchors = sandbox.findExceptionAnchors(items);
+  check("anchors found", anchors.length === 2 && anchors[0].num === "7" && anchors[1].num === "8");
+  check("link below 7 maps to 7", sandbox.nearestAnchor(anchors, 650) === "7");
+  check("link below 8 maps to 8", sandbox.nearestAnchor(anchors, 450) === "8");
+  check("link above all anchors maps to none", sandbox.nearestAnchor(anchors, 750) === "");
+  check("link label reads line text", sandbox.linkLabel(items, [60, 698, 300, 702]).includes("Easement recorded"));
+} catch (e) { check("link mapping", false, e.message); }
+
+/* ---- 7. endorsement aggregation + deep-dive schema ---- */
+try {
+  const ends = sandbox.aggregateEndorsements(demo);
+  check("endorsements aggregate", ends.length >= 2 && ends.every((x) => x.endorsement && x.exceptions.length));
+  const dd = inCtx("DEEP_DIVE_SCHEMA");
+  check("deep-dive schema exposed", dd && dd.required.includes("rating_effect") && dd.additionalProperties === false);
+  const memo = sandbox.buildMemo(demo);
+  check("memo has endorsement list", memo.includes("## Endorsement request list") && memo.includes("ALTA 25-06"));
+} catch (e) { check("endorsements/deep-dive", false, e.message); }
+
 console.log(failures === 0 ? "\nAll smoke tests passed." : `\n${failures} failure(s).`);
 process.exit(failures === 0 ? 0 : 1);

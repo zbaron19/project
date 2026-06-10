@@ -4,6 +4,10 @@
  * this browser to the Anthropic API (no intermediary server), which is what
  * keeps client documents off third-party infrastructure. Structured outputs
  * (output_config.format) guarantee the response parses as JSON.
+ *
+ * v2 additions: per-exception ALTA endorsement suggestions, extraction of the
+ * commitment's hyperlinked underlying documents (PDF.js, mapped to exception
+ * numbers), and per-exception deep-dive review of an uploaded instrument.
  */
 
 "use strict";
@@ -20,6 +24,8 @@ const state = {
   fileBase64: null,
   pastedText: "",
   result: null,
+  docLinks: [],           // [{url, page, exception, label}] from PDF link annotations
+  deepDives: {},          // exception number -> deep-dive result
   lastScreen: "home",
 };
 
@@ -83,7 +89,17 @@ function updateAnalyzeButton() {
   $("btn-analyze").disabled = !ready;
 }
 
-function acceptFile(file) {
+function readBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    // result is "data:<mime>;base64,<data>"
+    reader.onload = () => resolve(String(reader.result).split(",", 2)[1]);
+    reader.onerror = () => reject(new Error("Could not read that file"));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function acceptFile(file) {
   if (!file) return;
   if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
     toast("Please choose a PDF file");
@@ -93,25 +109,108 @@ function acceptFile(file) {
     toast("That PDF is over 30 MB — try the paste-text option instead");
     return;
   }
-  const reader = new FileReader();
-  reader.onload = () => {
-    // result is "data:application/pdf;base64,<data>"
-    state.fileBase64 = String(reader.result).split(",", 2)[1];
-    state.fileName = file.name;
-    $("file-chip-name").textContent = file.name;
-    $("file-chip").hidden = false;
-    updateAnalyzeButton();
-  };
-  reader.onerror = () => toast("Could not read that file");
-  reader.readAsDataURL(file);
+  try {
+    state.fileBase64 = await readBase64(file);
+  } catch (err) {
+    toast(err.message);
+    return;
+  }
+  state.fileName = file.name;
+  $("file-chip-name").textContent = file.name;
+  $("file-chip").hidden = false;
+  updateAnalyzeButton();
+
+  state.docLinks = [];
+  extractDocLinks(file).then((n) => {
+    if (n) toast(`Found ${n} linked document${n === 1 ? "" : "s"} in the commitment`);
+  }).catch((err) => console.warn("Link extraction skipped:", err));
 }
 
 function clearFile() {
   state.fileBase64 = null;
   state.fileName = null;
+  state.docLinks = [];
   $("file-input").value = "";
   $("file-chip").hidden = true;
   updateAnalyzeButton();
+}
+
+/* ============================ hyperlink extraction ============================ */
+/* Many commitments hyperlink each Schedule B-II exception to the recorded
+ * underlying document. PDF.js reads those link annotations; we map each link
+ * to the nearest exception number printed at or above it on the page. */
+
+const ANCHOR_RE = /^\s*(?:exception|item)?\s*(\d+[a-z]?)\s*[.):]/i;
+
+// Group text items into lines by rounded y, return [{y, num}] for lines that
+// start with a list number. Items: [{str, transform}] (transform[4]=x, [5]=y).
+function findExceptionAnchors(items) {
+  const lines = new Map();
+  for (const it of items) {
+    if (!it.str || !it.str.trim()) continue;
+    const y = Math.round(it.transform[5]);
+    if (!lines.has(y)) lines.set(y, []);
+    lines.get(y).push(it);
+  }
+  const anchors = [];
+  for (const [y, parts] of lines) {
+    parts.sort((a, b) => a.transform[4] - b.transform[4]);
+    const text = parts.map((p) => p.str).join(" ");
+    const m = text.match(ANCHOR_RE);
+    if (m) anchors.push({ y, num: m[1].toLowerCase() });
+  }
+  return anchors.sort((a, b) => b.y - a.y); // PDF y grows upward: top of page first
+}
+
+// The exception a link belongs to is the numbered line at or above it.
+function nearestAnchor(anchors, linkY) {
+  let best = null;
+  for (const a of anchors) {
+    if (a.y >= linkY - 2 && (best === null || a.y < best.y)) best = a;
+  }
+  return best ? best.num : "";
+}
+
+function linkLabel(items, rect) {
+  const [, y1, , y2] = rect;
+  const parts = items
+    .filter((it) => it.str && it.transform[5] >= y1 - 2 && it.transform[5] <= y2 + 2)
+    .sort((a, b) => a.transform[4] - b.transform[4])
+    .map((it) => it.str)
+    .join(" ")
+    .trim();
+  return parts.slice(0, 90) || "Linked document";
+}
+
+async function extractDocLinks(file) {
+  if (!window.pdfjsLib) return 0;
+  const data = new Uint8Array(await file.arrayBuffer());
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const links = [];
+  const seen = new Set();
+  for (let p = 1; p <= pdf.numPages; p++) {
+    const page = await pdf.getPage(p);
+    const [annots, text] = await Promise.all([page.getAnnotations(), page.getTextContent()]);
+    const anchors = findExceptionAnchors(text.items);
+    for (const a of annots) {
+      if (a.subtype !== "Link" || !a.url || !/^https?:/i.test(a.url)) continue;
+      const linkY = (a.rect[1] + a.rect[3]) / 2;
+      const exception = nearestAnchor(anchors, linkY);
+      const key = exception + "|" + a.url;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      links.push({ url: a.url, page: p, exception, label: linkLabel(text.items, a.rect) });
+    }
+  }
+  state.docLinks = links;
+  return links.length;
+}
+
+const normNum = (s) => String(s || "").toLowerCase().replace(/[^0-9a-z]/g, "");
+
+function linksForException(number) {
+  const n = normNum(number);
+  return state.docLinks.filter((l) => l.exception && normNum(l.exception) === n);
 }
 
 /* ============================ analysis schema ============================ */
@@ -153,9 +252,14 @@ const REPORT_SCHEMA = {
           risk: { type: "string", enum: RISK_ENUM },
           perspective_concerns: { type: "string", description: "Why this matters (or doesn't) specifically from the selected perspective" },
           recommended_action: { type: "string", description: "Concrete next step: accept, obtain and review the document, request deletion, negotiate endorsement, escrow holdback, etc." },
-          removal_outlook: { type: "string", enum: ["likely_removable", "possibly_removable", "stays_on_policy"], description: "Whether the title company would plausibly delete or insure over this exception if asked" }
+          removal_outlook: { type: "string", enum: ["likely_removable", "possibly_removable", "stays_on_policy"], description: "Whether the title company would plausibly delete or insure over this exception if asked" },
+          suggested_endorsements: {
+            type: "array",
+            description: "ALTA (or state-equivalent) endorsements worth requesting to mitigate this specific exception, each as a short string like 'ALTA 28.1-06 — encroachments'. Empty array if none applies.",
+            items: { type: "string" }
+          }
         },
-        required: ["number", "title", "plain_english", "risk", "perspective_concerns", "recommended_action", "removal_outlook"],
+        required: ["number", "title", "plain_english", "risk", "perspective_concerns", "recommended_action", "removal_outlook", "suggested_endorsements"],
         additionalProperties: false
       }
     },
@@ -184,6 +288,37 @@ const REPORT_SCHEMA = {
   additionalProperties: false
 };
 
+const DEEP_DIVE_SCHEMA = {
+  type: "object",
+  properties: {
+    instrument: { type: "string", description: "What this document is: instrument type, parties, date, recording information if shown" },
+    matches_exception: { type: "string", description: "Whether this document plausibly is the instrument described in the exception; if it appears to be a different document, say so plainly" },
+    plain_english_summary: { type: "string", description: "What this document does to the property, in plain English" },
+    key_provisions: {
+      type: "array",
+      description: "The provisions that matter for the deal, each one sentence",
+      items: { type: "string" }
+    },
+    risks: {
+      type: "array",
+      description: "Specific risks found in the document text",
+      items: {
+        type: "object",
+        properties: {
+          description: { type: "string" },
+          severity: { type: "string", enum: RISK_ENUM }
+        },
+        required: ["description", "severity"],
+        additionalProperties: false
+      }
+    },
+    recommended_position: { type: "string", description: "Concrete recommendation: accept as-is, negotiate (what), cure (how), endorsement to request, or escalate to counsel" },
+    rating_effect: { type: "string", enum: ["raises", "confirms", "lowers"], description: "Whether reading the actual document raises, confirms, or lowers the risk relative to the initial exception rating" }
+  },
+  required: ["instrument", "matches_exception", "plain_english_summary", "key_provisions", "risks", "recommended_position", "rating_effect"],
+  additionalProperties: false
+};
+
 function buildSystemPrompt() {
   const perspectiveBlock =
     state.perspective === "lender"
@@ -199,6 +334,7 @@ function buildSystemPrompt() {
 3. Walk Schedule B-II (Exceptions) item by item, in order, without skipping any. Number them exactly as printed. If the same instrument appears in multiple exceptions, note the connection.
 4. Standard preprinted/general exceptions (taxes not yet due, parties in possession, survey matters, mechanics' liens not of record) are usually low risk but say which can customarily be deleted with an owner's affidavit, survey, or extended coverage — and note that practice varies by state and underwriter.
 RISK CALIBRATION: 'high' = could block closing, impair the insured interest, or cost real money if unaddressed (unreleased monetary liens, reverters, defects in the chain, unsubordinated interests). 'medium' = needs the underlying document reviewed or an endorsement/negotiation (REAs, restrictive covenants, significant easements). 'low' = routine and customarily accepted or deleted.
+ENDORSEMENTS: For each exception, suggest the ALTA (or state-equivalent) endorsement(s) that would mitigate it, tailored to the perspective — e.g. 9-series (restrictions/encroachments), 17/17.1 (access), 22 (location), 25 (same as survey), 28-series (easements/encroachments); for lenders include the customary lender package items where the exceptions call for them. Leave the list empty when no endorsement helps. Endorsement availability varies by state and underwriter — phrase as items to request, not promises.
 STYLE: Plain English a sophisticated non-lawyer client can follow. State the main point first, qualifications second. Never bluff: if the commitment text is unclear, cut off, or the underlying document is needed to assess the exception, say exactly that in the recommended action.`,
   ].join("\n\n");
 }
@@ -226,24 +362,20 @@ function buildUserContent() {
 
 /* ============================ API call ============================ */
 
-async function analyze() {
+// One structured call to the Messages API. Returns {ok:true, result} or
+// {ok:false, message, needKey?}. Reads the raw body first, then parses —
+// avoids double-consume issues and surfaces non-JSON error bodies verbatim.
+async function callStructured({ system, content, schema, maxTokens = 16000 }) {
   const apiKey = getApiKey();
-  if (!apiKey) {
-    toast("Add your Anthropic API key first");
-    show("settings");
-    $("api-key").focus();
-    return;
-  }
-
-  show("working");
+  if (!apiKey) return { ok: false, needKey: true, message: "Add your Anthropic API key first" };
 
   const body = {
     model: MODEL,
-    max_tokens: 16000,
+    max_tokens: maxTokens,
     thinking: { type: "adaptive" },
-    system: buildSystemPrompt(),
-    output_config: { format: { type: "json_schema", schema: REPORT_SCHEMA } },
-    messages: [{ role: "user", content: buildUserContent() }],
+    system,
+    output_config: { format: { type: "json_schema", schema } },
+    messages: [{ role: "user", content }],
   };
 
   let response;
@@ -259,20 +391,20 @@ async function analyze() {
       body: JSON.stringify(body),
     });
   } catch (err) {
-    return showError(
-      "Network error reaching the Claude API.\n\n" + err.message +
-      "\n\nCheck your connection. If you are on a corporate network, api.anthropic.com may be blocked."
-    );
+    return {
+      ok: false,
+      message:
+        "Network error reaching the Claude API.\n\n" + err.message +
+        "\n\nCheck your connection. If you are on a corporate network, api.anthropic.com may be blocked.",
+    };
   }
 
-  // Read raw text first, then parse — avoids double-consume issues and lets us
-  // surface non-JSON error bodies verbatim.
   const raw = await response.text();
   let data;
   try {
     data = JSON.parse(raw);
   } catch {
-    return showError(`The API returned an unexpected response (HTTP ${response.status}):\n\n${raw.slice(0, 2000)}`);
+    return { ok: false, message: `The API returned an unexpected response (HTTP ${response.status}):\n\n${raw.slice(0, 2000)}` };
   }
 
   if (!response.ok) {
@@ -282,36 +414,133 @@ async function analyze() {
       : response.status === 429 ? "\n\nRate limited — wait a minute and retry."
       : response.status === 529 ? "\n\nThe API is overloaded — retry in a moment."
       : "";
-    return showError(`API error (HTTP ${response.status}): ${msg}${hint}`);
+    return { ok: false, message: `API error (HTTP ${response.status}): ${msg}${hint}` };
   }
 
-  // Find the text block (content may also include thinking blocks).
   const blocks = Array.isArray(data.content) ? data.content : [];
   const textBlock = blocks.find((b) => b.type === "text");
   if (!textBlock) {
-    return showError("The API response contained no analysis text.\n\n" + JSON.stringify(data).slice(0, 2000));
+    return { ok: false, message: "The API response contained no analysis text.\n\n" + JSON.stringify(data).slice(0, 2000) };
   }
   if (data.stop_reason === "max_tokens") {
-    return showError(
-      "The analysis ran out of room before finishing — this commitment may be unusually long.\n\nTry splitting the document, or paste only Schedules A and B as text."
-    );
+    return {
+      ok: false,
+      message: "The analysis ran out of room before finishing — this document may be unusually long.\n\nTry splitting it, or paste only the relevant schedules as text.",
+    };
   }
 
-  let result;
   try {
-    result = JSON.parse(textBlock.text);
+    return { ok: true, result: JSON.parse(textBlock.text) };
   } catch (err) {
-    return showError("Could not parse the analysis as JSON:\n\n" + err.message + "\n\n" + textBlock.text.slice(0, 1500));
+    return { ok: false, message: "Could not parse the analysis as JSON:\n\n" + err.message + "\n\n" + textBlock.text.slice(0, 1500) };
+  }
+}
+
+async function analyze() {
+  show("working");
+  state.deepDives = {};
+
+  const out = await callStructured({
+    system: buildSystemPrompt(),
+    content: buildUserContent(),
+    schema: REPORT_SCHEMA,
+  });
+
+  if (!out.ok) {
+    if (out.needKey) {
+      toast(out.message);
+      show("settings");
+      $("api-key").focus();
+      return;
+    }
+    return showError(out.message);
   }
 
-  state.result = result;
-  renderReport(result);
+  state.result = out.result;
+  renderReport(out.result);
   show("report");
 }
 
 function showError(message) {
   $("error-message").textContent = message;
   show("error");
+}
+
+/* ============================ deep dive ============================ */
+
+function findException(number) {
+  return (state.result?.exceptions || []).find((e) => normNum(e.number) === normNum(number));
+}
+
+async function deepDive(number, file, resultDiv) {
+  const exc = findException(number);
+  if (!exc) return;
+  if (file.size > MAX_PDF_BYTES) {
+    toast("That PDF is over 30 MB");
+    return;
+  }
+
+  resultDiv.innerHTML = `<p class="dd-status">Reading the document…</p>`;
+
+  let base64;
+  try {
+    base64 = await readBase64(file);
+  } catch (err) {
+    resultDiv.innerHTML = `<p class="dd-status dd-error">${esc(err.message)}</p>`;
+    return;
+  }
+
+  const system =
+    `You are a senior commercial real estate title attorney. You previously reviewed a title commitment from the ${state.perspective} perspective. ` +
+    `Now you are reading ONE recorded instrument that underlies a single Schedule B-II exception. Analyze only this document, against this deal. ` +
+    `Quote or pinpoint the provisions that drive your conclusions. Never bluff: if pages are missing or illegible, say so.`;
+
+  const content = [
+    {
+      type: "document",
+      source: { type: "base64", media_type: "application/pdf", data: base64 },
+      title: file.name,
+    },
+    {
+      type: "text",
+      text:
+        `This document was uploaded as the instrument underlying Schedule B-II exception ${exc.number} — "${exc.title}".\n\n` +
+        `Initial read of the exception (from the commitment alone): ${exc.plain_english}\n` +
+        `Initial risk rating: ${exc.risk}. Concern: ${exc.perspective_concerns}\n\n` +
+        `Review the document itself from the ${state.perspective} perspective and produce the structured deep-dive report.`,
+    },
+  ];
+
+  const out = await callStructured({ system, content, schema: DEEP_DIVE_SCHEMA, maxTokens: 8000 });
+
+  if (!out.ok) {
+    resultDiv.innerHTML = `<p class="dd-status dd-error">${esc(out.message)}</p><button type="button" class="link-btn dd-retry">Try another file</button>`;
+    if (out.needKey) { show("settings"); $("api-key").focus(); }
+    return;
+  }
+
+  state.deepDives[exc.number] = { ...out.result, file_name: file.name };
+  resultDiv.innerHTML = deepDiveHtml(out.result, file.name);
+}
+
+const RATING_EFFECT_LABEL = {
+  raises: "Reading the document RAISES the risk vs. the initial rating",
+  confirms: "Reading the document confirms the initial rating",
+  lowers: "Reading the document lowers the risk vs. the initial rating",
+};
+
+function deepDiveHtml(d, fileName) {
+  return `
+  <div class="dd-card">
+    <p class="dd-kicker">Deep-dive · ${esc(fileName)}</p>
+    <p><strong>${esc(d.instrument)}</strong></p>
+    ${normNum(d.matches_exception).includes("yes") ? "" : `<p class="dd-match">${esc(d.matches_exception)}</p>`}
+    <p>${esc(d.plain_english_summary)}</p>
+    ${(d.key_provisions || []).length ? `<p class="lbl">Key provisions</p><ul>${d.key_provisions.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>` : ""}
+    ${(d.risks || []).length ? `<p class="lbl">Risks in the document</p><ul>${d.risks.map((r) => `<li><span class="badge ${esc(r.severity)}">${esc(r.severity)}</span> ${esc(r.description)}</li>`).join("")}</ul>` : ""}
+    <p><span class="lbl">Recommended position:</span> ${esc(d.recommended_position)}</p>
+    <p class="dd-effect ${esc(d.rating_effect)}">${esc(RATING_EFFECT_LABEL[d.rating_effect] || d.rating_effect)}</p>
+  </div>`;
 }
 
 /* ============================ rendering ============================ */
@@ -331,6 +560,19 @@ const REMOVAL_LABEL = {
   possibly_removable: "Possibly removable — worth asking the title company",
   stays_on_policy: "Expect this to stay on the policy",
 };
+
+function aggregateEndorsements(result) {
+  const seen = new Map(); // endorsement -> [exception numbers]
+  for (const e of result.exceptions || []) {
+    for (const end of e.suggested_endorsements || []) {
+      const key = end.trim();
+      if (!key) continue;
+      if (!seen.has(key)) seen.set(key, []);
+      seen.get(key).push(e.number);
+    }
+  }
+  return [...seen.entries()].map(([endorsement, nums]) => ({ endorsement, exceptions: nums }));
+}
 
 function renderReport(r) {
   const s = r.summary;
@@ -355,7 +597,10 @@ function renderReport(r) {
     .map((p) => `<li>${esc(p)}</li>`).join("");
   $("rpt-priority-wrap").style.display = (r.priority_items || []).length ? "" : "none";
 
-  $("rpt-exceptions").innerHTML = (r.exceptions || []).map((e) => `
+  $("rpt-exceptions").innerHTML = (r.exceptions || []).map((e) => {
+    const links = linksForException(e.number);
+    const dive = state.deepDives[e.number];
+    return `
     <div class="exc-card ${esc(e.risk)}" data-risk="${esc(e.risk)}">
       <div class="exc-top">
         <span class="exc-title"><span class="exc-num">B‑II ${esc(e.number)}</span>${esc(e.title)}</span>
@@ -364,8 +609,35 @@ function renderReport(r) {
       <p class="exc-plain">${esc(e.plain_english)}</p>
       <p class="exc-row"><span class="lbl">Why it matters to you:</span> ${esc(e.perspective_concerns)}</p>
       <p class="exc-row"><span class="lbl">Recommended action:</span> ${esc(e.recommended_action)}</p>
+      ${(e.suggested_endorsements || []).length
+        ? `<p class="exc-row"><span class="lbl">Endorsements to request:</span> ${esc(e.suggested_endorsements.join("; "))}</p>` : ""}
+      ${links.length
+        ? `<p class="exc-row exc-links"><span class="lbl">Linked documents:</span> ${links.map((l) =>
+            `<a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)}</a>`).join(" · ")}</p>` : ""}
       <p class="exc-removal">${esc(REMOVAL_LABEL[e.removal_outlook] || e.removal_outlook)}</p>
-    </div>`).join("");
+      <div class="deep-dive" data-num="${esc(e.number)}">
+        <div class="no-print">
+          <button type="button" class="btn-secondary dd-btn">Deep-dive: upload the underlying document</button>
+          <input type="file" accept="application/pdf" class="dd-input" hidden>
+        </div>
+        <div class="dd-result">${dive ? deepDiveHtml(dive, dive.file_name) : ""}</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  // consolidated endorsement request list
+  const ends = aggregateEndorsements(r);
+  $("rpt-endorsements").innerHTML = ends
+    .map((x) => `<li>${esc(x.endorsement)} <span class="muted">(exception${x.exceptions.length > 1 ? "s" : ""} ${esc(x.exceptions.join(", "))})</span></li>`)
+    .join("");
+  $("rpt-endorsements-wrap").style.display = ends.length ? "" : "none";
+
+  // links the mapper couldn't tie to a numbered exception
+  const orphans = state.docLinks.filter((l) => !l.exception);
+  $("rpt-doclinks").innerHTML = orphans
+    .map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)}</a> <span class="muted">(p. ${esc(l.page)})</span></li>`)
+    .join("");
+  $("rpt-doclinks-wrap").style.display = orphans.length ? "" : "none";
 
   $("rpt-requirements").innerHTML = (r.requirements || []).map((q) => `
     <div class="req-item">
@@ -423,7 +695,33 @@ function buildMemo(r) {
     lines.push(e.plain_english);
     lines.push(`- **Concern:** ${e.perspective_concerns}`);
     lines.push(`- **Action:** ${e.recommended_action}`);
+    if ((e.suggested_endorsements || []).length) {
+      lines.push(`- **Endorsements to request:** ${e.suggested_endorsements.join("; ")}`);
+    }
+    const links = linksForException(e.number);
+    if (links.length) {
+      lines.push(`- **Linked documents:** ${links.map((l) => `[${l.label}](${l.url})`).join("; ")}`);
+    }
     lines.push(`- **Removal outlook:** ${REMOVAL_LABEL[e.removal_outlook] || e.removal_outlook}`);
+    const d = state.deepDives[e.number];
+    if (d) {
+      lines.push("");
+      lines.push(`#### Deep-dive: ${d.file_name}`);
+      lines.push(d.instrument);
+      lines.push("");
+      lines.push(d.plain_english_summary);
+      for (const k of d.key_provisions || []) lines.push(`- ${k}`);
+      for (const risk of d.risks || []) lines.push(`- **${riskLabel(risk.severity)}:** ${risk.description}`);
+      lines.push(`- **Recommended position:** ${d.recommended_position}`);
+      lines.push(`- ${RATING_EFFECT_LABEL[d.rating_effect] || d.rating_effect}`);
+    }
+    lines.push("");
+  }
+  const ends = aggregateEndorsements(r);
+  if (ends.length) {
+    lines.push("## Endorsement request list");
+    lines.push("");
+    for (const x of ends) lines.push(`- ${x.endorsement} *(exceptions ${x.exceptions.join(", ")})*`);
     lines.push("");
   }
   lines.push("## Schedule B-I — Requirements");
@@ -477,6 +775,8 @@ function toast(msg) {
 function loadDemo() {
   state.perspective = "buyer";
   state.result = window.TITLEVIZ_DEMO;
+  state.docLinks = [];
+  state.deepDives = {};
   renderReport(window.TITLEVIZ_DEMO);
   show("report");
   toast("This is a sample review of a fictional commitment");
@@ -485,6 +785,11 @@ function loadDemo() {
 /* ============================ wiring ============================ */
 
 document.addEventListener("DOMContentLoaded", () => {
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }
+
   // perspective + source
   document.querySelectorAll(".seg-btn[data-perspective]").forEach((b) =>
     b.addEventListener("click", () => setPerspective(b.dataset.perspective)));
@@ -529,6 +834,22 @@ document.addEventListener("DOMContentLoaded", () => {
   $("btn-copy-memo").addEventListener("click", copyMemo);
   $("btn-download-memo").addEventListener("click", downloadMemo);
   $("btn-print").addEventListener("click", () => window.print());
+
+  // deep-dive controls are re-rendered with the report — delegate
+  $("rpt-exceptions").addEventListener("click", (e) => {
+    const wrap = e.target.closest(".deep-dive");
+    if (!wrap) return;
+    if (e.target.closest(".dd-btn") || e.target.closest(".dd-retry")) {
+      wrap.querySelector(".dd-input").click();
+    }
+  });
+  $("rpt-exceptions").addEventListener("change", (e) => {
+    if (!e.target.classList.contains("dd-input")) return;
+    const wrap = e.target.closest(".deep-dive");
+    const file = e.target.files[0];
+    e.target.value = "";
+    if (file) deepDive(wrap.dataset.num, file, wrap.querySelector(".dd-result"));
+  });
 
   updateAnalyzeButton();
 });
