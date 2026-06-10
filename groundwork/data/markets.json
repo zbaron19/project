@@ -1,0 +1,167 @@
+{
+  "note": "Seeded market profiles for screening only. Compiled from general industry knowledge as of early 2026 — every fact requires verification against primary sources (utility filings, county code, session law) before client reliance. That verification IS the paid product.",
+  "score_legend": "1-10 per factor, higher is better for the developer. Composite is weighted: power 35%, entitlement 20%, water 15%, incentives 15%, political 15%.",
+  "markets": [
+    {
+      "id": "loudoun",
+      "name": "Loudoun County, VA (Data Center Alley)",
+      "state": "VA",
+      "utility": "Dominion Energy (NOVEC in portions)",
+      "grid": "PJM",
+      "profile": "The densest data center market on earth. Unmatched fiber and ecosystem, but transmission constraints, multi-year delivery timelines for new large loads, and a county that no longer needs to say yes.",
+      "power_outlook": "Dominion has publicly flagged multi-year waits for large new loads in eastern Loudoun; new transmission lines are under development and contested. Expect energization quotes of 4-7 years for greenfield large load. Large-load tariff/rate design proceedings active.",
+      "zoning_posture": "County removed by-right status for data centers in most districts (2023 ZOAM); special exception now typically required, with heightened design/noise standards. Board increasingly selective.",
+      "water": "Loudoun Water experienced with reclaimed supply for data centers; water is rarely the binding constraint here.",
+      "incentives": "Virginia sales tax exemption for data center equipment (investment + jobs thresholds; extended subject to conditions). County BPOL and personal property taxes on computer equipment are significant but predictable — the tax base is why supervisors tolerate the asset class.",
+      "watch_items": [
+        "Dominion large-load tariff design and PJM capacity cost pass-through",
+        "Transmission line routing fights (overhead vs underground) adding delay",
+        "GA legislation conditioning the sales tax exemption on ratepayer/energy terms",
+        "Citizen opposition now organized and experienced"
+      ],
+      "scores": { "power": 3, "entitlement": 4, "water": 8, "incentives": 7, "political": 4 },
+      "best_for": "Operators who already hold capacity or queue position; infill/redevelopment plays; buyers of existing shells.",
+      "avoid_if": "You need speed-to-power on greenfield. The market's moat is now its constraint."
+    },
+    {
+      "id": "phoenix",
+      "name": "Phoenix Metro / Maricopa County, AZ",
+      "state": "AZ",
+      "utility": "APS / SRP",
+      "grid": "WECC (non-RTO)",
+      "profile": "Top-tier growth market: cheap flat land, low natural disaster risk, two sophisticated utilities. Water politics and summer peak constraints are the story.",
+      "power_outlook": "APS and SRP both managing heavy data center queues; multi-year timelines for 100MW+ but generally better than PJM East. Both utilities developing large-load rate structures and requiring significant financial commitments.",
+      "zoning_posture": "Generally accommodating in industrial corridors (Mesa, Goodyear, Buckeye, Chandler legacy sites). Some municipalities tightening design and noise standards; Tucson-area pushback has been louder than Phoenix proper.",
+      "water": "The headline risk. Active Management Area rules constrain groundwater; assured water supply requirements affect some structures. Air-cooled or closed-loop designs plus municipal/reclaimed supply are the viable path — evaporative designs face real scrutiny.",
+      "incentives": "Arizona TPT (sales) exemption for qualifying data center equipment via ACA certification; 10-20 year terms depending on investment level.",
+      "watch_items": [
+        "Groundwater/AMA policy developments and municipal water-service moratorium areas",
+        "Large-load tariff dockets at the ACC",
+        "Grid interconnection with planned new generation (gas + storage) timing"
+      ],
+      "scores": { "power": 6, "entitlement": 7, "water": 4, "incentives": 8, "political": 6 },
+      "best_for": "Hyperscale campuses with air-cooled designs and patience for utility-scale negotiation.",
+      "avoid_if": "Your design needs heavy evaporative cooling from groundwater."
+    },
+    {
+      "id": "columbus",
+      "name": "Central Ohio (Columbus / New Albany / Licking County)",
+      "state": "OH",
+      "utility": "AEP Ohio",
+      "grid": "PJM",
+      "profile": "The Midwest's breakout market — hyperscaler campuses, Intel adjacency, aggressive local economic development. The AEP large-load tariff fight made it the national test case for data center rate design.",
+      "power_outlook": "AEP Ohio's data center tariff (PUCO-approved settlement) imposes long-term minimum demand charges and exit obligations on large new loads — financeable but must be modeled. Queue is heavy; timelines stretching but better than NoVA.",
+      "zoning_posture": "New Albany International Business Park is the template — pre-entitled, utility-coordinated. Outside the established corridors, townships vary widely and some have grown skeptical.",
+      "water": "Generally adequate via municipal systems; Columbus regional water planning has kept pace. Not the binding constraint.",
+      "incentives": "Ohio sales tax exemption for qualifying data centers (Tax Credit Authority approval); CRA/enterprise zone property tax abatements negotiated locally; New Albany-style 100% abatements with school district revenue-sharing are the pattern.",
+      "watch_items": [
+        "AEP tariff terms as precedent — and copycat filings in other states",
+        "Licking County growth-pains politics (roads, farmland conversion)",
+        "School district compensation expectations rising"
+      ],
+      "scores": { "power": 6, "entitlement": 7, "water": 7, "incentives": 8, "political": 6 },
+      "best_for": "Hyperscale and large colo following the established corridor playbook.",
+      "avoid_if": "Pro forma can't carry the tariff's minimum-demand floor through a slow ramp."
+    },
+    {
+      "id": "dfw",
+      "name": "Dallas–Fort Worth, TX",
+      "state": "TX",
+      "utility": "Oncor (delivery); competitive REP market",
+      "grid": "ERCOT",
+      "profile": "Scale, speed, and a deregulated market that lets sophisticated buyers structure power creatively. ERCOT's large-load interconnection reforms (SB 6 era) introduced new rules of the road.",
+      "power_outlook": "Oncor queue is enormous but Texas builds. SB 6 (2025) added large-load registration, curtailment-during-emergency frameworks, and cost-allocation provisions — know them before promising firm capacity. Behind-the-meter and co-located generation deals are viable here like nowhere else.",
+      "zoning_posture": "City-by-city; unincorporated areas have minimal zoning (but watch ETJ dynamics). Fort Worth/Alliance corridor and south Dallas industrial belts are well-trodden. Municipal design standards tightening modestly.",
+      "water": "Generally available via municipal systems; North Texas districts planning for growth. Evaporative designs feasible but reclaimed supply increasingly smart politics.",
+      "incentives": "Texas data center sales tax exemption (investment/jobs thresholds); Chapter 312 abatements and JETI (Ch. 403) for qualifying projects; no state income tax. Property tax base is high, making abatement negotiation central.",
+      "watch_items": [
+        "ERCOT large-load interconnection rule implementation",
+        "Legislative interest in data center water and grid impacts",
+        "Appraisal district aggressiveness on data center valuations"
+      ],
+      "scores": { "power": 7, "entitlement": 8, "water": 6, "incentives": 7, "political": 7 },
+      "best_for": "Speed-to-market builds; operators comfortable with ERCOT market risk and curtailment frameworks.",
+      "avoid_if": "Tenant requires firm, non-curtailable power with zero market exposure and you can't structure around ERCOT emergency rules."
+    },
+    {
+      "id": "atlanta",
+      "name": "Atlanta Metro, GA",
+      "state": "GA",
+      "utility": "Georgia Power",
+      "grid": "Southern Company (non-RTO)",
+      "profile": "Fiber-rich, fast-growing, and newly contested. Atlanta proper restricted data centers near transit; the legislature has fought over the sales tax exemption; Georgia Power is rebuilding its resource plan around data center load.",
+      "power_outlook": "Georgia Power's IRP updates added major capacity for data center demand; PSC approved large-load tariff provisions shifting infrastructure risk to large customers. Timelines moderate; utility is motivated but commission scrutiny is high.",
+      "zoning_posture": "City of Atlanta restricted data centers in core districts/BeltLine areas; suburban and exurban counties (Douglas, Fayette, Coweta, Bartow) range from welcoming to newly skeptical — several adopted pauses or tightened standards.",
+      "water": "Metro water wars history makes large withdrawals sensitive; municipal supply generally workable with closed-loop designs.",
+      "incentives": "State sales tax exemption for high-tech data center equipment — politically contested (suspension attempts, conditions debated). Local abatements via development authorities (bond-lease structures) are standard practice.",
+      "watch_items": [
+        "Legislative attempts to suspend/condition the sales tax exemption",
+        "Georgia Power large-load tariff implementation and PSC elections",
+        "County-level moratorium contagion in the exurbs"
+      ],
+      "scores": { "power": 6, "entitlement": 5, "water": 6, "incentives": 6, "political": 5 },
+      "best_for": "Operators with strong community-engagement playbooks targeting pre-zoned industrial corridors.",
+      "avoid_if": "Underwriting assumes the sales tax exemption survives unchanged through multiple refresh cycles."
+    },
+    {
+      "id": "quincy",
+      "name": "Central Washington (Quincy / Grant, Douglas & Chelan Counties)",
+      "state": "WA",
+      "utility": "Grant, Douglas & Chelan County PUDs",
+      "grid": "WECC / BPA region",
+      "profile": "Hydro-powered legacy market with some of the cheapest, cleanest power in North America — but PUD capacity is largely spoken for and new allocations are rationed. The lawyer-builder's home-turf advantage market.",
+      "power_outlook": "PUD rates remain enviable but headroom is constrained; new large-load requests face allocation policies, higher 'evolving industry' rate classes, and queue discipline. BPA regional capacity and new transmission are the long-term unlock.",
+      "zoning_posture": "Quincy and Grant County remain practically accommodating (data centers are the tax base); permitting is navigable. SEPA review applies — schedule it, don't fear it.",
+      "water": "Columbia Basin supply with municipal/industrial allocations; Quincy has history with reclaimed/cooling solutions. Far better than Phoenix; still paper it carefully.",
+      "incentives": "Washington rural-county data center sales/use tax exemption (eligibility windows and certification requirements have shifted repeatedly — verify current program status and sunset). No state income tax; B&O and REET planning matter on the deal itself.",
+      "watch_items": [
+        "Legislative renewal/modification of the rural data center exemption",
+        "PUD large-load rate class and allocation policy changes",
+        "CETA (clean energy) compliance interactions with new load"
+      ],
+      "scores": { "power": 5, "entitlement": 8, "water": 7, "incentives": 6, "political": 7 },
+      "best_for": "Operators who can win a PUD allocation or buy an existing powered site; ESG-driven tenants paying up for hydro.",
+      "avoid_if": "You need 100MW+ of new allocation on a near-term schedule."
+    },
+    {
+      "id": "iowa",
+      "name": "Des Moines Metro / Council Bluffs, IA",
+      "state": "IA",
+      "utility": "MidAmerican Energy / Alliant",
+      "grid": "MISO",
+      "profile": "Hyperscaler favorite: wind-heavy generation, low rates, genuinely fast government, and incentives that have survived politics. Less fiber density than coastal markets but the big platforms solved that themselves.",
+      "power_outlook": "MidAmerican's wind fleet and constructive regulatory climate keep timelines among the best in the country for committed large loads. MISO queue reform applies but utility-led solutions are common.",
+      "zoning_posture": "Altoona, West Des Moines, Council Bluffs: practiced, fast, predictable. Greenfield annexation/rezoning timelines measured in months, not years.",
+      "water": "Adequate municipal supply; some scrutiny rising on large users but nothing like the Southwest.",
+      "incentives": "Iowa sales tax exemption for qualifying data centers; property tax abatements/TIF locally negotiated; utility economic development riders available.",
+      "watch_items": [
+        "MISO capacity market tightening",
+        "Incentive threshold updates in the legislature",
+        "Competition for sites near existing hyperscale campuses"
+      ],
+      "scores": { "power": 8, "entitlement": 9, "water": 7, "incentives": 8, "political": 8 },
+      "best_for": "Hyperscale build-to-suit; anyone prioritizing execution certainty over network density.",
+      "avoid_if": "Multi-tenant colo needing dense interconnection ecosystems."
+    },
+    {
+      "id": "reno",
+      "name": "Northern Nevada (Reno / TRIC / Storey County)",
+      "state": "NV",
+      "utility": "NV Energy",
+      "grid": "WECC (joining EDAM/market constructs)",
+      "profile": "Tahoe-Reno Industrial Center is the fastest entitlement story in America — pre-approved industrial land at scale. Power and water are the gating items; Nevada's incentive program is strong.",
+      "power_outlook": "NV Energy managing rapid large-load growth; major new transmission (Greenlink) under construction with multi-year horizons. Large-load tariff/contract structures (special contracts approved by PUCN) are the norm for 50MW+.",
+      "zoning_posture": "TRIC/Storey County: industrial use effectively by-right with administrative review — weeks, not years. Washoe County more conventional.",
+      "water": "High desert: water rights are bought, not assumed. TRIC has dedicated supply infrastructure but large evaporative designs need careful rights diligence; effluent reuse deals are the local pattern.",
+      "incentives": "Nevada data center abatement program (sales tax to ~2%, property tax abatements for 10-20 yrs with investment/jobs thresholds via GOED). No corporate income tax.",
+      "watch_items": [
+        "Greenlink transmission schedule and cost allocation",
+        "PUCN large-load docket activity",
+        "Water rights market pricing in the Truckee Meadows basin"
+      ],
+      "scores": { "power": 5, "entitlement": 9, "water": 5, "incentives": 8, "political": 7 },
+      "best_for": "Speed-obsessed builds that can phase power; crypto-to-AI conversions; operators with water rights strategy.",
+      "avoid_if": "Day-one 100MW firm power is non-negotiable."
+    }
+  ]
+}
