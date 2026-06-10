@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackacre — Assemblage Title Intelligence</title>
+<style>
+  :root {
+    --ink: #1c2418;
+    --ink-soft: #4d5a46;
+    --paper: #f4f3ec;
+    --card: #fdfcf6;
+    --line: #d6d3c0;
+    --accent: #2e5d3e;
+    --accent-soft: #e2ede5;
+    --high: #b3372b;
+    --high-bg: #f9e8e5;
+    --med: #a06f1f;
+    --med-bg: #f8efdc;
+    --low: #3e7c4f;
+    --low-bg: #e7f1e9;
+    --killer: #6b1f63;
+    --killer-bg: #f3e3f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 16px/1.55 Georgia, 'Times New Roman', serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  header { border-bottom: 3px double var(--ink); padding-bottom: 18px; margin-bottom: 28px; }
+  .brand { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .brand h1 { font-size: 34px; letter-spacing: 0.5px; font-weight: normal; }
+  .brand h1 b { color: var(--accent); font-weight: normal; font-style: italic; }
+  .tagline { color: var(--ink-soft); font-style: italic; font-size: 15px; }
+
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 22px 24px; margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(28,36,24,0.06);
+  }
+  .panel h2 {
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: normal; margin-bottom: 14px;
+    font-family: Verdana, Geneva, sans-serif;
+  }
+
+  label { font-family: Verdana, Geneva, sans-serif; font-size: 12px; color: var(--ink-soft); display: block; margin-bottom: 6px; }
+  input[type="password"], select, textarea {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px;
+    font: 14px ui-monospace, 'SF Mono', Menlo, monospace; background: #fff; color: var(--ink);
+  }
+  select { font-family: Verdana, Geneva, sans-serif; }
+  textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 220px; }
+  .hint { font-size: 12.5px; color: var(--ink-soft); margin-top: 8px; font-style: italic; }
+
+  .drop {
+    border: 2px dashed var(--line); border-radius: 6px; padding: 38px 20px;
+    text-align: center; cursor: pointer; transition: border-color .15s, background .15s;
+    background: var(--card);
+  }
+  .drop.drag { border-color: var(--accent); background: var(--accent-soft); }
+  .drop .big { font-size: 18px; }
+  .drop .sub { color: var(--ink-soft); font-size: 13.5px; margin-top: 6px; font-style: italic; }
+  .drop.hasfiles { border-style: solid; border-color: var(--low); }
+
+  .filelist { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .filerow {
+    display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+    background: #fff; border: 1px solid var(--line); border-radius: 4px; font-size: 13.5px;
+  }
+  .filerow .fname { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .filerow .ftype { font-family: Verdana, sans-serif; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); }
+  .filerow .fstate { font-family: Verdana, sans-serif; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; background: var(--paper); color: var(--ink-soft); white-space: nowrap; }
+  .filerow .fstate.done { background: var(--low-bg); color: var(--low); }
+  .filerow .fstate.working { background: var(--med-bg); color: var(--med); }
+  .filerow .fstate.failed { background: var(--high-bg); color: var(--high); }
+  .filerow .rm { border: none; background: none; cursor: pointer; color: var(--ink-soft); font-size: 15px; padding: 0 4px; }
+  .filerow .rm:hover { color: var(--high); }
+
+  .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+  .btn {
+    padding: 12px 28px; border-radius: 4px; cursor: pointer; font: 15px Georgia, serif;
+    border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+  }
+  .btn:hover { background: #2c3a25; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: rgba(28,36,24,0.06); }
+  .btn.small { padding: 7px 16px; font-size: 13.5px; }
+
+  .status { font-style: italic; color: var(--ink-soft); }
+  .spinner {
+    display: inline-block; width: 14px; height: 14px; border: 2px solid var(--line);
+    border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite;
+    vertical-align: -2px; margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error {
+    background: var(--high-bg); border: 1px solid var(--high); border-radius: 6px;
+    padding: 16px 20px; margin-bottom: 18px; font-size: 14.5px;
+  }
+  .error b { font-family: Verdana, sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display:block; margin-bottom: 6px; color: var(--high); }
+  .error pre { white-space: pre-wrap; font-size: 12.5px; margin-top: 8px; font-family: ui-monospace, Menlo, monospace; }
+
+  .results-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin: 30px 0 16px; }
+  .results-bar h2 { font-size: 24px; font-weight: normal; }
+  .results-bar > div { display: flex; gap: 8px; flex-wrap: wrap; }
+  .demo-tag {
+    font: 11px Verdana, sans-serif; letter-spacing: 1.5px; text-transform: uppercase;
+    background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent);
+    border-radius: 3px; padding: 3px 9px; vertical-align: 4px;
+  }
+
+  .badge {
+    display: inline-block; font: 11px Verdana, sans-serif; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 11px; border-radius: 3px;
+  }
+  .badge.high { background: var(--high-bg); color: var(--high); border: 1px solid var(--high); }
+  .badge.medium { background: var(--med-bg); color: var(--med); border: 1px solid var(--med); }
+  .badge.low { background: var(--low-bg); color: var(--low); border: 1px solid var(--low); }
+  .badge.killer { background: var(--killer-bg); color: var(--killer); border: 1px solid var(--killer); }
+
+  .summary .headline { font-size: 19px; margin: 14px 0 10px; }
+  .summary ul { margin: 6px 0 14px 22px; }
+  .summary .meta { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 12px; }
+  .summary .meta i { font-style: normal; font-family: Verdana, sans-serif; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .killerbox { background: var(--killer-bg); border: 1px solid var(--killer); border-radius: 6px; padding: 14px 18px; margin-top: 14px; }
+  .killerbox b { font-family: Verdana, sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--killer); display: block; margin-bottom: 8px; }
+  .killerbox ul { margin-left: 20px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { font-family: Verdana, sans-serif; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--line); font-weight: normal; }
+  td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td .badge { font-size: 9.5px; padding: 2px 7px; }
+
+  .parcel-card { margin-bottom: 14px; }
+  .parcel-card h3 { font-size: 17px; font-weight: normal; margin-bottom: 4px; }
+  .parcel-card .pdesc { font-size: 13.5px; color: var(--ink-soft); font-style: italic; margin-bottom: 10px; }
+  .enc-row { display: flex; gap: 10px; align-items: baseline; padding: 7px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .enc-row .src { font-family: Verdana, sans-serif; font-size: 10.5px; color: var(--ink-soft); white-space: nowrap; }
+  .enc-row .note { flex: 1; }
+
+  .conflict { border-left: 4px solid var(--killer); padding-left: 16px; margin-bottom: 16px; }
+  .conflict.high { border-left-color: var(--high); }
+  .conflict.medium { border-left-color: var(--med); }
+  .conflict h3 { font-size: 16px; font-weight: normal; margin-bottom: 4px; }
+  .conflict .who { font-family: Verdana, sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+
+  .doc-card { margin-bottom: 10px; }
+  .doc-card summary { cursor: pointer; font-size: 15px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .doc-card summary .ftag { font-family: Verdana, sans-serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 2px 7px; color: var(--ink-soft); }
+  .doc-card .doc-body { padding: 12px 0 4px; font-size: 14px; }
+  .doc-card .doc-body p { margin-bottom: 8px; }
+  .doc-card .kv { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 8px; }
+  .doc-card .kv i { font-style: normal; font-family: Verdana, sans-serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .lbl { font-family: Verdana, sans-serif; font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-soft); display: block; margin: 10px 0 4px; }
+
+  footer { margin-top: 50px; border-top: 1px solid var(--line); padding-top: 16px; font-size: 12.5px; color: var(--ink-soft); font-style: italic; }
+  details.keybox summary { cursor: pointer; font-size: 14px; }
+  details.keybox .inner { margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <h1>Black<b>acre</b></h1>
+    <span class="tagline">Assemblage title intelligence for energy &amp; data-center land</span>
+  </div>
+</header>
+
+<div class="panel">
+  <details class="keybox" id="keybox">
+    <summary>API key &amp; models</summary>
+    <div class="inner">
+      <div class="row">
+        <div>
+          <label for="apikey">Anthropic API key (stored in this browser only)</label>
+          <input type="password" id="apikey" placeholder="sk-ant-…" autocomplete="off">
+        </div>
+        <div>
+          <label for="extractmodel">Per-document reading model</label>
+          <select id="extractmodel">
+            <option value="claude-sonnet-4-6" selected>Claude Sonnet 4.6 — fast, ~$0.05–0.15/doc</option>
+            <option value="claude-opus-4-8">Claude Opus 4.8 — most careful</option>
+            <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 — cheapest</option>
+          </select>
+        </div>
+        <div>
+          <label for="synthmodel">Assemblage synthesis model</label>
+          <select id="synthmodel">
+            <option value="claude-opus-4-8" selected>Claude Opus 4.8 — recommended</option>
+            <option value="claude-sonnet-4-6">Claude Sonnet 4.6</option>
+          </select>
+        </div>
+      </div>
+      <p class="hint">Documents go from your browser directly to the Anthropic API — there is no Blackacre server. Typical full-assemblage run: $1–$5 depending on document count and models.</p>
+    </div>
+  </details>
+</div>
+
+<div class="panel">
+  <h2>1 · Project parcels</h2>
+  <label for="parcels">One parcel per line — an ID and a short description (APN, acreage, role in the project). Optional but strongly recommended: it lets Blackacre map every instrument to the ground it burdens.</label>
+  <textarea id="parcels" placeholder="Parcel A — APN 123-456-001, 120 ac, main array site
+Parcel B — APN 123-456-002, 85 ac, gen-tie corridor + access
+Parcel C — APN 123-456-003, 200 ac, array expansion"></textarea>
+  <label for="projnotes" style="margin-top:12px">Project type &amp; notes (what is being built, what matters)</label>
+  <textarea id="projnotes" style="min-height:56px" placeholder="150 MW solar + storage. Gen-tie must cross Parcel B to the substation. Financing close target Q4."></textarea>
+</div>
+
+<div class="panel">
+  <h2>2 · Recorded instruments</h2>
+  <div class="drop" id="drop">
+    <div class="big">Drop the title documents here</div>
+    <div class="sub">Deeds, easements, mineral deeds, CC&amp;Rs, leases, liens, plats, title commitments — PDFs, as many as you have. Click to browse.</div>
+  </div>
+  <input type="file" id="fileinput" accept="application/pdf" multiple style="display:none">
+  <div class="filelist" id="filelist"></div>
+</div>
+
+<div class="panel">
+  <h2>3 · Run</h2>
+  <div class="actions">
+    <button class="btn" id="analyzeBtn" disabled>Map the Assemblage</button>
+    <button class="btn ghost" id="demoBtn">View sample analysis</button>
+    <span class="status" id="status"></span>
+  </div>
+</div>
+
+<div id="errbox"></div>
+<div id="results"></div>
+
+<footer>
+  Blackacre reads recorded instruments and drafts a working encumbrance analysis. It is a diligence
+  accelerant, not a title opinion, a title policy, or legal advice — confirm everything against the
+  record and your underwriter before relying on it. Documents are sent only to the Anthropic API
+  under your own key.
+</footer>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- elements ---------- */
+const els = {
+  apikey: document.getElementById("apikey"),
+  keybox: document.getElementById("keybox"),
+  extractmodel: document.getElementById("extractmodel"),
+  synthmodel: document.getElementById("synthmodel"),
+  parcels: document.getElementById("parcels"),
+  projnotes: document.getElementById("projnotes"),
+  drop: document.getElementById("drop"),
+  fileinput: document.getElementById("fileinput"),
+  filelist: document.getElementById("filelist"),
+  analyzeBtn: document.getElementById("analyzeBtn"),
+  demoBtn: document.getElementById("demoBtn"),
+  status: document.getElementById("status"),
+  errbox: document.getElementById("errbox"),
+  results: document.getElementById("results")
+};
+
+/* ---------- state ---------- */
+let files = [];          // [{file, state, type}]
+let lastAnalysis = null; // synthesis object
+let lastDocs = null;     // per-document extraction objects
+let lastMeta = null;
+
+els.apikey.value = localStorage.getItem("blackacre_key") || "";
+els.apikey.addEventListener("change", () => localStorage.setItem("blackacre_key", els.apikey.value.trim()));
+if (!els.apikey.value) els.keybox.open = true;
+
+/* ---------- file handling ---------- */
+els.drop.addEventListener("click", () => els.fileinput.click());
+els.drop.addEventListener("dragover", e => { e.preventDefault(); els.drop.classList.add("drag"); });
+els.drop.addEventListener("dragleave", () => els.drop.classList.remove("drag"));
+els.drop.addEventListener("drop", e => {
+  e.preventDefault(); els.drop.classList.remove("drag");
+  addFiles([...e.dataTransfer.files]);
+});
+els.fileinput.addEventListener("change", () => { addFiles([...els.fileinput.files]); els.fileinput.value = ""; });
+
+function addFiles(list) {
+  for (const f of list) {
+    if (f.type !== "application/pdf" && !/\.pdf$/i.test(f.name)) {
+      showError("Skipped " + f.name, "Blackacre reads PDFs. Export or scan the instrument to PDF first.");
+      continue;
+    }
+    if (f.size > 32 * 1024 * 1024) {
+      showError("Skipped " + f.name, "Over 32 MB — split the file (county scans usually compress well).");
+      continue;
+    }
+    if (files.length >= 40) {
+      showError("File limit", "v0.1 caps a run at 40 instruments. Run the assemblage in tranches.");
+      break;
+    }
+    if (!files.some(x => x.file.name === f.name && x.file.size === f.size)) {
+      files.push({ file: f, state: "queued", type: "" });
+    }
+  }
+  renderFiles();
+}
+
+function renderFiles() {
+  els.filelist.innerHTML = "";
+  for (let i = 0; i < files.length; i++) {
+    const x = files[i];
+    const row = document.createElement("div");
+    row.className = "filerow";
+    const stateClass = x.state === "analyzed" ? "done" : (x.state === "reading…" ? "working" : (x.state === "failed" ? "failed" : ""));
+    row.innerHTML =
+      '<span class="fname">' + esc(x.file.name) + "</span>" +
+      (x.type ? '<span class="ftype">' + esc(x.type.replace(/_/g, " ")) + "</span>" : "") +
+      '<span class="fstate ' + stateClass + '">' + esc(x.state) + "</span>";
+    const rm = document.createElement("button");
+    rm.className = "rm"; rm.textContent = "×"; rm.title = "Remove";
+    rm.addEventListener("click", () => { files.splice(i, 1); renderFiles(); });
+    row.append(rm);
+    els.filelist.append(row);
+  }
+  els.drop.classList.toggle("hasfiles", files.length > 0);
+  els.drop.querySelector(".big").textContent = files.length
+    ? files.length + " instrument" + (files.length > 1 ? "s" : "") + " loaded — drop more or click to browse"
+    : "Drop the title documents here";
+  els.analyzeBtn.disabled = files.length === 0;
+}
+
+/* ---------- errors / status ---------- */
+function showError(title, msg) {
+  const d = document.createElement("div");
+  d.className = "error";
+  d.innerHTML = "<b>" + esc(title) + "</b>" + esc(msg);
+  els.errbox.append(d);
+}
+function clearError() { els.errbox.innerHTML = ""; }
+function setStatus(t, busy) {
+  els.status.innerHTML = (busy ? '<span class="spinner"></span>' : "") + esc(t);
+}
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/* ---------- prompts & schemas ---------- */
+const EXTRACT_SYSTEM = `You are a senior title examiner and land counsel working for the developer of a utility-scale energy or data-center project. You are reading ONE recorded instrument (or title commitment) from the project assemblage. Read it the way examining counsel would: identify exactly what interest it creates or conveys, what land it burdens or benefits, and what it could do to this project. Be precise about recording data and parties — they drive the curative chain. If the scan is partly illegible or pages are missing, say so in flags rather than guessing. Map the legal description to the project parcel list when you can; if you cannot tell which parcel is affected, say so. Never invent recording numbers, dates, or parties.`;
+
+const EXTRACT_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["is_recorded_instrument", "document_note", "instrument_type", "title", "recording", "parties", "parcels_affected", "summary", "encumbrance", "project_impacts", "flags"],
+  properties: {
+    is_recorded_instrument: { type: "boolean", description: "False if this is not a land-title document at all." },
+    document_note: { type: "string", description: "If not a recorded instrument or commitment, what it appears to be." },
+    instrument_type: { type: "string", enum: ["deed", "easement", "right_of_way", "mineral_deed_or_reservation", "ccr_or_restriction", "lease_or_memorandum", "mortgage_or_deed_of_trust", "lien_or_judgment", "option_or_rofr", "plat_or_survey", "title_commitment", "water_or_irrigation", "other"] },
+    title: { type: "string", description: "Short label, e.g. 'Blanket pipeline easement — Cascade Pipeline Co. (1968)'." },
+    recording: {
+      type: "object", additionalProperties: false,
+      required: ["date", "number", "county"],
+      properties: {
+        date: { type: "string", description: "Recording date as shown, or empty if not visible." },
+        number: { type: "string", description: "Recording/instrument number or book-page, or empty." },
+        county: { type: "string", description: "County and state, or empty." }
+      }
+    },
+    parties: {
+      type: "object", additionalProperties: false,
+      required: ["grantor", "grantee"],
+      properties: { grantor: { type: "string" }, grantee: { type: "string" } }
+    },
+    parcels_affected: { type: "array", items: { type: "string" }, description: "Project parcel IDs from the provided list this instrument burdens or benefits; ['unmapped'] if it cannot be tied to the list." },
+    summary: { type: "string", description: "2-4 sentence plain-English account of what this instrument does." },
+    encumbrance: {
+      type: "object", additionalProperties: false,
+      required: ["creates_encumbrance", "scope", "duration", "runs_with_land", "key_terms"],
+      properties: {
+        creates_encumbrance: { type: "boolean" },
+        scope: { type: "string", enum: ["blanket", "defined_corridor_or_area", "entire_parcel", "appurtenant_benefit", "none", "unclear"] },
+        duration: { type: "string", description: "Term, perpetual, or conditions of termination/reversion." },
+        runs_with_land: { type: "string", enum: ["yes", "no", "unclear"] },
+        key_terms: { type: "array", items: { type: "string" }, description: "The provisions that matter to a developer: exclusivity, relocation rights, consent rights, use limits, reverter, ROFR/option mechanics, surface rights of mineral owner, subordination, cure rights." }
+      }
+    },
+    project_impacts: { type: "array", items: { type: "string" }, description: "Concrete ways this could constrain siting, construction, financing, or title insurance for the stated project." },
+    risk: { type: "string", enum: ["high", "medium", "low"], description: "Risk to the project as described." },
+    flags: { type: "array", items: { type: "string" }, description: "Legibility problems, missing pages/exhibits, ambiguities, or anything requiring human verification." }
+  }
+};
+
+const SYNTH_SYSTEM = `You are project land counsel for a utility-scale energy or data-center developer, synthesizing the title diligence for an entire multi-parcel assemblage. You are given structured extractions of every recorded instrument the land team has gathered, the project parcel list, and project notes. Produce the work product a first-rate land counsel would: (1) an executive read on whether this assemblage supports the project; (2) a parcel-by-parcel encumbrance map; (3) cross-parcel and cross-instrument conflicts a single-document review would miss — easements crossing buildable area or the gen-tie route, severed minerals with surface rights under the array, ROFRs or reversions that can break the assemblage, access that depends on a parcel that could drop out, use restrictions inconsistent with the project, gaps in the chain the documents reveal; (4) a curative punch list ordered by what kills financing first, naming the counterparty, the instrument needed, and a realistic timeline. Identify true project killers separately from routine curative. Note where the document set itself looks incomplete (e.g., a commitment lists an exception no instrument was provided for). Be specific and cite source documents by filename. Never soften a project killer.`;
+
+const SYNTH_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["summary", "parcels", "conflicts", "punch_list", "document_set_gaps"],
+  properties: {
+    summary: {
+      type: "object", additionalProperties: false,
+      required: ["overall_risk", "headline", "project_killers", "priority_items"],
+      properties: {
+        overall_risk: { type: "string", enum: ["high", "medium", "low"] },
+        headline: { type: "string", description: "Two or three sentences: can this assemblage support the project, and what stands in the way." },
+        project_killers: { type: "array", items: { type: "string" }, description: "Issues that, uncured, defeat the project or its financing. Empty if none." },
+        priority_items: { type: "array", items: { type: "string" }, description: "The 3-6 things to deal with first." }
+      }
+    },
+    parcels: {
+      type: "array",
+      items: {
+        type: "object", additionalProperties: false,
+        required: ["id", "description", "parcel_risk", "encumbrances"],
+        properties: {
+          id: { type: "string" },
+          description: { type: "string" },
+          parcel_risk: { type: "string", enum: ["high", "medium", "low"] },
+          encumbrances: {
+            type: "array",
+            items: {
+              type: "object", additionalProperties: false,
+              required: ["source_doc", "label", "risk", "note"],
+              properties: {
+                source_doc: { type: "string", description: "Filename of the instrument." },
+                label: { type: "string", description: "Short label of the encumbrance." },
+                risk: { type: "string", enum: ["high", "medium", "low"] },
+                note: { type: "string", description: "Why it matters for this parcel and project." }
+              }
+            }
+          }
+        }
+      }
+    },
+    conflicts: {
+      type: "array",
+      items: {
+        type: "object", additionalProperties: false,
+        required: ["title", "severity", "parcels_involved", "docs_involved", "explanation"],
+        properties: {
+          title: { type: "string" },
+          severity: { type: "string", enum: ["killer", "high", "medium"] },
+          parcels_involved: { type: "array", items: { type: "string" } },
+          docs_involved: { type: "array", items: { type: "string" } },
+          explanation: { type: "string", description: "The interaction a single-document review would miss, and its consequence." }
+        }
+      }
+    },
+    punch_list: {
+      type: "array",
+      items: {
+        type: "object", additionalProperties: false,
+        required: ["issue", "severity", "parcels", "curative_action", "counterparty", "instrument_needed", "timeline"],
+        properties: {
+          issue: { type: "string" },
+          severity: { type: "string", enum: ["killer", "high", "medium", "low"] },
+          parcels: { type: "array", items: { type: "string" } },
+          curative_action: { type: "string" },
+          counterparty: { type: "string", description: "Who must sign or act." },
+          instrument_needed: { type: "string", description: "E.g. surface use waiver, partial release, corridor definition agreement, ROFR waiver, CC&R amendment, subordination." },
+          timeline: { type: "string", description: "Realistic estimate, e.g. '2-6 weeks if cooperative; months if heirs must be located'." }
+        }
+      }
+    },
+    document_set_gaps: { type: "array", items: { type: "string" }, description: "Instruments the record implies exist but were not provided, or searches still needed." }
+  }
+};
+
+/* ---------- API ---------- */
+function fileToBase64(f) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result.split(",")[1]);
+    r.onerror = () => reject(new Error("Could not read the file."));
+    r.readAsDataURL(f);
+  });
+}
+
+async function callAPI(key, body) {
+  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": key,
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true"
+    },
+    body: JSON.stringify(body)
+  });
+  const raw = await resp.text();
+  let data;
+  try { data = JSON.parse(raw); }
+  catch { throw new Error("The API returned an unreadable response:\n" + raw.slice(0, 600)); }
+  if (!resp.ok) {
+    const msg = data && data.error ? data.error.message : raw.slice(0, 600);
+    if (resp.status === 401) throw new Error("Authentication failed — check the API key.\n\n" + msg);
+    if (resp.status === 429) throw new Error("Rate limited — wait a moment and try again.\n\n" + msg);
+    if (resp.status === 413) throw new Error("Document too large for one request — split the PDF.\n\n" + msg);
+    throw new Error("API error (" + resp.status + "): " + msg);
+  }
+  if (data.stop_reason === "refusal") {
+    const why = data.stop_details && data.stop_details.explanation ? data.stop_details.explanation : "";
+    throw new Error("The model declined to process this document. " + why);
+  }
+  const textBlock = (Array.isArray(data.content) ? data.content : []).find(b => b.type === "text");
+  if (!textBlock) throw new Error("The response contained no analysis text.");
+  let parsed;
+  try { parsed = JSON.parse(textBlock.text); }
+  catch { throw new Error("Could not parse the structured output:\n" + textBlock.text.slice(0, 600)); }
+  return { parsed, truncated: data.stop_reason === "max_tokens", model: data.model, usage: data.usage };
+}
+
+function contextText() {
+  const parcels = els.parcels.value.trim();
+  const notes = els.projnotes.value.trim();
+  return "PROJECT PARCEL LIST:\n" + (parcels || "(none provided — refer to legal descriptions directly)") +
+    "\n\nPROJECT TYPE & NOTES:\n" + (notes || "(none provided — assume a utility-scale energy or data-center development)");
+}
+
+async function extractOne(key, entry) {
+  const b64 = await fileToBase64(entry.file);
+  const body = {
+    model: els.extractmodel.value,
+    max_tokens: 6000,
+    system: EXTRACT_SYSTEM,
+    messages: [{
+      role: "user",
+      content: [
+        { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 }, title: entry.file.name },
+        { type: "text", text: contextText() + "\n\nExamine the attached instrument (filename: " + entry.file.name + ") and return the structured extraction." }
+      ]
+    }],
+    output_config: { format: { type: "json_schema", schema: EXTRACT_SCHEMA } }
+  };
+  const { parsed, truncated } = await callAPI(key, body);
+  parsed._filename = entry.file.name;
+  if (truncated) parsed.flags = (parsed.flags || []).concat(["Output hit the length limit — extraction may be incomplete."]);
+  return parsed;
+}
+
+async function synthesize(key, docs) {
+  const body = {
+    model: els.synthmodel.value,
+    max_tokens: 20000,
+    thinking: { type: "adaptive" },
+    system: SYNTH_SYSTEM,
+    messages: [{
+      role: "user",
+      content: [{
+        type: "text",
+        text: contextText() +
+          "\n\nSTRUCTURED EXTRACTIONS OF ALL INSTRUMENTS (one JSON object per document; _filename identifies the source):\n\n" +
+          JSON.stringify(docs, null, 1) +
+          "\n\nSynthesize the assemblage-level title analysis and return the structured result."
+      }]
+    }],
+    output_config: { format: { type: "json_schema", schema: SYNTH_SCHEMA } }
+  };
+  const { parsed, truncated, model, usage } = await callAPI(key, body);
+  return { synth: parsed, truncated, model, usage };
+}
+
+/* ---------- run ---------- */
+els.analyzeBtn.addEventListener("click", run);
+
+async function run() {
+  clearError();
+  const key = els.apikey.value.trim();
+  if (!key) {
+    els.keybox.open = true;
+    showError("API key needed", "Paste your Anthropic API key above (it never leaves this browser except to call the API), or click “View sample analysis” to see Blackacre without a key.");
+    return;
+  }
+  if (!files.length) return;
+
+  els.analyzeBtn.disabled = true;
+  els.demoBtn.disabled = true;
+  els.results.innerHTML = "";
+  for (const x of files) { x.state = "queued"; x.type = ""; }
+  renderFiles();
+  els.analyzeBtn.disabled = true; // renderFiles re-enables; keep off during run
+
+  const docs = [];
+  let failed = 0, doneCount = 0;
+  const queue = [...files];
+  const POOL = 3;
+
+  setStatus("Reading instruments — 0 of " + files.length + "…", true);
+
+  async function worker() {
+    while (queue.length) {
+      const entry = queue.shift();
+      entry.state = "reading…"; renderFiles(); els.analyzeBtn.disabled = true;
+      try {
+        const d = await extractOne(key, entry);
+        entry.state = "analyzed";
+        entry.type = d.is_recorded_instrument ? d.instrument_type : "not a title doc";
+        docs.push(d);
+      } catch (err) {
+        entry.state = "failed"; failed++;
+        showError("Could not read " + entry.file.name, err.message || String(err));
+      }
+      doneCount++;
+      setStatus("Reading instruments — " + doneCount + " of " + files.length + "…", true);
+      renderFiles(); els.analyzeBtn.disabled = true;
+    }
+  }
+
+  try {
+    await Promise.all(Array.from({ length: Math.min(POOL, files.length) }, worker));
+
+    if (!docs.length) throw new Error("No document could be read — nothing to synthesize.");
+    if (failed) showError(failed + " document(s) failed", "The synthesis below covers only the documents that were read successfully.");
+
+    // Stable order: as listed, not as finished.
+    docs.sort((a, b) => files.findIndex(f => f.file.name === a._filename) - files.findIndex(f => f.file.name === b._filename));
+
+    setStatus("Synthesizing the assemblage — cross-parcel analysis takes a minute or two…", true);
+    const { synth, truncated, model, usage } = await synthesize(key, docs);
+    if (truncated) showError("Possibly truncated", "The synthesis hit the output limit; the tail may be incomplete.");
+
+    lastAnalysis = synth;
+    lastDocs = docs;
+    lastMeta = {
+      date: new Date().toLocaleDateString(),
+      model, usage,
+      nDocs: docs.length,
+      demo: false
+    };
+    render(synth, docs, lastMeta);
+    setStatus("");
+  } catch (err) {
+    showError("Analysis failed", err.message || String(err));
+    setStatus("");
+  } finally {
+    els.demoBtn.disabled = false;
+    renderFiles();
+  }
+}
+
+/* ---------- render ---------- */
+function render(a, docs, meta) {
+  const r = els.results;
+  r.innerHTML = "";
+
+  const bar = document.createElement("div");
+  bar.className = "results-bar";
+  bar.innerHTML = "<h2>Assemblage Analysis" + (meta.demo ? ' <span class="demo-tag">Sample</span>' : "") + "</h2>";
+  const btns = document.createElement("div");
+  btns.append(
+    mkBtn("Copy memo", copyMemo),
+    mkBtn("Download memo (.md)", downloadMemo),
+    mkBtn("Download matrix (.csv)", downloadCSV)
+  );
+  bar.append(btns);
+  r.append(bar);
+
+  // Executive summary
+  const s = document.createElement("div");
+  s.className = "panel summary";
+  s.innerHTML =
+    '<span class="badge ' + esc(a.summary.overall_risk) + '">' + esc(a.summary.overall_risk) + " risk overall</span>" +
+    '<p class="headline">' + esc(a.summary.headline) + "</p>" +
+    (a.summary.project_killers && a.summary.project_killers.length
+      ? '<div class="killerbox"><b>Project killers (uncured, these defeat the project)</b><ul>' +
+        a.summary.project_killers.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul></div>"
+      : "") +
+    '<span class="lbl">Deal with first</span>' +
+    "<ul>" + a.summary.priority_items.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>" +
+    '<div class="meta">' +
+      "<span><i>Instruments read:</i> " + meta.nDocs + "</span>" +
+      "<span><i>Date:</i> " + esc(meta.date) + "</span>" +
+      (meta.model ? "<span><i>Model:</i> " + esc(meta.model) + "</span>" : "") +
+    "</div>";
+  r.append(s);
+
+  // Conflicts
+  if (a.conflicts && a.conflicts.length) {
+    const c = document.createElement("div");
+    c.className = "panel";
+    c.innerHTML = "<h2>Cross-Parcel &amp; Cross-Instrument Conflicts</h2>";
+    const sevOrder = { killer: 0, high: 1, medium: 2 };
+    for (const x of [...a.conflicts].sort((p, q) => (sevOrder[p.severity] ?? 3) - (sevOrder[q.severity] ?? 3))) {
+      const d = document.createElement("div");
+      d.className = "conflict " + esc(x.severity);
+      d.innerHTML =
+        "<h3>" + esc(x.title) + ' <span class="badge ' + esc(x.severity) + '">' + esc(x.severity) + "</span></h3>" +
+        '<div class="who">Parcels: ' + esc(x.parcels_involved.join(", ")) + " · Sources: " + esc(x.docs_involved.join(", ")) + "</div>" +
+        "<p>" + esc(x.explanation) + "</p>";
+      c.append(d);
+    }
+    r.append(c);
+  }
+
+  // Punch list
+  if (a.punch_list && a.punch_list.length) {
+    const p = document.createElement("div");
+    p.className = "panel";
+    p.innerHTML = "<h2>Curative Punch List</h2>";
+    const t = document.createElement("table");
+    t.innerHTML = "<thead><tr><th></th><th>Issue</th><th>Parcels</th><th>Curative action</th><th>Counterparty</th><th>Instrument</th><th>Timeline</th></tr></thead>";
+    const tb = document.createElement("tbody");
+    const sevOrder = { killer: 0, high: 1, medium: 2, low: 3 };
+    for (const x of [...a.punch_list].sort((p1, q) => (sevOrder[p1.severity] ?? 4) - (sevOrder[q.severity] ?? 4))) {
+      const tr = document.createElement("tr");
+      tr.innerHTML =
+        '<td><span class="badge ' + esc(x.severity) + '">' + esc(x.severity) + "</span></td>" +
+        "<td>" + esc(x.issue) + "</td>" +
+        "<td>" + esc(x.parcels.join(", ")) + "</td>" +
+        "<td>" + esc(x.curative_action) + "</td>" +
+        "<td>" + esc(x.counterparty) + "</td>" +
+        "<td>" + esc(x.instrument_needed) + "</td>" +
+        "<td>" + esc(x.timeline) + "</td>";
+      tb.append(tr);
+    }
+    t.append(tb);
+    p.append(t);
+    r.append(p);
+  }
+
+  // Parcel map
+  if (a.parcels && a.parcels.length) {
+    const pm = document.createElement("div");
+    pm.className = "panel";
+    pm.innerHTML = "<h2>Encumbrance Map — Parcel by Parcel</h2>";
+    for (const p of a.parcels) {
+      const d = document.createElement("div");
+      d.className = "parcel-card";
+      d.innerHTML =
+        "<h3>" + esc(p.id) + ' <span class="badge ' + esc(p.parcel_risk) + '">' + esc(p.parcel_risk) + "</span></h3>" +
+        '<div class="pdesc">' + esc(p.description) + "</div>" +
+        (p.encumbrances.length
+          ? p.encumbrances.map(e =>
+              '<div class="enc-row"><span class="badge ' + esc(e.risk) + '">' + esc(e.risk) + "</span>" +
+              '<span class="note"><b>' + esc(e.label) + ".</b> " + esc(e.note) + "</span>" +
+              '<span class="src">' + esc(e.source_doc) + "</span></div>").join("")
+          : '<div class="enc-row"><span class="note" style="font-style:italic;color:var(--ink-soft)">No encumbrances identified in the provided documents.</span></div>');
+      pm.append(d);
+    }
+    r.append(pm);
+  }
+
+  // Document set gaps
+  if (a.document_set_gaps && a.document_set_gaps.length) {
+    const g = document.createElement("div");
+    g.className = "panel";
+    g.innerHTML = "<h2>Gaps in the Document Set</h2><ul style='margin-left:22px'>" +
+      a.document_set_gaps.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>";
+    r.append(g);
+  }
+
+  // Per-document cards
+  if (docs && docs.length) {
+    const dc = document.createElement("div");
+    dc.className = "panel";
+    dc.innerHTML = "<h2>Instruments as Read</h2>";
+    for (const d of docs) {
+      const card = document.createElement("details");
+      card.className = "doc-card";
+      const risk = d.risk || "low";
+      card.innerHTML =
+        "<summary><b>" + esc(d.title || d._filename) + "</b>" +
+        '<span class="ftag">' + esc((d.instrument_type || "other").replace(/_/g, " ")) + "</span>" +
+        '<span class="badge ' + esc(risk) + '">' + esc(risk) + "</span>" +
+        '<span class="ftag">' + esc(d._filename) + "</span></summary>" +
+        '<div class="doc-body">' +
+          '<div class="kv">' +
+            (d.recording && d.recording.date ? "<span><i>Recorded:</i> " + esc(d.recording.date) + "</span>" : "") +
+            (d.recording && d.recording.number ? "<span><i>No.:</i> " + esc(d.recording.number) + "</span>" : "") +
+            (d.recording && d.recording.county ? "<span><i>County:</i> " + esc(d.recording.county) + "</span>" : "") +
+            (d.parties && d.parties.grantor ? "<span><i>Grantor:</i> " + esc(d.parties.grantor) + "</span>" : "") +
+            (d.parties && d.parties.grantee ? "<span><i>Grantee:</i> " + esc(d.parties.grantee) + "</span>" : "") +
+            (d.parcels_affected && d.parcels_affected.length ? "<span><i>Parcels:</i> " + esc(d.parcels_affected.join(", ")) + "</span>" : "") +
+          "</div>" +
+          "<p>" + esc(d.summary) + "</p>" +
+          (d.encumbrance && d.encumbrance.key_terms && d.encumbrance.key_terms.length
+            ? '<span class="lbl">Key terms</span><ul style="margin-left:20px">' + d.encumbrance.key_terms.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>" : "") +
+          (d.project_impacts && d.project_impacts.length
+            ? '<span class="lbl">Project impacts</span><ul style="margin-left:20px">' + d.project_impacts.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>" : "") +
+          (d.flags && d.flags.length
+            ? '<span class="lbl" style="color:var(--high)">Verification flags</span><ul style="margin-left:20px">' + d.flags.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>" : "") +
+        "</div>";
+      dc.append(card);
+    }
+    r.append(dc);
+  }
+
+  r.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function mkBtn(label, fn) {
+  const b = document.createElement("button");
+  b.className = "btn ghost small";
+  b.textContent = label;
+  b.addEventListener("click", fn);
+  return b;
+}
+
+/* ---------- exports ---------- */
+function memoText() {
+  if (!lastAnalysis) return "";
+  const a = lastAnalysis, m = lastMeta;
+  const L = [];
+  L.push("# Assemblage Title Analysis" + (m.demo ? " (SAMPLE)" : ""));
+  L.push("");
+  L.push("*Prepared with Blackacre — " + m.date + " — " + m.nDocs + " instruments reviewed. Working diligence product; not a title opinion or legal advice.*");
+  L.push("");
+  L.push("## Executive Summary — Overall risk: " + a.summary.overall_risk.toUpperCase());
+  L.push("");
+  L.push(a.summary.headline);
+  L.push("");
+  if (a.summary.project_killers && a.summary.project_killers.length) {
+    L.push("### Project killers");
+    for (const x of a.summary.project_killers) L.push("- " + x);
+    L.push("");
+  }
+  L.push("### Deal with first");
+  for (const x of a.summary.priority_items) L.push("- " + x);
+  L.push("");
+  if (a.conflicts && a.conflicts.length) {
+    L.push("## Cross-Parcel & Cross-Instrument Conflicts");
+    L.push("");
+    for (const c of a.conflicts) {
+      L.push("### " + c.title + " [" + c.severity.toUpperCase() + "]");
+      L.push("*Parcels: " + c.parcels_involved.join(", ") + " — Sources: " + c.docs_involved.join(", ") + "*");
+      L.push("");
+      L.push(c.explanation);
+      L.push("");
+    }
+  }
+  if (a.punch_list && a.punch_list.length) {
+    L.push("## Curative Punch List");
+    L.push("");
+    L.push("| Severity | Issue | Parcels | Curative action | Counterparty | Instrument | Timeline |");
+    L.push("|---|---|---|---|---|---|---|");
+    for (const x of a.punch_list) {
+      L.push("| " + [x.severity.toUpperCase(), x.issue, x.parcels.join(", "), x.curative_action, x.counterparty, x.instrument_needed, x.timeline]
+        .map(v => String(v).replace(/\|/g, "/")).join(" | ") + " |");
+    }
+    L.push("");
+  }
+  if (a.parcels && a.parcels.length) {
+    L.push("## Encumbrance Map");
+    L.push("");
+    for (const p of a.parcels) {
+      L.push("### " + p.id + " — " + p.parcel_risk.toUpperCase() + " risk");
+      L.push("*" + p.description + "*");
+      L.push("");
+      if (p.encumbrances.length) {
+        for (const e of p.encumbrances) L.push("- **" + e.label + "** [" + e.risk + "] — " + e.note + " *(" + e.source_doc + ")*");
+      } else {
+        L.push("- No encumbrances identified in the provided documents.");
+      }
+      L.push("");
+    }
+  }
+  if (a.document_set_gaps && a.document_set_gaps.length) {
+    L.push("## Gaps in the Document Set");
+    L.push("");
+    for (const x of a.document_set_gaps) L.push("- " + x);
+    L.push("");
+  }
+  return L.join("\n");
+}
+
+function copyMemo() {
+  navigator.clipboard.writeText(memoText()).then(
+    () => setStatus("Memo copied."),
+    () => showError("Copy failed", "Your browser blocked clipboard access — use Download instead.")
+  );
+}
+
+function downloadMemo() {
+  downloadFile("blackacre-assemblage-memo.md", memoText(), "text/markdown");
+}
+
+function downloadCSV() {
+  if (!lastAnalysis) return;
+  const rows = [["parcel", "encumbrance", "risk", "source_document", "note"]];
+  for (const p of lastAnalysis.parcels || []) {
+    if (!p.encumbrances.length) rows.push([p.id, "(none identified)", "", "", ""]);
+    for (const e of p.encumbrances) rows.push([p.id, e.label, e.risk, e.source_doc, e.note]);
+  }
+  const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(",")).join("\n");
+  downloadFile("blackacre-encumbrance-matrix.csv", csv, "text/csv");
+}
+
+function downloadFile(name, content, mime) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([content], { type: mime }));
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ---------- sample analysis ---------- */
+els.demoBtn.addEventListener("click", () => {
+  clearError();
+  lastAnalysis = SAMPLE.synth;
+  lastDocs = SAMPLE.docs;
+  lastMeta = { date: new Date().toLocaleDateString(), model: "", usage: null, nDocs: SAMPLE.docs.length, demo: true };
+  render(SAMPLE.synth, SAMPLE.docs, lastMeta);
+  setStatus("");
+});
+
+const SAMPLE = {
+  docs: [
+    {
+      _filename: "parcelA-mineral-deed-1952.pdf",
+      is_recorded_instrument: true, document_note: "",
+      instrument_type: "mineral_deed_or_reservation",
+      title: "Mineral deed — Hollis to Crandall Oil (1952), all minerals + surface access",
+      recording: { date: "1952-08-14", number: "Book 212, Page 388", county: "Linn County, OR" },
+      parties: { grantor: "Earl & Vesta Hollis", grantee: "Crandall Oil & Gas Co." },
+      parcels_affected: ["Parcel A"],
+      summary: "Conveys all oil, gas and other minerals under the SW quarter of Section 14 — the heart of Parcel A — together with an express right of ingress and egress and the right to use so much of the surface as is reasonably necessary for exploration and production. No surface-use restrictions, setbacks, or accommodation language.",
+      encumbrance: { creates_encumbrance: true, scope: "entire_parcel", duration: "Perpetual", runs_with_land: "yes",
+        key_terms: ["All minerals, not just oil and gas", "Express surface ingress/egress rights", "No accommodation or setback obligations on the mineral owner", "Grantee corporate entity likely dissolved — interest may now be held by unknown successors or heirs"] },
+      project_impacts: ["Mineral owner could site wells or access roads inside the array footprint", "Title company will except all minerals and will not insure over without a surface waiver", "Tax-equity and debt counsel routinely treat unwaived severed minerals with surface rights as a financing block"],
+      risk: "high",
+      flags: ["1952 typescript; legal description partially faded — verify quarter-section call against the county tract index"]
+    },
+    {
+      _filename: "parcelA-pipeline-easement-1968.pdf",
+      is_recorded_instrument: true, document_note: "",
+      instrument_type: "easement",
+      title: "Blanket pipeline easement — Cascade Pipeline Co. (1968)",
+      recording: { date: "1968-03-02", number: "Book 301, Page 77", county: "Linn County, OR" },
+      parties: { grantor: "Earl Hollis", grantee: "Cascade Pipeline Company" },
+      parcels_affected: ["Parcel A"],
+      summary: "Grants a pipeline easement over the entire SW quarter of Section 14 without a defined corridor — a classic blanket easement. Includes rights to lay additional lines in the future and to access the line for maintenance across the whole burdened tract.",
+      encumbrance: { creates_encumbrance: true, scope: "blanket", duration: "Perpetual so long as used", runs_with_land: "yes",
+        key_terms: ["No defined corridor — burden floats over the entire parcel", "Multiple-line clause permits future additional pipelines", "No relocation right reserved to landowner", "Abandonment/termination only on non-use"] },
+      project_impacts: ["Cannot fix buildable area until the easement is confined to a corridor", "Surveyor cannot locate the burden; title company will except the full blanket", "Successor pipeline operator must be identified (Cascade likely merged into a midstream company)"],
+      risk: "high",
+      flags: []
+    },
+    {
+      _filename: "parcelB-rofr-2005.pdf",
+      is_recorded_instrument: true, document_note: "",
+      instrument_type: "option_or_rofr",
+      title: "Right of first refusal — McAllister (2005)",
+      recording: { date: "2005-06-30", number: "2005-011842", county: "Linn County, OR" },
+      parties: { grantor: "Janet Friel", grantee: "Dean McAllister" },
+      parcels_affected: ["Parcel B"],
+      summary: "Grants the adjoining owner a right of first refusal over any sale or transfer of Parcel B, exercisable for 30 days after notice of a bona fide offer. By its terms it binds successors and applies to 'any transfer of any interest,' which on its face could reach a long-term lease or easement grant.",
+      encumbrance: { creates_encumbrance: true, scope: "entire_parcel", duration: "Life of grantee plus 21 years per its terms", runs_with_land: "yes",
+        key_terms: ["'Any transfer of any interest' — arguably triggered by site lease or easement, not just a deed", "30-day exercise window after notice", "Binds successors and assigns", "No exclusion for financing liens"] },
+      project_impacts: ["Site control on the gen-tie/access parcel is contingent until the ROFR is waived or its non-application to leases/easements is confirmed", "Lender's counsel will require a waiver or estoppel from the holder before closing the financing"],
+      risk: "high",
+      flags: []
+    },
+    {
+      _filename: "parcelB-distribution-easement-1989.pdf",
+      is_recorded_instrument: true, document_note: "",
+      instrument_type: "easement",
+      title: "Utility distribution easement — Pacific Power (1989), road frontage",
+      recording: { date: "1989-11-21", number: "Book 502, Page 144", county: "Linn County, OR" },
+      parties: { grantor: "Janet Friel", grantee: "Pacific Power & Light" },
+      parcels_affected: ["Parcel B"],
+      summary: "A 20-foot distribution-line easement along the county road frontage of Parcel B, defined by survey. Standard terms; no expansion rights.",
+      encumbrance: { creates_encumbrance: true, scope: "defined_corridor_or_area", duration: "Perpetual", runs_with_land: "yes",
+        key_terms: ["Defined 20-ft corridor along the road", "Vegetation management rights within the corridor"] },
+      project_impacts: ["Minor: keep permanent structures out of the 20-ft strip; gen-tie crossing of the corridor needs a routine crossing consent"],
+      risk: "low",
+      flags: []
+    },
+    {
+      _filename: "parcelC-ccrs-1996.pdf",
+      is_recorded_instrument: true, document_note: "",
+      instrument_type: "ccr_or_restriction",
+      title: "Declaration of CC&Rs — Valley View Ranches (1996), ag/residential use only",
+      recording: { date: "1996-04-09", number: "1996-006233", county: "Linn County, OR" },
+      parties: { grantor: "Valley View Ranches LLC (declarant)", grantee: "All lots in Valley View Ranches" },
+      parcels_affected: ["Parcel C"],
+      summary: "Recorded declaration covering the 6-lot Valley View Ranches subdivision, of which Parcel C is Lot 4. Restricts use to agricultural and single-family residential purposes, prohibits 'commercial or industrial structures,' and requires consent of 75% of lot owners to amend. No sunset clause.",
+      encumbrance: { creates_encumbrance: true, scope: "entire_parcel", duration: "Perpetual; amendable by 75% of lot owners", runs_with_land: "yes",
+        key_terms: ["Use limited to agricultural / single-family residential", "Express prohibition on commercial or industrial structures", "Amendment requires 75% of 6 lot owners (i.e., 5 of 6)", "Any lot owner may enforce by injunction"] },
+      project_impacts: ["A solar array and substation are almost certainly 'commercial or industrial structures' — direct use violation", "Amendment requires cooperation of at least 4 neighboring owners; any holdout can enforce", "Title company will not insure over an unamended use restriction"],
+      risk: "high",
+      flags: []
+    },
+    {
+      _filename: "parcelC-irrigation-lien-2023.pdf",
+      is_recorded_instrument: true, document_note: "",
+      instrument_type: "water_or_irrigation",
+      title: "Irrigation district assessment lien — Santiam ID (2023)",
+      recording: { date: "2023-10-15", number: "2023-018990", county: "Linn County, OR" },
+      parties: { grantor: "—", grantee: "Santiam Irrigation District" },
+      parcels_affected: ["Parcel C"],
+      summary: "Notice of annual assessment lien for in-district acreage; Parcel C is within district boundaries. Liens are first-priority by statute but modest in amount ($4,120 outstanding) and releasable on payment. Exclusion from the district is available by petition where land is removed from irrigated use.",
+      encumbrance: { creates_encumbrance: true, scope: "entire_parcel", duration: "Annual; statutory first priority", runs_with_land: "yes",
+        key_terms: ["Statutory super-priority over mortgages", "Annual reassessment while in district", "Exclusion petition available"] },
+      project_impacts: ["Pay current assessments at closing; consider district exclusion to avoid recurring liens senior to project financing"],
+      risk: "medium",
+      flags: []
+    },
+    {
+      _filename: "parcelC-access-easement-2010.pdf",
+      is_recorded_instrument: true, document_note: "",
+      instrument_type: "easement",
+      title: "Appurtenant access easement — Parcel C over Parcel B (2010)",
+      recording: { date: "2010-02-18", number: "2010-002551", county: "Linn County, OR" },
+      parties: { grantor: "Janet Friel (Parcel B)", grantee: "Owner of Lot 4, Valley View Ranches (Parcel C)" },
+      parcels_affected: ["Parcel B", "Parcel C"],
+      summary: "Grants Parcel C a 30-foot non-exclusive access easement across Parcel B to the county road — Parcel C's only legal access. Limited by its terms to 'agricultural and residential ingress and egress.'",
+      encumbrance: { creates_encumbrance: true, scope: "defined_corridor_or_area", duration: "Perpetual, appurtenant", runs_with_land: "yes",
+        key_terms: ["Parcel C's sole legal access", "Use expressly limited to agricultural and residential ingress/egress", "Non-exclusive; grantor may relocate the road at grantor's cost"] },
+      project_impacts: ["Construction traffic and O&M access for an energy project likely exceed the granted scope — easement must be amended or re-granted", "If Parcel B falls out of the assemblage (see ROFR), Parcel C may be landlocked for project purposes"],
+      risk: "high",
+      flags: []
+    }
+  ],
+  synth: {
+    summary: {
+      overall_risk: "high",
+      headline: "The dirt works but the paper doesn't — yet. Three of the four financing blocks on this assemblage are concentrated where the project can least tolerate them: unwaived severed minerals with surface rights and a blanket pipeline easement on the main array parcel, and a successor-binding ROFR on the only parcel that provides access and the gen-tie route. All are curable with known instruments, but two involve counterparties who must first be located, so curative should start now, in parallel with permitting.",
+      project_killers: [
+        "Parcel A severed minerals (1952) with express surface rights and no accommodation language — uninsurable and unfinanceable until a surface use waiver or non-disturbance is obtained from the current mineral owners, who must first be traced through Crandall Oil's corporate succession.",
+        "Parcel B ROFR (2005) drafted to reach 'any transfer of any interest' — site control over the access/gen-tie parcel is illusory until the holder waives or confirms non-application to the site lease, easements, and financing liens."
+      ],
+      priority_items: [
+        "Commission a landman/heir search for the Crandall Oil mineral interest successors and open surface-waiver negotiations (longest-lead item).",
+        "Approach the ROFR holder for a recordable waiver and estoppel before project intentions become public and the price of cooperation rises.",
+        "Identify Cascade Pipeline's successor operator and negotiate a corridor definition agreement converting the blanket easement to a fixed strip.",
+        "Begin the Valley View Ranches CC&R amendment campaign — 5 of 6 lot owners must sign; any holdout can enjoin the project on Parcel C.",
+        "Amend or re-grant the Parcel C access easement to cover construction and O&M traffic, and record it before the Parcel B ROFR issue is resolved against you."
+      ]
+    },
+    parcels: [
+      {
+        id: "Parcel A", description: "APN 123-456-001 · 120 ac · main array site", parcel_risk: "high",
+        encumbrances: [
+          { source_doc: "parcelA-mineral-deed-1952.pdf", label: "Severed minerals with surface access (1952)", risk: "high", note: "All minerals out; express ingress/egress and reasonable surface use. No accommodation doctrine help in the deed itself. Financing block until waived." },
+          { source_doc: "parcelA-pipeline-easement-1968.pdf", label: "Blanket pipeline easement (1968)", risk: "high", note: "Undefined corridor over the whole quarter-section with a multiple-line clause. Buildable area cannot be fixed until confined to a surveyed strip." }
+        ]
+      },
+      {
+        id: "Parcel B", description: "APN 123-456-002 · 85 ac · gen-tie corridor + access", parcel_risk: "high",
+        encumbrances: [
+          { source_doc: "parcelB-rofr-2005.pdf", label: "Successor-binding ROFR (2005)", risk: "high", note: "'Any transfer of any interest' arguably reaches the site lease and easement grants, not just a sale. Waiver/estoppel required for lender's counsel." },
+          { source_doc: "parcelB-distribution-easement-1989.pdf", label: "20-ft distribution easement (1989)", risk: "low", note: "Defined road-frontage strip; routine crossing consent for the gen-tie." },
+          { source_doc: "parcelC-access-easement-2010.pdf", label: "Servient to Parcel C access easement (2010)", risk: "medium", note: "Burdens B with C's only access; grantor relocation right could disrupt project road planning if B's owner changes." }
+        ]
+      },
+      {
+        id: "Parcel C", description: "APN 123-456-003 · 200 ac · array expansion", parcel_risk: "high",
+        encumbrances: [
+          { source_doc: "parcelC-ccrs-1996.pdf", label: "Ag/residential-only CC&Rs (1996)", risk: "high", note: "Solar facilities are 'commercial or industrial structures' on the declaration's face. 75% (5 of 6 owners) amendment needed; any owner can enforce." },
+          { source_doc: "parcelC-access-easement-2010.pdf", label: "Access limited to ag/residential use (2010)", risk: "high", note: "Sole legal access, expressly scoped to agricultural/residential ingress — construction and O&M traffic exceed the grant." },
+          { source_doc: "parcelC-irrigation-lien-2023.pdf", label: "Irrigation district assessment lien (2023)", risk: "medium", note: "$4,120 outstanding, statutory super-priority. Pay at closing; petition for district exclusion to stop future senior liens." }
+        ]
+      }
+    ],
+    conflicts: [
+      {
+        title: "The assemblage hinges on Parcel B — and Parcel B is the least controlled parcel",
+        severity: "killer",
+        parcels_involved: ["Parcel B", "Parcel C"],
+        docs_involved: ["parcelB-rofr-2005.pdf", "parcelC-access-easement-2010.pdf"],
+        explanation: "Parcel C's only legal access runs across Parcel B, and the gen-tie must cross B to reach the substation — yet B carries a successor-binding ROFR that on its face reaches any transfer of any interest. If the ROFR holder exercises or litigates, the project loses its access and interconnection route simultaneously: C becomes unusable for project purposes even though its own title is otherwise curable. No single-document review would surface this dependency; it emerges only from reading the access easement and the ROFR together against the project layout."
+      },
+      {
+        title: "Gen-tie route crosses an unlocated pipeline corridor",
+        severity: "high",
+        parcels_involved: ["Parcel A", "Parcel B"],
+        docs_involved: ["parcelA-pipeline-easement-1968.pdf"],
+        explanation: "Until the 1968 blanket easement is confined to a surveyed strip, the pipeline could lawfully be anywhere on Parcel A — including under the planned gen-tie route and array blocks. Crossing agreements cannot even be drafted until the corridor is defined, so the corridor definition agreement gates both the site layout and the interconnection schedule."
+      },
+      {
+        title: "Use restrictions stack on Parcel C: CC&Rs and the access grant point the same direction",
+        severity: "high",
+        parcels_involved: ["Parcel C"],
+        docs_involved: ["parcelC-ccrs-1996.pdf", "parcelC-access-easement-2010.pdf"],
+        explanation: "Even if the CC&R amendment succeeds, the access easement's own 'agricultural and residential' scope independently blocks project traffic. Curing one without the other leaves Parcel C unusable. Both instruments involve overlapping counterparties (the neighboring lot owners), so a single coordinated negotiation — amendment plus easement re-grant — is cheaper than two sequential ones."
+      }
+    ],
+    punch_list: [
+      { issue: "Severed minerals under the array (Parcel A)", severity: "killer", parcels: ["Parcel A"],
+        curative_action: "Trace Crandall Oil & Gas successors/heirs; negotiate surface use waiver or accommodation and non-disturbance agreement; back up with title insurer comfort (ALTA 36 series) once waiver is in hand.",
+        counterparty: "Current holders of the 1952 mineral estate (unknown — heir/corporate-succession search required)", instrument_needed: "Surface use waiver / non-disturbance agreement, recorded", timeline: "2–6 months; longer if heirs are scattered or an estate must be probated" },
+      { issue: "ROFR over access & gen-tie parcel (Parcel B)", severity: "killer", parcels: ["Parcel B"],
+        curative_action: "Obtain recordable waiver and estoppel confirming the ROFR does not apply to the site lease, easement grants, or financing liens — or a full release for consideration.",
+        counterparty: "Dean McAllister or successors", instrument_needed: "ROFR waiver/estoppel or release, recorded", timeline: "2–8 weeks if cooperative; budget consideration" },
+      { issue: "Blanket pipeline easement (Parcel A)", severity: "high", parcels: ["Parcel A"],
+        curative_action: "Identify successor operator; negotiate corridor definition agreement fixing the easement to a surveyed strip with crossing rights for project facilities.",
+        counterparty: "Cascade Pipeline Co. successor (midstream operator)", instrument_needed: "Corridor definition / partial release + crossing agreement, recorded", timeline: "1–4 months, operator-dependent" },
+      { issue: "Ag/residential-only CC&Rs (Parcel C)", severity: "high", parcels: ["Parcel C"],
+        curative_action: "Run the amendment campaign: secure 5 of 6 lot-owner signatures permitting energy use on Lot 4; consider neighbor consideration packages; record amendment.",
+        counterparty: "Valley View Ranches lot owners (5 of 6 required)", instrument_needed: "Recorded CC&R amendment", timeline: "1–3 months; holdout risk is real — start before project becomes public" },
+      { issue: "Access easement scope (Parcel C over B)", severity: "high", parcels: ["Parcel B", "Parcel C"],
+        curative_action: "Amend or re-grant the access easement to cover construction, operation and maintenance traffic for an energy facility; coordinate with ROFR waiver so the grant itself does not trigger the ROFR.",
+        counterparty: "Parcel B owner (and ROFR holder by coordination)", instrument_needed: "Amended and restated access easement, recorded", timeline: "2–6 weeks once ROFR posture is resolved" },
+      { issue: "Irrigation district assessment lien (Parcel C)", severity: "medium", parcels: ["Parcel C"],
+        curative_action: "Pay outstanding assessment at closing; petition for exclusion of non-irrigated project acreage to stop future super-priority liens.",
+        counterparty: "Santiam Irrigation District", instrument_needed: "Lien release; district exclusion order", timeline: "Payment immediate; exclusion 1–2 board cycles" },
+      { issue: "Distribution easement crossing (Parcel B)", severity: "low", parcels: ["Parcel B"],
+        curative_action: "Routine crossing consent from utility for gen-tie over the 20-ft distribution corridor.",
+        counterparty: "Pacific Power successor", instrument_needed: "Crossing consent letter", timeline: "2–4 weeks, routine" }
+    ],
+    document_set_gaps: [
+      "No title commitment was provided for any parcel — the instrument set may be incomplete; order commitments to confirm nothing is missing from this review.",
+      "No deed into the current owner of Parcel A was provided — the vesting chain after Hollis is unverified.",
+      "Parcel C is Lot 4 of a recorded subdivision; the plat itself (building envelopes, platted easements) was not provided.",
+      "No search results for mineral-interest conveyances after 1952 — the current mineral ownership of Parcel A is unestablished.",
+      "Water rights for Parcel C (in-district acreage) were not documented; confirm whether any certificated rights would be affected by district exclusion."
+    ]
+  }
+};
+</script>
+</body>
+</html>
