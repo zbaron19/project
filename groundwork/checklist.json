@@ -1,0 +1,308 @@
+{
+  "name": "Groundwork Data Center Site Diligence Checklist",
+  "version": "0.2",
+  "note": "Framework checklist for data center site acquisition diligence. Each item needs jurisdiction-specific verification by counsel before reliance.",
+  "workstreams": [
+    {
+      "id": "power",
+      "title": "Power & Utility",
+      "weight": 0.35,
+      "intro": "Power is the deal. A site without a credible megawatt story is a farm field with a nice survey. This workstream usually decides go/no-go before anything else is worth spending money on.",
+      "items": [
+        {
+          "id": "power-1",
+          "item": "Identify the serving utility and confirm exclusive service territory",
+          "why": "Territory disputes and unclear service rights between an IOU, a co-op, or a municipal utility can add years. In some states territory is contestable; in others it is fixed by statute or commission order.",
+          "red_flags": "Site straddles two service territories; co-op territory with limited large-load experience; municipal utility with no transmission-level interconnection history."
+        },
+        {
+          "id": "power-2",
+          "item": "Obtain a will-serve or load study commitment in writing, with capacity and timeline",
+          "why": "Verbal 'we can serve you' means nothing. The letter should state MW available, voltage, delivery point, required system upgrades, and an estimated energization schedule.",
+          "red_flags": "Utility will only commit to 'study queue' status; energization date beyond 4-5 years; capacity conditioned on unbuilt generation or transmission."
+        },
+        {
+          "id": "power-3",
+          "item": "Review the utility's large-load tariff and any pending large-load rate cases",
+          "why": "Multiple states have adopted or proposed special data center tariffs: minimum take-or-pay terms, long contract tenors (10-15 yrs), collateral requirements, and exit fees. These reshape project economics and financeability.",
+          "red_flags": "Pending rate case that could impose retroactive terms; take-or-pay minimums above realistic ramp; termination fees that survive assignment."
+        },
+        {
+          "id": "power-4",
+          "item": "Map distance to existing transmission and substation capacity",
+          "why": "A new 230kV+ substation and transmission tap is a multi-year, $50M+ undertaking with its own siting, NEPA/state-EIS, and condemnation risks. Proximity to existing headroom is worth a premium on land price.",
+          "red_flags": "Nearest transmission line >5 miles; substation expansion requires new right-of-way through residential or environmentally sensitive land."
+        },
+        {
+          "id": "power-5",
+          "item": "Assess interconnection queue position and regional (RTO/ISO) constraints",
+          "why": "In constrained RTO regions, queue position is an asset that conveys (or doesn't) with the land. Confirm whether any queue rights exist, who holds them, and whether they are assignable.",
+          "red_flags": "Seller markets 'power available' based on a queue position held by an affiliate that doesn't convey; cluster-study restart risk."
+        },
+        {
+          "id": "power-6",
+          "item": "Evaluate behind-the-meter / on-site generation options and their regulatory posture",
+          "why": "Gas turbines, fuel cells, and bridging generation can rescue a timeline, but several states are moving to regulate or surcharge behind-the-meter large loads. Air permits for on-site generation are their own critical path.",
+          "red_flags": "Nonattainment area for NOx/ozone making air permits slow; state legislation pending on BTM large-load cost allocation."
+        },
+        {
+          "id": "power-7",
+          "item": "Confirm who pays for system upgrades and on what schedule (CIAC exposure)",
+          "why": "Contribution-in-aid-of-construction obligations can run nine figures and are often due before financing milestones. Tax treatment of CIAC matters too.",
+          "red_flags": "Open-ended upgrade cost true-up clauses; utility requires full prepayment with no refund mechanism if capacity is later shared."
+        },
+        {
+          "id": "power-8",
+          "item": "Review curtailment, demand-response, and non-firm service terms",
+          "why": "Some fast-track interconnection products are conditioned on curtailability. Acceptable for some tenants, fatal for others — know the end user before accepting non-firm terms.",
+          "red_flags": "Unlimited curtailment hours; curtailment triggers defined solely at utility discretion."
+        }
+      ]
+    },
+    {
+      "id": "zoning",
+      "title": "Land Use, Zoning & Entitlements",
+      "weight": 0.2,
+      "intro": "The entitlement climate for data centers shifted hard after 2023. By-right today is not by-right at closing unless you protect it. This is where a CRE lawyer earns the fee.",
+      "items": [
+        {
+          "id": "zoning-1",
+          "item": "Confirm current zoning permits data center use by right, by special exception, or not at all",
+          "why": "Many jurisdictions have re-classified data centers out of by-right industrial categories or added special-exception requirements with discretionary review.",
+          "red_flags": "Use is permitted only via legislative rezoning; pending zoning ordinance amendment targeting data centers; 'data center' undefined in the code (interpretation risk)."
+        },
+        {
+          "id": "zoning-2",
+          "item": "Check for pending or threatened moratoria at county, city, and town level",
+          "why": "Data center moratoria have been adopted with little warning in multiple states. A moratorium between PSA signing and entitlement vesting can strand a deposit.",
+          "red_flags": "Council member statements or citizen petitions advocating a pause; comprehensive plan update in progress that revisits data center policy."
+        },
+        {
+          "id": "zoning-3",
+          "item": "Determine when development rights vest under state law and structure the PSA around it",
+          "why": "Vesting rules vary enormously: some states vest at complete application, others only at building permit. The PSA's diligence and closing conditions should track the actual vesting trigger.",
+          "red_flags": "Long gap between closing obligation and vesting event; jurisdiction with history of downzoning during application pendency."
+        },
+        {
+          "id": "zoning-4",
+          "item": "Review setback, height, noise, and screening standards specific to data centers",
+          "why": "Newer ordinances impose data-center-specific noise limits (often dBA at property line), generator setbacks, and substation screening that can cut buildable envelope materially.",
+          "red_flags": "Noise standard measured at residential property line with homes <500 ft; generator yard orientation constrained by adjacency."
+        },
+        {
+          "id": "zoning-5",
+          "item": "Identify all discretionary approvals and their realistic timelines (rezoning, SUP, site plan, comp plan amendment)",
+          "why": "Each discretionary step is a public hearing, which is an organizing opportunity for opposition. Map the full approval stack and the political calendar (elections matter).",
+          "red_flags": "Approval requires supermajority after protest petition; hearing schedule pushes decision past an election with anti-data-center candidates."
+        },
+        {
+          "id": "zoning-6",
+          "item": "Check proffer / development agreement / community benefit expectations",
+          "why": "In competitive jurisdictions, road improvements, fiscal contributions, and design proffers are the de facto price of approval. Budget them like hard costs.",
+          "red_flags": "Recent comparable approvals carried proffers materially above your pro forma; jurisdiction has no development agreement statute (handshake risk)."
+        }
+      ]
+    },
+    {
+      "id": "water",
+      "title": "Water, Sewer & Cooling",
+      "weight": 0.1,
+      "intro": "Cooling technology choices drive water demand, and water is the most politically combustible input after power — especially in the West.",
+      "items": [
+        {
+          "id": "water-1",
+          "item": "Quantify water demand under the actual cooling design (evaporative vs. closed-loop vs. air-cooled) and confirm supply",
+          "why": "Demand ranges from near-zero (air-cooled) to millions of gallons/day (evaporative). Get the will-serve from the water purveyor sized to the real design, with peak-day numbers.",
+          "red_flags": "Purveyor capacity letter caps supply below peak design day; supply contingent on unbuilt treatment capacity."
+        },
+        {
+          "id": "water-2",
+          "item": "Confirm water rights regime and whether new appropriations are realistically available",
+          "why": "In prior-appropriation states, municipal supply may be the only practical path; new rights can be effectively unobtainable. Groundwater management areas add another layer.",
+          "red_flags": "Site in a groundwater management/active management area with moratorium on new wells; water rights marketed with the land are unadjudicated or relinquishment-prone."
+        },
+        {
+          "id": "water-3",
+          "item": "Review sewer/industrial discharge capacity and pretreatment requirements for blowdown",
+          "why": "Cooling tower blowdown is an industrial discharge. POTW capacity and pretreatment permits are routinely overlooked until design development.",
+          "red_flags": "POTW at or near permitted capacity; TDS limits that force on-site treatment."
+        },
+        {
+          "id": "water-4",
+          "item": "Assess reclaimed/recycled water availability as both cost saver and political mitigation",
+          "why": "Purple-pipe supply materially de-risks the public narrative and may be cheaper. Some jurisdictions now effectively require it for large users.",
+          "red_flags": "Reclaimed main >3 miles away with no extension plan; reclaimed supply already fully subscribed."
+        }
+      ]
+    },
+    {
+      "id": "environmental",
+      "title": "Environmental",
+      "weight": 0.08,
+      "items": [
+        {
+          "id": "environmental-1",
+          "item": "Phase I ESA (and Phase II if RECs) under current ASTM standard, with non-scope items considered",
+          "why": "Baseline CERCLA innocent-landowner protection. For data centers, also ask the consultant to address PFAS (firefighting systems history) and historic agricultural chemical use.",
+          "red_flags": "Former industrial/landfill/orchard use; dry cleaner or UST history on or adjacent; vapor pathways near planned office space."
+        },
+        {
+          "id": "environmental-2",
+          "item": "Wetlands/waters delineation and 404/401 permitting exposure",
+          "why": "Large-pad grading on greenfield sites frequently touches jurisdictional waters; mitigation banking costs and Corps timelines belong in the schedule and budget.",
+          "red_flags": "Mapped streams/wetlands across the buildable area; recent jurisdictional rule changes in flux for the region."
+        },
+        {
+          "id": "environmental-3",
+          "item": "Threatened/endangered species and critical habitat screening",
+          "why": "A listed species survey window can freeze grading for a season. Know the survey calendar before signing a construction-start commitment.",
+          "red_flags": "Site in mapped critical habitat; survey windows that don't align with the construction schedule."
+        },
+        {
+          "id": "environmental-4",
+          "item": "Air permitting pathway for backup generators (and any bridging generation)",
+          "why": "A 100+ MW campus can carry dozens of 2-3 MW diesel generators — minor source vs. major source determination drives a 6-24 month spread in timeline.",
+          "red_flags": "Nonattainment designation; aggregation risk with neighboring facilities under common control."
+        },
+        {
+          "id": "environmental-5",
+          "item": "Stormwater, floodplain, and geotech screening",
+          "why": "Data halls are flat, heavy, and water-averse. FEMA floodplain on the pad or poor soils (expansive clay, shallow rock, high groundwater) move real money.",
+          "red_flags": "Any floodway touch; karst terrain; groundwater within excavation depth of mission-critical vaults."
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "title": "Title, Survey & Land",
+      "weight": 0.07,
+      "intro": "Standard CRE title work, but with data-center-specific traps: easement corridors, mineral severance under big pads, and assemblage seams.",
+      "items": [
+        {
+          "id": "title-1",
+          "item": "Full title commitment review with data-center lens on easements and use restrictions",
+          "why": "Pipeline, transmission, and fiber easements crossing the pad area are not minor exceptions here — they dictate building placement. CC&Rs with use or height restrictions can quietly prohibit the project.",
+          "red_flags": "Blanket easements without defined location; private restrictions requiring third-party consent for industrial use; reversionary clauses tied to use."
+        },
+        {
+          "id": "title-2",
+          "item": "Mineral estate severance and surface-use risk",
+          "why": "In severed-estate states, the mineral owner's implied right of reasonable surface use is incompatible with a mission-critical facility. Surface waivers or accommodation agreements may be needed.",
+          "red_flags": "Active leases or recent mineral conveyances; state with strong mineral-dominance doctrine; no surface waiver obtainable."
+        },
+        {
+          "id": "title-3",
+          "item": "ALTA survey with utility corridor, easement, and encroachment mapping against the conceptual site plan",
+          "why": "Overlay the survey on the power and fiber routing plan early — the cheapest time to discover a corridor conflict is before the deposit goes hard.",
+          "red_flags": "Gaps or gores in an assemblage; boundary line agreements needed with multiple neighbors."
+        },
+        {
+          "id": "title-4",
+          "item": "Assemblage strategy: option structure, confidentiality, and holdout exposure",
+          "why": "Multi-parcel campuses live or die on sequencing. Options with staged exercise, name-shielded entities, and uniform pricing discipline prevent the last parcel from costing more than the first ten.",
+          "red_flags": "Key center parcel not yet under control; broker leakage of end-user identity; recorded memoranda tipping the market."
+        },
+        {
+          "id": "title-5",
+          "item": "Existing agricultural/forestry tax classification and rollback/penalty exposure on conversion",
+          "why": "Current-use programs (ag deferral, forestland classification) trigger rollback taxes and penalties on change of use — a real number on 200+ acre sites, and allocation between buyer/seller belongs in the PSA.",
+          "red_flags": "Decade-plus of deferral accumulated; statute imposes penalty in addition to rollback; PSA silent on allocation."
+        }
+      ]
+    },
+    {
+      "id": "tax",
+      "title": "Tax & Incentives",
+      "weight": 0.1,
+      "items": [
+        {
+          "id": "tax-1",
+          "item": "State sales/use tax exemption for data center equipment: eligibility thresholds, sunset dates, and clawbacks",
+          "why": "Equipment is 70-80% of project cost and refreshes every 4-6 years; the sales tax exemption is usually the single largest incentive. Eligibility thresholds (investment, jobs, wages) and certification timing are strict.",
+          "red_flags": "Program sunset before refresh cycles; pending legislation to repeal or condition the exemption; jobs covenant the operating model can't meet."
+        },
+        {
+          "id": "tax-2",
+          "item": "Property tax treatment of real vs. personal property, and abatement availability",
+          "why": "Classification of servers, generators, and electrical gear as real vs. personal property varies by state and drives the assessed base. Local abatements (PILOT, FILOT, Chapter-style agreements) are negotiable instruments — paper them like contracts.",
+          "red_flags": "County reassessment cycle landing mid-construction; abatement requires annual reapplication; assessor history of aggressive 'fixtures' positions."
+        },
+        {
+          "id": "tax-3",
+          "item": "Negotiated incentive agreements: performance covenants, clawbacks, transferability",
+          "why": "Incentive agreements are contracts with default provisions. Confirm they survive an asset sale or REIT transfer, and model the clawback as a contingent liability.",
+          "red_flags": "Non-assignable incentives in a build-to-sell strategy; clawback triggered by headcount metrics outside operator control."
+        },
+        {
+          "id": "tax-4",
+          "item": "Transfer tax / recording cost structuring on acquisition (entity vs. asset, applicable exemptions)",
+          "why": "On nine-figure land deals, real estate excise/transfer tax planning is real money. Controlling-interest transfer rules catch entity deals in several states.",
+          "red_flags": "State with controlling-interest transfer tax and lookback period; county-level surcharge recently enacted."
+        },
+        {
+          "id": "tax-5",
+          "item": "Utility tax, gross receipts tax, and franchise fee exposure on power purchases",
+          "why": "A facility buying $100M+/yr of electricity cares about every percentage point of utility tax. Some municipalities tax utility sales at 5-6%; site selection inside vs. outside city limits can be an eight-figure NPV decision.",
+          "red_flags": "Annexation risk into a high-utility-tax city; gross receipts tax regimes reaching colocation revenue."
+        }
+      ]
+    },
+    {
+      "id": "fiber",
+      "title": "Fiber & Connectivity",
+      "weight": 0.05,
+      "items": [
+        {
+          "id": "fiber-1",
+          "item": "Identify long-haul and metro fiber routes serving the site and distance to splice points",
+          "why": "Two diverse fiber paths is the standard. Lit buildings nearby help, but what matters is conduit rights and construction cost to reach diverse backbone routes.",
+          "red_flags": "Single fiber corridor serving the area; railroad or limited-access highway crossing required for diversity."
+        },
+        {
+          "id": "fiber-2",
+          "item": "Confirm rights-of-way and franchise/permit pathway for new fiber laterals",
+          "why": "Fiber laterals cross public ROW and private land; county franchise requirements and railroad crossing agreements have their own timelines (railroads are famously slow).",
+          "red_flags": "Railroad crossing on every diverse-path option; private easements needed from uncooperative neighbors."
+        },
+        {
+          "id": "fiber-3",
+          "item": "Latency profile to relevant exchange points / availability zones",
+          "why": "For some workloads proximity to existing cloud regions or IXPs is a leasing prerequisite; for AI training it matters less. Know the target tenant before pricing this in.",
+          "red_flags": "Marketing the site for latency-sensitive use at distances the physics doesn't support."
+        }
+      ]
+    },
+    {
+      "id": "political",
+      "title": "Community, Political & Legal Risk",
+      "weight": 0.05,
+      "intro": "Data centers have become a local political issue in a way warehouses never were. Quiet sites get loud fast.",
+      "items": [
+        {
+          "id": "political-1",
+          "item": "Map the opposition landscape: organized groups, recent contested projects, local press tone",
+          "why": "A jurisdiction's last data center fight predicts your hearing. Search local coverage, planning commission minutes, and citizen group activity before relying on a 'business friendly' label.",
+          "red_flags": "Active anti-data-center citizen group; prior project withdrawn or denied; moratorium adopted in an adjacent jurisdiction (contagion)."
+        },
+        {
+          "id": "political-2",
+          "item": "Review pending state legislation touching data centers (tariffs, incentives, siting, water, noise)",
+          "why": "Legislative sessions have produced large-load tariff mandates, incentive repeals, and siting bills with short fuses. A pending bill can change the deal between LOI and closing.",
+          "red_flags": "Bill with momentum that conditions incentives on ratepayer protections your pro forma didn't assume."
+        },
+        {
+          "id": "political-3",
+          "item": "Check for litigation risk patterns: land use appeals, NEPA/state-EIS challenges, ratepayer complaints",
+          "why": "Serial land-use appellants and well-funded environmental petitioners can add 12-24 months even when they lose. Price the delay, not just the merits.",
+          "red_flags": "State with liberal land-use standing rules and a history of data center appeals; utility's certificate proceedings already contested."
+        },
+        {
+          "id": "political-4",
+          "item": "Election calendar and key-decision-maker mapping",
+          "why": "Approvals that span an election are hostage to it. Know which seats turn over before your hearing dates and what the candidates are saying about data centers.",
+          "red_flags": "Project approval scheduled within 90 days of a contested local election where the project is an issue."
+        }
+      ]
+    }
+  ]
+}

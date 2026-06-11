@@ -1,0 +1,369 @@
+{
+  "schema": "groundwork-parcel/1",
+  "demo": true,
+  "checklist_version": "0.2",
+  "parcel": {
+    "name": "Demo Parcel A — Columbia Basin (FICTIONAL)",
+    "county": "Grant County",
+    "state": "WA",
+    "apn": "00-0000-000 (fictional)",
+    "acres": 160,
+    "target_mw": 75,
+    "market_id": "quincy",
+    "client": "Sample client",
+    "engagement": "Sample engagement — fictional parcel assembled to demonstrate the deliverable format; every fact and source on this report is invented."
+  },
+  "recommendation": "Proceed to PSA, with closing conditioned on (1) recordation of an amended, corridor-confined transmission easement resolving title-1 — this is the single go/no-go item; (2) a written will-serve letter superseding the study-queue acknowledgment (power-2); and (3) rollback-tax allocation to seller (title-5). The watch items are manageable in the ordinary course; the wildlife survey window (environmental-3) should drive the grading schedule now, not at permit time.",
+  "items": {
+    "power-1": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Parcel lies entirely within Grant County PUD's exclusive service territory; no territory overlap with adjacent co-op.",
+      "sources": [
+        "[fictional sample] Grant County PUD service-territory map; WUTC territory registry, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "power-2": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "PUD load study (in progress) indicates 75 MW available 2028, 150 MW contingent on a planned 230kV substation expansion; no will-serve letter yet — only a study-queue acknowledgment.",
+      "sources": [
+        "[fictional sample] Grant County PUD large-load study acknowledgment letter dated 2026-04-30"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "power-3": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "PUD evolving-industry rate schedule applies: 15-year minimum-take term with collateral posting; a pending rate proceeding could raise the demand charge ~12%.",
+      "sources": [
+        "[fictional sample] Grant County PUD Schedule 17 (evolving industries); open rate docket reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "power-4": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Existing 230kV BPA line traverses the section 0.8 miles north; PUD substation with documented headroom 1.6 miles east.",
+      "sources": [
+        "[fictional sample] BPA transmission map overlay; PUD system map, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "power-5": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "No third-party interconnection queue rights marketed with the land; service is distribution-level via PUD, avoiding BPA cluster-study exposure at this scale.",
+      "sources": [
+        "[fictional sample] Seller diligence responses; BPA queue search, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "power-6": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "No behind-the-meter generation contemplated at this scale; county is in attainment for NOx/ozone, preserving the option for backup-gen permitting.",
+      "sources": [
+        "[fictional sample] Ecology air-quality attainment designations, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "power-7": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "Substation expansion CIAC is estimated at $18-24M, due in two tranches before energization; refund mechanism if capacity later shared is capped at 50%.",
+      "sources": [
+        "[fictional sample] PUD facilities-charge estimate dated 2026-05-15"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "power-8": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Schedule 17 service is firm; curtailment limited to system emergencies under standard tariff terms.",
+      "sources": [
+        "[fictional sample] Grant County PUD Schedule 17 tariff text, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "zoning-1": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Zoned Rural Heavy Industrial; 'data center / server farm' is a permitted use by right under GCC 23.08 use table.",
+      "sources": [
+        "[fictional sample] Grant County Code Title 23 use matrix, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "zoning-2": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "No moratorium pending in Grant County, but a neighboring county adopted a 6-month data center moratorium in March 2026 — contagion risk at the county commission is real but not imminent.",
+      "sources": [
+        "[fictional sample] County commission minutes Jan-May 2026; regional press review, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "zoning-3": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Washington vests development rights at complete building-permit application; PSA closing conditioned on permit-application acceptance.",
+      "sources": [
+        "[fictional sample] RCW 19.27.095 vesting doctrine; PSA draft sec. 6.2, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "zoning-4": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "No data-center-specific noise or screening standards in current code; nearest residential receptor is 1.4 miles, beyond the 60 dBA contour of a standard generator yard layout.",
+      "sources": [
+        "[fictional sample] GCC ch. 8.68 noise; aerial measurement, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "zoning-5": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "By-right use means site-plan review only — administrative, no public hearing; SEPA checklist is the only discretionary touchpoint.",
+      "sources": [
+        "[fictional sample] Grant County development-review flowchart, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "zoning-6": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "No proffer regime; recent comparable approvals carried only standard road-impact fees (~$1.1M at this scale).",
+      "sources": [
+        "[fictional sample] County fee schedule; two recent comparable site-plan files, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "water-1": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Closed-loop design: peak demand 110 gpm, average 38 gpm; city industrial main extension 0.9 miles with purveyor capacity letter sized to peak day.",
+      "sources": [
+        "[fictional sample] Purveyor capacity letter dated 2026-05-20; basis-of-design memo"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "water-2": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "No new appropriation needed; service is municipal. Parcel's stale 1962 irrigation right is being relinquished by seller at closing.",
+      "sources": [
+        "[fictional sample] Ecology water-rights query; PSA sec. 5.8, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "water-3": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Blowdown volumes from closed-loop design within POTW pretreatment thresholds; no industrial discharge permit required at design loads.",
+      "sources": [
+        "[fictional sample] POTW pretreatment coordinator email dated 2026-05-22"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "water-4": {
+      "status": "na",
+      "risk": "tbd",
+      "finding": "Closed-loop design makes reclaimed supply immaterial; nearest purple-pipe main is 7 miles and unbudgeted.",
+      "sources": [],
+      "verified_on": null
+    },
+    "environmental-1": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Phase I ESA found no RECs; historical use is dryland wheat. PFAS and orchard-chemical non-scope items addressed — no orchard history on the parcel.",
+      "sources": [
+        "[fictional sample] Phase I ESA, ABC Environmental, dated 2026-05-01"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "environmental-2": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "NWI mapping and field reconnaissance show no jurisdictional waters on the buildable area; one roadside ditch determined non-jurisdictional.",
+      "sources": [
+        "[fictional sample] Wetland reconnaissance memo dated 2026-04-22"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "environmental-3": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "Site is mapped shrub-steppe; ground-nesting bird surveys required March-June. Grading start before July 1 risks a season slip if surveys find occupied habitat.",
+      "sources": [
+        "[fictional sample] WDFW PHS data review; biologist memo dated 2026-05-05"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "environmental-4": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Attainment area; 24 x 3MW diesel units pencil as a synthetic-minor source with standard permitting (~8 months).",
+      "sources": [
+        "[fictional sample] Air permitting feasibility memo dated 2026-05-10"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "environmental-5": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Zone X (outside floodplain); geotech borings show dense gravels, groundwater >60 ft; standard spread footings feasible.",
+      "sources": [
+        "[fictional sample] FEMA FIRM panel; preliminary geotech report dated 2026-04-28"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "title-1": {
+      "status": "verified",
+      "risk": "fatal",
+      "finding": "Schedule B-II discloses a blanket transmission easement (1948, undefined location) in favor of the PUD's predecessor across the entire section — as written it permits future lines anywhere on the parcel. PUD has indicated willingness to confine to a defined corridor, but until an amended easement is recorded this is a no-go condition for a mission-critical pad.",
+      "sources": [
+        "[fictional sample] Title commitment, Schedule B-II item 14, eff. 2026-05-18"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "title-2": {
+      "status": "na",
+      "risk": "tbd",
+      "finding": "Mineral estate never severed; chain of title confirms surface and minerals united since patent.",
+      "sources": [],
+      "verified_on": null
+    },
+    "title-3": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "ALTA survey overlays show the conceptual substation yard clipping a 30-ft irrigation-district lateral easement; relocation agreement with the district is feasible but unpriced.",
+      "sources": [
+        "[fictional sample] ALTA survey dated 2026-05-25, overlay vs. concept plan"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "title-4": {
+      "status": "na",
+      "risk": "tbd",
+      "finding": "Single-parcel acquisition; no assemblage.",
+      "sources": [],
+      "verified_on": null
+    },
+    "title-5": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "Parcel is in open-space ag classification since 2009; conversion triggers ~$410K rollback plus penalty. PSA currently silent on allocation — needs a buyer-favorable allocation or price adjustment.",
+      "sources": [
+        "[fictional sample] County assessor classification record; rollback estimate, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "tax-1": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Washington data center sales/use tax exemption available in this county (rural county program); eligibility window and 40-job covenant are achievable at planned scale, but certification must precede equipment purchase orders.",
+      "sources": [
+        "[fictional sample] RCW 82.08 data center exemption program materials, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "tax-2": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Servers and generators classified as personal property; county has no special data-center assessment history. No local abatement needed under current pro forma.",
+      "sources": [
+        "[fictional sample] County assessor personal-property guidance, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "tax-3": {
+      "status": "na",
+      "risk": "tbd",
+      "finding": "No negotiated incentive agreement contemplated; statutory exemption only.",
+      "sources": [],
+      "verified_on": null
+    },
+    "tax-4": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Straight asset purchase; REET applies at standard graduated rates — controlling-interest structure evaluated and rejected (no material savings on these facts).",
+      "sources": [
+        "[fictional sample] REET calculation memo, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "tax-5": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "Parcel is unincorporated — no city utility tax; annexation risk low (nearest city UGA boundary 4.2 miles, no expansion in current comp plan cycle).",
+      "sources": [
+        "[fictional sample] County comp plan UGA map, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "fiber-1": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "One long-haul route parallels the BPA corridor at the section line; the second diverse path requires a 6-mile lateral along county ROW — feasible, ~$2.1M, 9-month construct.",
+      "sources": [
+        "[fictional sample] Carrier route maps (two carriers); lateral cost estimate dated 2026-05-19"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "fiber-2": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "County franchise process for fiber laterals is administrative (60-90 days); no railroad crossings on either contemplated path.",
+      "sources": [
+        "[fictional sample] County public-works franchise checklist, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "fiber-3": {
+      "status": "na",
+      "risk": "tbd",
+      "finding": "Target tenant is AI training; latency to IXPs not a leasing prerequisite per client's basis of design.",
+      "sources": [],
+      "verified_on": null
+    },
+    "political-1": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "No organized opposition in Grant County to date, but regional press tone turned critical in Q1 2026 and a citizens' group is active in the adjacent county; recommend community-engagement plan before site-plan submission.",
+      "sources": [
+        "[fictional sample] Local press review Jan-Jun 2026; planning-commission minutes, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "political-2": {
+      "status": "verified",
+      "risk": "watch",
+      "finding": "Two bills carried over in the legislature touching the data center exemption (performance reporting; ratepayer-protection conditions on large-load tariffs). Neither passed; both expected back next session.",
+      "sources": [
+        "[fictional sample] Legislative bill tracking, 2026 session review, 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "political-3": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "No land-use appeal history on industrial approvals in this county in the past 5 years; PUD's large-load proceedings uncontested to date.",
+      "sources": [
+        "[fictional sample] GMHB and superior-court docket search, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    },
+    "political-4": {
+      "status": "verified",
+      "risk": "clear",
+      "finding": "County commission seats are not up until next year; no candidate has made data centers an issue. Administrative approval path further insulates timing.",
+      "sources": [
+        "[fictional sample] County election calendar; press review, reviewed 2026-06-08"
+      ],
+      "verified_on": "2026-06-08"
+    }
+  }
+}
