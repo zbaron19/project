@@ -204,3 +204,34 @@ body {
 .empty-note { padding: 26px 24px; text-align: center; color: var(--dim); font-size: 13.5px; line-height: 1.6; }
 
 .quiz-meta { padding: 14px 20px 0; font-size: 12px; color: var(--muted); font-weight: 600; }
+
+/* ---------- live spar ---------- */
+.spar-thread { padding: 4px 20px 0; }
+.bubble {
+  border-radius: 14px; padding: 12px 15px; margin-bottom: 9px;
+  max-width: 92%;
+}
+.bubble p { font-size: 14.5px; line-height: 1.58; margin-top: 4px; }
+.bubble.marcus { background: rgba(92,168,240,0.08); border: 1px solid rgba(92,168,240,0.2); margin-right: auto; }
+.bubble.player { background: var(--amber-dim); border: 1px solid var(--amber-border); margin-left: auto; }
+.bubble.player .speaker { color: var(--amber); }
+
+.spar-input { padding: 10px 20px 0; }
+.spar-ta {
+  width: 100%; background: var(--card); border: 1px solid var(--card-border);
+  border-radius: 12px; padding: 12px 14px; color: var(--text);
+  font-family: inherit; font-size: 15px; line-height: 1.5; resize: vertical;
+}
+.spar-ta:focus { outline: none; border-color: var(--amber-border); }
+.spar-btns { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
+
+/* ---------- settings ---------- */
+.settings-input {
+  display: block; width: 100%; margin-bottom: 10px;
+  background: var(--card); border: 1px solid var(--card-border);
+  border-radius: 12px; padding: 13px 15px; color: var(--text);
+  font-family: inherit; font-size: 15px;
+}
+.settings-input:focus { outline: none; border-color: var(--amber-border); }
+select.settings-input { appearance: none; -webkit-appearance: none; }
+.settings-status { font-size: 13px; color: var(--muted); min-height: 18px; padding: 2px 2px 0; }

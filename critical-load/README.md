@@ -43,6 +43,21 @@ open `http://localhost:8000`.
 - **Glossary** collects your banked term cards.
 - Grades persist per episode (best kept). Reset lives on the home screen.
 
+## Live AI sparring (optional)
+
+Tap **Spar AI** on the home screen and enter your Anthropic API key to make
+THE SPAR live: you argue against Marcus in your own words, he argues back in
+character (grounded in the episode's engineering), and Claude grades the
+exchange honestly — what landed, what a sophisticated operator would exploit,
+and the counter a fluent lawyer would have made. Up to three turns per spar.
+
+- The key is stored only in the device's localStorage and sent only to
+  api.anthropic.com (direct browser call, no server in between).
+- Model is selectable: Opus 4.8 (sharpest Marcus, default) or Haiku 4.5
+  (fastest/cheapest). A spar costs a few cents at most.
+- No key, or any API failure: the game falls back to the scripted
+  multiple-choice spar automatically. Everything else works fully offline.
+
 ## Files
 
 - `index.html`, `style.css`, `app.js` — shell and engine (vanilla JS, no deps)

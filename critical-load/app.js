@@ -89,6 +89,8 @@
     qBtn.onclick = renderQuiz;
     var gBtn = el('button', 'home-action', 'Glossary<small>banked terms</small>');
     gBtn.onclick = renderGlossary;
+    var sBtn = el('button', 'home-action', 'Spar AI<small>' + (liveSparReady() ? 'live: on' : 'set up') + '</small>');
+    sBtn.onclick = renderSettings;
     var rBtn = el('button', 'home-action', 'Reset<small>wipe progress</small>');
     rBtn.onclick = function () {
       if (confirm('Wipe all progress and grades?')) {
@@ -96,7 +98,7 @@
         save(); renderHome();
       }
     };
-    actions.appendChild(qBtn); actions.appendChild(gBtn); actions.appendChild(rBtn);
+    actions.appendChild(qBtn); actions.appendChild(gBtn); actions.appendChild(sBtn); actions.appendChild(rBtn);
     app.appendChild(actions);
 
     app.appendChild(el('div', 'section-label', 'Campaign Map'));
@@ -239,9 +241,15 @@
       if (ep.spar.setup) scene.appendChild(el('p', 'muted', ep.spar.setup));
       scene.appendChild(el('div', 'speaker marcus', 'Marcus &middot; Ironvale deal lead'));
       scene.appendChild(el('p', null, '“' + ep.spar.marcus + '”'));
-      scene.appendChild(el('p', 'muted', 'Pick your response. Graded straight, no curve.'));
-      app.appendChild(scene);
-      renderSpar(run);
+      if (liveSparReady()) {
+        scene.appendChild(el('p', 'muted', 'Live spar: respond in your own words. Marcus argues back. Graded straight, no curve.'));
+        app.appendChild(scene);
+        renderLiveSpar(run);
+      } else {
+        scene.appendChild(el('p', 'muted', 'Pick your response. Graded straight, no curve. (Add your API key under Spar AI on the home screen to argue in your own words.)'));
+        app.appendChild(scene);
+        renderSpar(run);
+      }
 
     } else if (step.t === 'bank') {
       var q = ep.bank[step.i];
@@ -345,6 +353,174 @@
       wrap.appendChild(b);
     });
     app.appendChild(wrap);
+  }
+
+  /* ================= LIVE SPAR (Claude API) ================= */
+  function liveSparReady() {
+    return !!(window.CLAPI && window.CLAPI.getKey());
+  }
+
+  function renderLiveSpar(run) {
+    var ep = run.ep;
+    var convo = [];      // API message history
+    var playerTurns = 0;
+    var last = null;     // most recent parsed result
+
+    var thread = el('div', 'spar-thread');
+    app.appendChild(thread);
+
+    var inputWrap = el('div', 'spar-input');
+    var ta = el('textarea', 'spar-ta');
+    ta.placeholder = 'Your response to Marcus…';
+    ta.rows = 3;
+    var btnRow = el('div', 'spar-btns');
+    var sendBtn = el('button', 'btn', 'Send');
+    var endBtn = el('button', 'btn secondary', 'End spar & get graded');
+    endBtn.style.display = 'none';
+    btnRow.appendChild(sendBtn);
+    btnRow.appendChild(endBtn);
+    inputWrap.appendChild(ta);
+    inputWrap.appendChild(btnRow);
+    app.appendChild(inputWrap);
+
+    function bubble(who, text) {
+      var b = el('div', 'bubble ' + who);
+      b.appendChild(el('div', 'speaker ' + (who === 'marcus' ? 'marcus' : 'dee'), who === 'marcus' ? 'Marcus' : 'You'));
+      b.appendChild(el('p', null, esc(text)));
+      thread.appendChild(b);
+      b.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    function conclude() {
+      inputWrap.remove();
+      var g = last ? last.grade : 0;
+      run.pts += g;
+      var cls = g >= 3 ? 'good' : (g >= 2 ? 'mid' : 'bad');
+      var label = g >= 3 ? 'Landed clean' : g === 2 ? 'Landed, but exploitable' : g === 1 ? 'Marcus is smiling' : 'Marcus just won the point';
+      var fb = el('div', 'feedback ' + cls);
+      fb.appendChild(el('div', 'fb-grade', label + ' &middot; ' + g + '/3'));
+      if (last) {
+        fb.appendChild(el('div', null, '<b>What landed:</b> ' + esc(last.what_landed)));
+        var fx = el('div', null, '<b>What a sophisticated operator would exploit:</b> ' + esc(last.what_exploitable));
+        fx.style.marginTop = '8px';
+        fb.appendChild(fx);
+      }
+      app.appendChild(fb);
+      if (last && g < 3) {
+        var fc = el('div', 'feedback good');
+        fc.appendChild(el('div', 'fb-grade', 'The counter a fluent lawyer makes'));
+        fc.appendChild(el('div', null, esc(last.counter)));
+        app.appendChild(fc);
+      }
+      var row = el('div', 'btn-row');
+      var nb = el('button', 'btn', 'Bank it');
+      nb.onclick = function () { run.idx++; renderStep(run); };
+      row.appendChild(nb);
+      app.appendChild(row);
+      nb.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    function fallbackToScripted(errMsg) {
+      thread.remove();
+      inputWrap.remove();
+      var note = el('div', 'feedback bad');
+      note.appendChild(el('div', 'fb-grade', 'Live spar unavailable'));
+      note.appendChild(el('div', null, esc(errMsg) + ' Falling back to the scripted spar.'));
+      app.appendChild(note);
+      renderSpar(run);
+    }
+
+    function send() {
+      var text = ta.value.trim();
+      if (!text) return;
+      ta.value = '';
+      playerTurns++;
+      bubble('player', text);
+      convo.push({ role: 'user', content: text });
+      sendBtn.disabled = true;
+      endBtn.disabled = true;
+      sendBtn.textContent = 'Marcus is thinking…';
+      window.CLAPI.sparTurn(ep, convo).then(function (parsed) {
+        last = parsed;
+        convo.push({ role: 'assistant', content: parsed._raw });
+        bubble('marcus', parsed.marcus);
+        if (parsed.concluded || playerTurns >= 3) {
+          conclude();
+        } else {
+          sendBtn.disabled = false;
+          endBtn.disabled = false;
+          sendBtn.textContent = 'Send';
+          endBtn.style.display = 'block';
+          ta.focus();
+        }
+      }).catch(function (err) {
+        if (last) {
+          // mid-spar failure: grade on what we have rather than losing the run
+          conclude();
+        } else {
+          fallbackToScripted(err && err.message ? err.message : 'Request failed.');
+        }
+      });
+    }
+
+    sendBtn.onclick = send;
+    endBtn.onclick = conclude;
+  }
+
+  /* ================= SETTINGS ================= */
+  function renderSettings() {
+    clear();
+    app.appendChild(header('Spar AI', 'Live free-text sparring against Marcus', renderHome));
+    var scene = el('div', 'scene');
+    scene.appendChild(el('p', null, 'With an Anthropic API key, THE SPAR becomes live: you argue in your own words, Marcus argues back, and Claude grades the exchange. Without a key, spars use the scripted multiple-choice mode.'));
+    scene.appendChild(el('p', 'muted', 'Your key is stored only on this device and sent only to api.anthropic.com. A spar costs a few cents at most. Get a key at console.anthropic.com.'));
+    app.appendChild(scene);
+
+    var wrap = el('div', 'choices');
+    var input = el('input', 'settings-input');
+    input.type = 'password';
+    input.placeholder = 'sk-ant-…';
+    input.value = window.CLAPI ? window.CLAPI.getKey() : '';
+    wrap.appendChild(input);
+
+    var sel = el('select', 'settings-input');
+    (window.CLAPI ? window.CLAPI.MODELS : []).forEach(function (m) {
+      var o = el('option', null, esc(m.label));
+      o.value = m.id;
+      if (window.CLAPI.getModel() === m.id) o.selected = true;
+      sel.appendChild(o);
+    });
+    wrap.appendChild(sel);
+
+    var status = el('div', 'settings-status');
+    wrap.appendChild(status);
+    app.appendChild(wrap);
+
+    var row = el('div', 'btn-row');
+    var saveBtn = el('button', 'btn', 'Save & test connection');
+    saveBtn.onclick = function () {
+      window.CLAPI.setKey(input.value.trim());
+      window.CLAPI.setModel(sel.value);
+      if (!input.value.trim()) {
+        status.textContent = 'Key cleared. Spars will use scripted mode.';
+        return;
+      }
+      status.textContent = 'Testing…';
+      window.CLAPI.test().then(function () {
+        status.textContent = '✓ Connected. Live sparring is on.';
+      }).catch(function (err) {
+        status.textContent = '✗ ' + (err && err.message ? err.message : 'Connection failed.');
+      });
+    };
+    var clearBtn = el('button', 'btn secondary', 'Remove key from this device');
+    clearBtn.onclick = function () {
+      window.CLAPI.setKey('');
+      input.value = '';
+      status.textContent = 'Key removed.';
+    };
+    row.appendChild(saveBtn);
+    row.appendChild(clearBtn);
+    app.appendChild(row);
   }
 
   function finishRun(run) {

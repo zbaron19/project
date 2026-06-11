@@ -1,10 +1,11 @@
 /* Critical Load — offline cache */
-var CACHE = 'critical-load-v1';
+var CACHE = 'critical-load-v2';
 var ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
+  './spar-live.js',
   './data1.js',
   './data2.js',
   './data3.js',
@@ -31,6 +32,9 @@ self.addEventListener('activate', function (e) {
 });
 
 self.addEventListener('fetch', function (e) {
+  if (e.request.method !== 'GET' || new URL(e.request.url).origin !== self.location.origin) {
+    return; // API calls and other cross-origin requests go straight to the network
+  }
   e.respondWith(
     fetch(e.request).then(function (res) {
       var copy = res.clone();
