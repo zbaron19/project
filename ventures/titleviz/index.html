@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TitleViz — Commitment Cross-Check Workbench</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="app-header" id="app-header">
+  <div class="header-row">
+    <div class="brand">
+      <h1>TitleViz</h1>
+      <p class="tagline">The exam workbench for attorneys who sign their name to title.</p>
+    </div>
+    <div class="header-controls">
+      <label class="attorney-field">
+        Reviewing attorney
+        <input type="text" id="attorney-name" placeholder="Your name (for attestations)" autocomplete="name">
+      </label>
+      <span id="mode-badge" class="mode-badge" title="Extraction server status">checking&hellip;</span>
+      <button id="btn-live" class="btn secondary" hidden>Paste a commitment</button>
+      <button id="btn-print" class="btn primary">Print exam report</button>
+    </div>
+  </div>
+  <p class="framing-line">TitleViz organizes and cross-references documents. It does not examine
+  title, determine insurability or marketability, or render an opinion of title. All
+  determinations remain the reviewing attorney&rsquo;s professional judgment.</p>
+</header>
+
+<section id="live-panel" class="live-panel" hidden>
+  <div class="live-panel-inner">
+    <h2>Live extraction</h2>
+    <p class="muted">Paste raw commitment text. The extraction server returns Schedule A / B
+    structure into this workbench. Every extracted item starts at <strong>needs review</strong> —
+    extraction is a starting point for your exam, not a result.</p>
+    <textarea id="live-text" rows="10" placeholder="Paste the full text of a title commitment here&hellip;"></textarea>
+    <div class="live-actions">
+      <button id="btn-extract" class="btn primary">Extract structure</button>
+      <button id="btn-load-demo" class="btn secondary">Back to demo file</button>
+      <span id="live-status" class="live-status" role="status"></span>
+    </div>
+  </div>
+</section>
+
+<section id="file-summary" class="file-summary" aria-label="Commitment summary"></section>
+
+<section id="timeline-section" class="timeline-section" aria-label="Chain of recorded instruments">
+  <div class="timeline-head">
+    <h2>Recorded chain (from structured file data)</h2>
+    <span class="muted small">Links shown as &ldquo;verified per source&rdquo; only because each node
+    is a document in this file — click any node to read it. No inferred links.</span>
+  </div>
+  <div id="timeline" class="timeline"></div>
+</section>
+
+<main class="workbench">
+  <nav id="pane-list" class="pane pane-list" aria-label="Schedule B items"></nav>
+  <section id="pane-detail" class="pane pane-detail" aria-label="Selected item detail"></section>
+  <aside id="pane-doc" class="pane pane-doc" aria-label="Source document">
+    <div id="doc-meta" class="doc-meta">
+      <p class="muted doc-placeholder">Select an item with a source document to view the recorded
+      instrument here, with its operative language highlighted.</p>
+    </div>
+    <iframe id="doc-frame" class="doc-frame" title="Recorded document view" hidden></iframe>
+  </aside>
+</main>
+
+<footer class="app-footer">
+  <p class="framing-line">TitleViz organizes and cross-references documents. It does not examine
+  title, determine insurability or marketability, or render an opinion of title. All
+  determinations remain the reviewing attorney&rsquo;s professional judgment.</p>
+  <p class="muted small" id="synthetic-notice"></p>
+</footer>
+
+<div id="print-report" class="print-report" aria-hidden="true"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

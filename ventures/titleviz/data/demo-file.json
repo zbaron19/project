@@ -1,0 +1,250 @@
+{
+  "file_id": "TV-DEMO-001",
+  "file_label": "Demo file — 7214 38th Ave NE (synthetic)",
+  "synthetic_notice": "All names, instruments, and recording numbers in this file are synthetic demonstration data. No real persons, property, or county records are referenced.",
+  "commitment": {
+    "form": "ALTA Commitment for Title Insurance (07-01-2021)",
+    "underwriter": "Demo Title Insurance Company (synthetic)",
+    "file_no": "26-114752-KNG",
+    "effective_date": "May 28, 2026 at 8:00 A.M.",
+    "schedule_a": {
+      "policy_type": "ALTA Owner's Policy (07-01-2021)",
+      "policy_amount": 825000,
+      "proposed_insured": "Maya R. Lindqvist, an unmarried person",
+      "vesting": "Theodore J. Aldercroft and Susan M. Aldercroft, husband and wife",
+      "vesting_instrument_afn": "20180706000341",
+      "estate": "Fee simple",
+      "legal_description": "Lot 4, Block 2, Cedarbrook Heights Division No. 3, according to the plat thereof recorded in Volume 89 of Plats, pages 45 through 47, records of King County, Washington. Situate in the County of King, State of Washington.",
+      "parcel_no": "145270-0040",
+      "county": "King",
+      "state": "WA"
+    },
+    "requirements": [
+      {
+        "id": "req-1",
+        "number": 1,
+        "text": "Pay the agreed amount for the interest in the Land and/or the mortgage to be insured.",
+        "afns": []
+      },
+      {
+        "id": "req-2",
+        "number": 2,
+        "text": "Record a Statutory Warranty Deed, in the form provided by RCW 64.04.030, executed by Theodore J. Aldercroft and Susan M. Aldercroft, husband and wife, conveying the Land to Maya R. Lindqvist, an unmarried person.",
+        "afns": []
+      },
+      {
+        "id": "req-3",
+        "number": 3,
+        "text": "Payment of real estate excise tax, if any, pursuant to chapter 82.45 RCW and the rules of the Washington Department of Revenue, together with a fully completed Real Estate Excise Tax Affidavit.",
+        "afns": []
+      },
+      {
+        "id": "req-4",
+        "number": 4,
+        "text": "Obtain and record a Full Reconveyance of the Deed of Trust recorded under Recording No. 20210312000456, executed by the trustee named therein or its lawfully appointed successor, upon satisfaction of the obligation secured thereby.",
+        "afns": ["20210312000456"]
+      }
+    ],
+    "exceptions": [
+      {
+        "id": "exc-1",
+        "number": 1,
+        "exception_class": "standard",
+        "heading": "General taxes — not yet due",
+        "text": "General taxes and charges for the year 2026, which are not yet due and payable. Tax Account No. 145270-0040. Levy code 2156. (Amounts billed and collected by the King County Treasurer; first half delinquent after April 30, second half delinquent after October 31, per RCW 84.56.020.)",
+        "afns": []
+      },
+      {
+        "id": "exc-2",
+        "number": 2,
+        "exception_class": "standard",
+        "heading": "Parties in possession",
+        "text": "Rights or claims of parties in possession of the Land not shown by the Public Records.",
+        "afns": []
+      },
+      {
+        "id": "exc-3",
+        "number": 3,
+        "exception_class": "standard",
+        "heading": "Survey matters",
+        "text": "Encroachments, overlaps, boundary line disputes, or other matters which would be disclosed by an accurate survey and inspection of the Land.",
+        "afns": []
+      },
+      {
+        "id": "exc-4",
+        "number": 4,
+        "exception_class": "standard",
+        "heading": "Unrecorded liens for labor or material",
+        "text": "Any lien, or right to a lien, for services, labor, or material heretofore or hereafter furnished, imposed by law and not shown by the Public Records.",
+        "afns": []
+      },
+      {
+        "id": "exc-5",
+        "number": 5,
+        "exception_class": "special",
+        "heading": "Plat matters — Cedarbrook Heights Div. No. 3",
+        "text": "All covenants, conditions, restrictions, reservations, easements, notes, dedications, and setback lines, if any, set forth on the face of the plat of Cedarbrook Heights Division No. 3, recorded June 14, 1962, in Volume 89 of Plats, pages 45 through 47, under Recording No. 5432109, records of King County, Washington.",
+        "afns": ["5432109"]
+      },
+      {
+        "id": "exc-6",
+        "number": 6,
+        "exception_class": "special",
+        "heading": "Covenants, conditions and restrictions",
+        "text": "Covenants, conditions, restrictions, and easements contained in the Amended and Restated Declaration of Covenants, Conditions and Restrictions for Cedarbrook Heights Division No. 3, recorded September 10, 2003, under Recording No. 20030910000789, records of King County, Washington, including provision for assessments and a lien therefor. NOTE: This exception omits any covenant, condition, or restriction, if any, based upon race, color, creed, religion, sex, sexual orientation, familial status, marital status, disability, honorably discharged veteran or military status, or national origin, unless and only to the extent that said covenant (a) is exempt under Title 42, Section 3607 of the United States Code, or (b) relates to handicap but does not discriminate against handicapped persons. Such covenants are void under RCW 49.60.224 and may be stricken from the record pursuant to RCW 49.60.227.",
+        "afns": ["20030910000789"]
+      },
+      {
+        "id": "exc-7",
+        "number": 7,
+        "exception_class": "special",
+        "heading": "Easement — electric distribution (2005)",
+        "text": "Easement and the terms and conditions thereof: Grantee: Cascadia Power & Light Company, a Washington corporation; Purpose: electric transmission and/or distribution lines, together with necessary appurtenances; Area affected: the East 30 feet of said Lot 4; Recorded: August 22, 2005; Recording No.: 20050822001234.",
+        "afns": ["20050822001234"]
+      },
+      {
+        "id": "exc-8",
+        "number": 8,
+        "exception_class": "special",
+        "heading": "Easement — ingress, egress and utilities (1998)",
+        "text": "Easement and the terms and conditions thereof: Purpose: ingress, egress, and utilities; Area affected: a portion of said premises; Recorded: April 17, 1998; Recording No.: 19980417000892.",
+        "afns": ["19980417000892"]
+      },
+      {
+        "id": "exc-9",
+        "number": 9,
+        "exception_class": "special",
+        "heading": "Deed of trust (2021) and assignment",
+        "text": "Deed of Trust and the terms and conditions thereof: Grantor: Theodore J. Aldercroft and Susan M. Aldercroft, husband and wife; Trustee: Sound Title & Escrow, Inc., a Washington corporation; Beneficiary: Cascade Community Bank; Amount: $480,000.00; Dated: March 9, 2021; Recorded: March 12, 2021; Recording No.: 20210312000456. The beneficial interest under said Deed of Trust has been assigned to Rainier Loan Servicing, LLC by Assignment of Deed of Trust recorded June 15, 2023, under Recording No. 20230615000123.",
+        "afns": ["20210312000456", "20230615000123"]
+      }
+    ]
+  },
+  "documents": [
+    {
+      "afn": "5432109",
+      "afn_label": "Recording No. 5432109",
+      "title": "Plat of Cedarbrook Heights Division No. 3",
+      "doc_type": "Plat",
+      "recorded": "1962-06-14",
+      "recorded_display": "June 14, 1962",
+      "citation": "Volume 89 of Plats, pages 45–47, Rec. No. 5432109, records of King County, WA",
+      "parties": "Cedarbrook Development Company (dedicator)",
+      "href": "docs/plat.html",
+      "anchor": "operative",
+      "operative_excerpt": "An easement is hereby reserved under and upon the rear ten (10) feet of all lots and tracts in this plat for the installation and maintenance of utilities and drainage facilities... No structure shall be erected nearer than twenty (20) feet to the front lot line."
+    },
+    {
+      "afn": "20030910000789",
+      "afn_label": "AFN 20030910000789",
+      "title": "Amended and Restated Declaration of CC&Rs — Cedarbrook Heights Div. No. 3",
+      "doc_type": "CC&Rs",
+      "recorded": "2003-09-10",
+      "recorded_display": "September 10, 2003",
+      "citation": "Rec. No. 20030910000789, records of King County, WA",
+      "parties": "Cedarbrook Heights Community Association (declarant)",
+      "href": "docs/ccrs.html",
+      "anchor": "operative",
+      "operative_excerpt": "Each Owner... is deemed to covenant and agree to pay to the Association annual assessments... Each such assessment, together with interest, costs, and reasonable attorneys' fees, shall be a charge on the land and shall be a continuing lien upon the Lot against which the assessment is made."
+    },
+    {
+      "afn": "20050822001234",
+      "afn_label": "AFN 20050822001234",
+      "title": "Easement (Electric Distribution) — Cascadia Power & Light Company",
+      "doc_type": "Easement",
+      "recorded": "2005-08-22",
+      "recorded_display": "August 22, 2005",
+      "citation": "Rec. No. 20050822001234, records of King County, WA",
+      "parties": "Aldercroft predecessors (grantor) to Cascadia Power & Light Company (grantee)",
+      "href": "docs/easement-utility.html",
+      "anchor": "operative",
+      "operative_excerpt": "...a perpetual easement under, across, and over the following described portion of the Property: the East 30 feet of said Lot 4, Block 2, Cedarbrook Heights Division No. 3, for the purpose of constructing, operating, maintaining, repairing, and replacing one or more electric distribution lines..."
+    },
+    {
+      "afn": "20090223000567",
+      "afn_label": "AFN 20090223000567",
+      "title": "Deed of Trust — Pemberly to Emerald City Savings Bank",
+      "doc_type": "Deed of Trust",
+      "recorded": "2009-02-23",
+      "recorded_display": "February 23, 2009",
+      "citation": "Rec. No. 20090223000567, records of King County, WA",
+      "parties": "Harold T. Pemberly (grantor); Pacific Crest Title Company of Washington, Inc. (trustee); Emerald City Savings Bank (beneficiary)",
+      "href": "docs/deed-of-trust-2009.html",
+      "anchor": "operative",
+      "operative_excerpt": "Grantor hereby irrevocably grants, bargains, sells, and conveys to Trustee in trust, with power of sale, the following described real property in King County, Washington... to secure payment of the sum of $310,000.00..."
+    },
+    {
+      "afn": "20180706000340",
+      "afn_label": "AFN 20180706000340",
+      "title": "Full Reconveyance — of Deed of Trust Rec. No. 20090223000567",
+      "doc_type": "Full Reconveyance",
+      "recorded": "2018-07-06",
+      "recorded_display": "July 6, 2018",
+      "citation": "Rec. No. 20180706000340, records of King County, WA",
+      "parties": "Pacific Crest Title Company of Washington, Inc., trustee",
+      "href": "docs/full-reconveyance.html",
+      "anchor": "operative",
+      "discharges": "20090223000567",
+      "operative_excerpt": "...the Trustee does hereby RECONVEY, WITHOUT WARRANTY, to the person or persons legally entitled thereto, all the estate, title, and interest now held by it under said Deed of Trust recorded under Recording No. 20090223000567."
+    },
+    {
+      "afn": "20180706000341",
+      "afn_label": "AFN 20180706000341",
+      "title": "Statutory Warranty Deed — Pemberly to Aldercroft (vesting deed)",
+      "doc_type": "Statutory Warranty Deed",
+      "recorded": "2018-07-06",
+      "recorded_display": "July 6, 2018",
+      "citation": "Rec. No. 20180706000341, records of King County, WA",
+      "parties": "Harold T. Pemberly, an unmarried man (grantor) to Theodore J. Aldercroft and Susan M. Aldercroft, husband and wife (grantees)",
+      "href": "docs/statutory-warranty-deed.html",
+      "anchor": "operative",
+      "operative_excerpt": "THE GRANTOR, Harold T. Pemberly, an unmarried man, for and in consideration of Ten Dollars and other good and valuable consideration, conveys and warrants to Theodore J. Aldercroft and Susan M. Aldercroft, husband and wife, the following described real estate, situated in the County of King, State of Washington: Lot 4, Block 2, Cedarbrook Heights Division No. 3..."
+    },
+    {
+      "afn": "20210312000456",
+      "afn_label": "AFN 20210312000456",
+      "title": "Deed of Trust — Aldercroft to Cascade Community Bank",
+      "doc_type": "Deed of Trust",
+      "recorded": "2021-03-12",
+      "recorded_display": "March 12, 2021",
+      "citation": "Rec. No. 20210312000456, records of King County, WA",
+      "parties": "Theodore J. Aldercroft and Susan M. Aldercroft, husband and wife (grantors); Sound Title & Escrow, Inc. (trustee); Cascade Community Bank (beneficiary)",
+      "href": "docs/deed-of-trust-2021.html",
+      "anchor": "operative",
+      "operative_excerpt": "Grantors hereby irrevocably grant, bargain, sell, and convey to Trustee in trust, with power of sale, the following described real property in King County, Washington... to secure payment of the sum of $480,000.00 with interest thereon according to the terms of a promissory note of even date..."
+    },
+    {
+      "afn": "20230615000123",
+      "afn_label": "AFN 20230615000123",
+      "title": "Assignment of Deed of Trust — Cascade Community Bank to Rainier Loan Servicing, LLC",
+      "doc_type": "Assignment of Deed of Trust",
+      "recorded": "2023-06-15",
+      "recorded_display": "June 15, 2023",
+      "citation": "Rec. No. 20230615000123, records of King County, WA",
+      "parties": "Cascade Community Bank (assignor) to Rainier Loan Servicing, LLC (assignee)",
+      "href": "docs/assignment-deed-of-trust.html",
+      "anchor": "operative",
+      "operative_excerpt": "...hereby grants, assigns, and transfers to Rainier Loan Servicing, LLC all beneficial interest under that certain Deed of Trust dated March 9, 2021, executed by Theodore J. Aldercroft and Susan M. Aldercroft... recorded March 12, 2021, under Recording No. 20210312000456..."
+    },
+    {
+      "afn": "20240118000976",
+      "afn_label": "AFN 20240118000976",
+      "title": "Boundary Line Agreement — Aldercroft / Okonkwo",
+      "doc_type": "Boundary Line Agreement",
+      "recorded": "2024-01-18",
+      "recorded_display": "January 18, 2024",
+      "citation": "Rec. No. 20240118000976, records of King County, WA",
+      "parties": "Theodore J. Aldercroft and Susan M. Aldercroft (Lot 4); Chidi N. Okonkwo and Amara E. Okonkwo (Lot 5)",
+      "href": "docs/boundary-line-agreement.html",
+      "anchor": "operative",
+      "operative_excerpt": "The parties hereby fix and agree that the common boundary between Lot 4 and Lot 5, Block 2, Cedarbrook Heights Division No. 3, shall be the line of the existing cedar fence as described on Exhibit A, which line shall be binding upon the parties, their heirs, successors, and assigns."
+    }
+  ],
+  "chain": [
+    "20090223000567",
+    "20180706000340",
+    "20180706000341",
+    "20210312000456",
+    "20230615000123"
+  ]
+}
