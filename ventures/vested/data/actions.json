@@ -1,0 +1,664 @@
+{
+  "meta": {
+    "product": "Vested",
+    "dataset": "U.S. data center entitlement actions",
+    "as_of": "2026-06-11",
+    "not_yet_covering": [
+      "Arizona, Ohio, Indiana, Pennsylvania, Minnesota, Missouri and other states with active local fights",
+      "State-level legislation (e.g., Georgia HB 1059)",
+      "Utility / public service commission proceedings",
+      "Tax-incentive and economic-development agreements",
+      "Site-specific rezonings except where they set jurisdiction-wide precedent or are in litigation"
+    ],
+    "schema_version": "0.1"
+  },
+  "actions": [
+    {
+      "id": "va-loudoun-zoam-2024-0001",
+      "state": "VA",
+      "jurisdiction": "Loudoun County",
+      "jurisdiction_type": "county",
+      "action_type": "ordinance_amendment",
+      "instrument_kind": "ordinance",
+      "status": "adopted",
+      "adopted_date": "2025-03-18",
+      "expiry_date": null,
+      "title": "ZOAM-2024-0001 / CPAM-2024-0001 — Data Center Standards & Locations, Phase 1",
+      "scope_decode": {
+        "prohibits_new_applications": false,
+        "prohibits_pending_applications": false,
+        "prohibits_permit_issuance": false,
+        "summary": "Not a prohibition. Eliminates by-right (administrative) approval of data centers in the Industrial Park (IP), General Industry (GI), and Mineral Resources-Heavy Industry (MR-HI) districts; new data center uses now require Special Exception (SPEX) approval, a legislative review with public hearings before both the Planning Commission and the Board of Supervisors. Companion CPAM-2024-0001 designates data centers a conditional use in the 2019 General Plan."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Yes, but narrow. The Board adopted a companion Grandfathering Resolution: data center applications accepted for review before February 12, 2025 may continue processing without SPEX approval — but, per the County's published summary and Holland & Knight's analysis, only for proposed data centers located more than 500 feet from residential areas, and only absent substantial changes to the application. Pending applications closer to residential areas lost their by-right path."
+      },
+      "vesting_context": "Virginia: Va. Code § 15.2-2307. Vesting requires a significant affirmative governmental act (e.g., approved rezoning, special exception, or site plan) plus good-faith reliance and substantial expense. A pending application, standing alone, generally does NOT vest rights in Virginia — which is why Loudoun's grandfathering resolution, not the vesting statute, is doing the work for in-process projects.",
+      "numeric_standards": "SPEX now required for data center use in IP, GI and MR-HI districts. Grandfathering limited to applications accepted before Feb. 12, 2025 on sites more than 500 ft from residential areas. Phase 2 (performance standards — noise, design, siting criteria) in development as of 2026.",
+      "entitlement_path": "Formerly by-right in key industrial districts; now special exception (SPEX) county-wide for new applications. Loudoun uses 'special exception,' not CUP, terminology.",
+      "next_hearing": null,
+      "vote_tally": "7-2 (Supervisors Kershner and Umstattd opposed)",
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: The world's largest data center market just converted its core product — fast administrative approval — into a discretionary legislative process. Expect SPEX timelines of 12-18+ months, proffer-style negotiation pressure, and a repricing of land that was bought at by-right values. The 500-foot grandfathering line is the immediate battleground: pending applications near residential edges lost their lane on adoption day. Phase 2 performance standards are the next event to watch.",
+      "sources": [
+        {"label": "Loudoun County — Data Center Standards & Locations (official)", "url": "https://www.loudoun.gov/5990/Data-Center-Standards-Locations"},
+        {"label": "Holland & Knight client alert (Apr. 2025)", "url": "https://www.hklaw.com/en/insights/publications/2025/04/loudoun-county-virginia-eliminates-by-right-data-center-development"},
+        {"label": "Blue Ridge Leader coverage of adoption", "url": "https://blueridgeleader.com/loudoun-board-of-supervisors-passes-data-center-zoning-amendments/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-03-18",
+      "change_note": "Adopted by Board of Supervisors 7-2 with grandfathering resolution."
+    },
+    {
+      "id": "va-prince-william-digital-gateway",
+      "state": "VA",
+      "jurisdiction": "Prince William County",
+      "jurisdiction_type": "county",
+      "action_type": "litigation",
+      "instrument_kind": "ordinance",
+      "status": "repealed",
+      "adopted_date": "2023-12-12",
+      "expiry_date": null,
+      "title": "PW Digital Gateway rezonings — voided ab initio by circuit court",
+      "scope_decode": {
+        "prohibits_new_applications": null,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": null,
+        "summary": "Status shown as 'repealed' for filtering purposes; the precise posture is judicial invalidation, not legislative repeal. On Aug. 7, 2025 the Prince William Circuit Court (Judge Kimberly Irving) declared the rezoning ordinances for the ~2,100-acre Digital Gateway corridor (approved after the Dec. 12, 2023 public hearing) void ab initio for failure to comply with Va. Code § 15.2-2204 public-notice requirements — notice published only days before the hearing, without the rezoning documents available for review."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Not applicable — this is litigation over an approval, not a restriction with a carve-out. The relevant lesson runs the other way: an approval void ab initio is treated as if it never existed, so nothing downstream of it (site plans, permits) can support vesting."
+      },
+      "vesting_context": "Virginia: Va. Code § 15.2-2307 requires a significant affirmative governmental act plus good-faith reliance. A rezoning declared void ab initio is legally no act at all — meaning reliance expenditures on the Digital Gateway approvals likely cannot generate vested rights. Procedural compliance diligence (notice, advertisement, document availability) is therefore a title-grade issue for data center M&A in Virginia.",
+      "numeric_standards": "Project as approved: ~2,100-acre corridor along Pageland Lane near Gainesville; reported at over 22 million sq ft across up to 37 data center buildings at full buildout.",
+      "entitlement_path": "Rezoning-based (legislative). After invalidation, the land reverts to its prior zoning; any new attempt requires a fresh rezoning with compliant notice.",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": "Oak Valley homeowners' challenge. Aug. 7, 2025: circuit court voids rezonings ab initio (Va. Code § 15.2-2204 notice defects). Nov. 2025: construction barred pending appeal. The Virginia Court of Appeals upheld the circuit court; in April 2026, Compass Datacenters dropped its appeal, leaving the invalidation in place.",
+      "editorial_analysis": "Editorial analysis: The largest planned data center campus in the world was undone not on the merits but on a notice defect — three days of notice instead of the statutory minimum, with documents unavailable. That is now the template for opposition groups statewide: procedural attack is cheaper than substantive attack and, as here, fully dispositive. Buyers of entitled Virginia land should treat hearing-notice compliance files as diligence documents on par with the proffers themselves.",
+      "sources": [
+        {"label": "WTOP — Judge voids Digital Gateway rezoning (Aug. 2025)", "url": "https://wtop.com/prince-william-county/2025/08/judge-voids-digital-gateway-rezoning-in-prince-william-county/"},
+        {"label": "WTOP — Developers drop appeal (Apr. 2026)", "url": "https://wtop.com/prince-william-county/2026/04/developers-drop-appeal-of-zoning-decision-on-digital-gateway-project/"},
+        {"label": "Bean, Kinney & Korman analysis", "url": "https://www.beankinney.com/data-center-infrastructure-under-siege-lessons-from-virginias-digital-gateway-decision/"},
+        {"label": "Prince William Times — Judge overturns Digital Gateway", "url": "https://www.princewilliamtimes.com/news/breaking-judge-overturns-prince-william-digital-gateway/article_951d6362-1bbd-416f-89c5-ff322bf49fa8.html"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2026-04-30",
+      "change_note": "Compass Datacenters dropped its appeal in April 2026 (exact date not yet verified); circuit court invalidation stands."
+    },
+    {
+      "id": "va-fairfax-zoa-2024",
+      "state": "VA",
+      "jurisdiction": "Fairfax County",
+      "jurisdiction_type": "county",
+      "action_type": "ordinance_amendment",
+      "instrument_kind": "ordinance",
+      "status": "adopted",
+      "adopted_date": "2024-09-10",
+      "expiry_date": null,
+      "title": "Data Center Zoning Ordinance Amendment (effective Sept. 11, 2024)",
+      "scope_decode": {
+        "prohibits_new_applications": false,
+        "prohibits_pending_applications": false,
+        "prohibits_permit_issuance": false,
+        "summary": "Not a prohibition. Adds detailed use standards for data centers and caps by-right size; projects that exceed the by-right thresholds or cannot meet the standards require Special Exception approval (except in the I-5 and I-6 districts). In practice, most new data centers in Fairfax now route through Special Exception."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "The amendment took effect Sept. 11, 2024, the day after adoption. Specific transition language for applications pending on the effective date has not yet been verified against the adopted ordinance text — verify before relying."
+      },
+      "vesting_context": "Virginia: Va. Code § 15.2-2307. A pending application generally does not vest; a project with an approved site plan or special exception before the effective date stands on much stronger ground. Fairfax uses 'special exception' terminology.",
+      "numeric_standards": "By-right size caps: 40,000 sq ft in C-3 and C-4 (retained); 80,000 sq ft in I-2, I-3 and I-4 (new). Larger projects require Special Exception except in I-5/I-6. Data center buildings: minimum 200 ft from the lot line of adjacent residential districts/uses. Ground equipment (incl. generators): 300 ft from residential lot lines, or screened by the building itself. Additional noise, architectural design and Metro-station-proximity standards.",
+      "entitlement_path": "By-right only under the size caps and standards; Special Exception for everything larger or non-conforming, except I-5/I-6 districts.",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Fairfax took the calibrated path — keep a by-right lane, but shrink it to sizes (40k-80k sq ft) well below modern hyperscale formats, which effectively pushes every institutional-grade project into discretionary review. The 200/300-foot residential setbacks are now a de facto regional floor; expect them cited in every Northern Virginia ordinance fight. For site selection, I-5 and I-6 parcels carry a measurable entitlement premium.",
+      "sources": [
+        {"label": "Fairfax County — Board approves data center ZOA (official)", "url": "https://www.fairfaxcounty.gov/news/board-supervisors-approve-new-data-center-zoning-ordinance-amendment"},
+        {"label": "Holland & Knight client alert (Sept. 2024)", "url": "https://www.hklaw.com/en/insights/publications/2024/09/fairfax-county-virginia-approves-updated-zoning-regulations"},
+        {"label": "McGuireWoods client alert (Sept. 2024)", "url": "https://www.mcguirewoods.com/client-resources/alerts/2024/9/fairfax-county-board-adopts-data-center-zoning-changes/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2024-09-10",
+      "change_note": "Adopted Sept. 10, 2024; effective Sept. 11, 2024."
+    },
+    {
+      "id": "va-prince-william-dcozod-2026",
+      "state": "VA",
+      "jurisdiction": "Prince William County",
+      "jurisdiction_type": "county",
+      "action_type": "overlay_district",
+      "instrument_kind": "ordinance",
+      "status": "proposed",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "DPA2026-00006 — Data Center Opportunity Zone Overlay District (DCOZOD) reduction",
+      "scope_decode": {
+        "prohibits_new_applications": null,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": null,
+        "summary": "Proposed, not adopted. On March 3, 2026 the Board of County Supervisors initiated a Zoning Text Amendment (DPA2026-00006) to reduce and redefine the DCOZOD — the overlay that has enabled streamlined data center development — limiting it to parcels meeting one or more of five County-defined eligibility pathways, and to move toward ending by-right data center development in the overlay. A 2024 attempt to eliminate the overlay entirely failed 6-2."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Draft transition/grandfathering language not yet published or verified. Until adoption, existing DCOZOD rules govern — which is precisely why opponents are pressing for speed and developers are racing applications in."
+      },
+      "vesting_context": "Virginia: Va. Code § 15.2-2307. Filing inside the overlay before adoption does not by itself vest rights; an approved site plan or other significant affirmative governmental act before the amendment's effective date is the meaningful line. Expect a filing surge while the amendment is pending.",
+      "numeric_standards": "Five County-defined parcel eligibility pathways proposed for continued overlay inclusion (criteria under development). Current overlay rules per Zoning Ordinance Part 509 remain in effect pending adoption.",
+      "entitlement_path": "Today: data-center-friendly overlay with by-right pathways. As proposed: smaller overlay, eligibility-gated, with by-right development curtailed (March 2026 Board action initiated ending by-right in the district).",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Prince William is running the Loudoun playbook a year later: shrink the map, end by-right, and force discretionary review — while still approving individual projects (the Hornbaker Road data center passed 4-3 the same week the amendment was initiated). The window between initiation and adoption is a classic vesting race; land inside the overlay that exits under the new eligibility pathways will reprice sharply. Watch the draft eligibility criteria and any grandfathering clause more than the headline.",
+      "sources": [
+        {"label": "Prince William County — DPA2026-00006 (official)", "url": "https://www.pwcva.gov/department/planning-office/dpa2026-00006-data-center-opportunity-zone-overlay-district-dcozod"},
+        {"label": "Venable — PWC moves to eliminate by-right data centers (Apr. 2026)", "url": "https://www.venable.com/insights/publications/2026/04/prince-william-county-moves-to-eliminate-by-right"},
+        {"label": "Potomac Local — Board initiates amendment; Hornbaker approved 4-3", "url": "https://www.potomaclocal.com/2026/03/04/prince-william-supervisors-move-to-end-by-right-data-centers-in-overlay-district-but-approve-controversial-hornbaker-project-in-4-3-vote/"},
+        {"label": "InsideNoVa — 2024 attempt to kill overlay failed 6-2", "url": "https://www.insidenova.com/headlines/prince-william-supervisors-vote-to-keep-data-center-overlay-district-intact/article_6c39bdb6-28ea-11ef-b433-f3e82cffe9a7.html"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2026-03-03",
+      "change_note": "Board initiated the zoning text amendment March 3, 2026."
+    },
+    {
+      "id": "va-warrenton-amazon-sup",
+      "state": "VA",
+      "jurisdiction": "Town of Warrenton (Fauquier County)",
+      "jurisdiction_type": "municipal",
+      "action_type": "litigation",
+      "instrument_kind": "resolution",
+      "status": "pending_litigation",
+      "adopted_date": "2023-02-14",
+      "expiry_date": null,
+      "title": "Amazon Data Services special use permit — Citizens for Fauquier County challenges",
+      "scope_decode": {
+        "prohibits_new_applications": null,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": null,
+        "summary": "Litigation over an approval, not a restriction. On Feb. 14, 2023 the Warrenton Town Council voted 4-3 to approve Amazon Data Services' special use permit for a ~220,000 sq ft data center. Citizens for Fauquier County and area residents sued in Fauquier Circuit Court to overturn the approval, alleging violations of the town zoning ordinance and Comprehensive Plan, and separately litigated FOIA access to town records about the project."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Not applicable — litigation record."
+      },
+      "vesting_context": "Virginia: Va. Code § 15.2-2307. A granted special use permit is a significant affirmative governmental act and can anchor vesting — but only if it survives judicial review. Reliance expenditures made while an appeal of the approval is pending are at risk.",
+      "numeric_standards": "Approved facility reported at ~220,000 sq ft on land in the town's industrial district, where data centers were made permissible with a special use permit via a 2021-initiated text amendment.",
+      "entitlement_path": "Special use permit in industrial district (municipal approval; the town, not Fauquier County, was the approving body).",
+      "next_hearing": null,
+      "vote_tally": "4-3 (Town Council, Feb. 14, 2023)",
+      "litigation": "Merits suit by Citizens for Fauquier County and residents in Fauquier Circuit Court (filed 2023; amended; appealed after adverse circuit court ruling, Sept. 2023). Parallel FOIA suit: on July 30, 2024 the Virginia Court of Appeals reversed the circuit court on the town's working-papers exemption claims and its 10-email sampling method, remanding for further proceedings. Final disposition of all proceedings not yet verified — confirm current posture before relying.",
+      "editorial_analysis": "Editorial analysis: Warrenton shows the small-town version of the Digital Gateway dynamic: a one-vote approval margin, a well-funded citizen group, and multi-track litigation (merits plus FOIA) designed to raise cost and delay. The FOIA appellate win matters beyond Warrenton — it narrows the working-papers exemption localities use to shield data center negotiations, which means more discoverable records in future fights.",
+      "sources": [
+        {"label": "Fauquier Now — CFFC appeals ruling on Amazon data center", "url": "https://www.fauquiernow.com/news/update-citizens-for-fauquier-county-appeals-ruling-related-to-amazon-data-center-in-warrenton/article_e07d6e96-55f2-11ee-b797-43110d791118.html"},
+        {"label": "Data Center Dynamics — suit filed to stop Warrenton data center", "url": "https://www.datacenterdynamics.com/en/news/local-activists-file-lawsuit-to-stop-amazon-data-center-in-warrenton-northern-virginia/"},
+        {"label": "RCFP — Citizens for Fauquier v. Warrenton (FOIA appeal)", "url": "https://www.rcfp.org/briefs-comments/citizens-for-fauquier-v-warrenton/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2024-07-30",
+      "change_note": "Va. Court of Appeals FOIA ruling (July 30, 2024) is the latest development verified; current merits posture unconfirmed."
+    },
+    {
+      "id": "va-culpeper-cup-amendment",
+      "state": "VA",
+      "jurisdiction": "Culpeper County",
+      "jurisdiction_type": "county",
+      "action_type": "ordinance_amendment",
+      "instrument_kind": "ordinance",
+      "status": "adopted",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "Zoning text amendment — discretionary permit required for data centers on industrial land",
+      "scope_decode": {
+        "prohibits_new_applications": false,
+        "prohibits_pending_applications": false,
+        "prohibits_permit_issuance": false,
+        "summary": "Not a prohibition. Per Bean, Kinney & Korman and Piedmont Environmental Council reporting, the Board of Supervisors passed a zoning amendment requiring a conditional use permit (the County's label for its discretionary use permit; Virginia state law speaks of special use permits/special exceptions) for new data centers on industrially zoned land — ending the prior practice of data center development on industrial land without legislative review. The county's ~690-acre Culpeper Technology Zone remains the designated concentration area."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Transition treatment of applications pending at adoption has not yet been verified against the adopted ordinance text. Adoption date and ordinance number also not yet verified — confirm against County records before relying."
+      },
+      "vesting_context": "Virginia: Va. Code § 15.2-2307. Projects with approved site plans or rezonings (several large campuses were approved in 2023-2024) hold significant affirmative governmental acts; unfiled or pending-only projects on industrial land lost their by-right path.",
+      "numeric_standards": "Culpeper Technology Zone: ~690 acres designated for data center concentration (reported as roughly 0.4% of county land). Specific use standards in the amendment not yet verified.",
+      "entitlement_path": "Formerly effectively by-right on industrially zoned land; now discretionary permit required outside prior approvals. Technology Zone remains the favored siting area.",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Culpeper is the spillover market thesis in miniature — it courted data centers with a technology zone, absorbed two 2+ million sq ft campus applications, then pulled the by-right ladder up behind them. The pattern (recruit, saturate, restrict) is now predictable enough to underwrite: the discretionary-permit conversion tends to arrive 18-30 months after the first hyperscale approvals. Record details here are thinner than our Northern Virginia entries; treat dates as unverified.",
+      "sources": [
+        {"label": "Bean, Kinney & Korman — Data Center Shake-Up in Virginia", "url": "https://www.beankinney.com/data-center-shake-up-new-rules-and-hotspots-in-virginia/"},
+        {"label": "Piedmont Environmental Council — Culpeper data center regulation", "url": "https://www.pecva.org/region/culpeper/support-more-data-center-regulation-in-culpeper-county/"},
+        {"label": "Data Center Dynamics — two campuses totaling 4.46M sq ft seek zoning in Culpeper", "url": "https://www.datacenterdynamics.com/en/news/two-data-center-campuses-totaling-446-million-sq-ft-seek-zoning-permission-in-virginias-culpeper-county/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-06-30",
+      "change_note": "Amendment reported passed; exact adoption date pending verification against County records."
+    },
+    {
+      "id": "ga-atlanta-beltline-ban",
+      "state": "GA",
+      "jurisdiction": "City of Atlanta",
+      "jurisdiction_type": "municipal",
+      "action_type": "ordinance_amendment",
+      "instrument_kind": "ordinance",
+      "status": "adopted",
+      "adopted_date": "2024-09-03",
+      "expiry_date": null,
+      "title": "Ordinances 24-O-1218 & 24-O-1222 — data centers banned in BeltLine Overlay and near transit",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": true,
+        "summary": "A true geographic prohibition, not a pause. 24-O-1222 defines 'data center' in the zoning code and prohibits the use within 2,640 feet (half a mile) of a high-capacity transit station; 24-O-1218 prohibits data centers within the BeltLine Overlay District. Outside those geographies, data centers remain possible under the city's general zoning."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Treatment of applications pending on the adoption date has not been verified against the ordinance text. Note that in mid-2024, while the legislation was pending, council members also pursued interim pause measures; verify any project's specific filing date against the effective ordinance."
+      },
+      "vesting_context": "Georgia: common-law vesting. Rights generally vest on issuance of a building permit, or on substantial expenditures made in good-faith reliance on existing zoning or on the probability of permit issuance. A pre-ordinance land closing alone is weak; a pre-ordinance building permit is strong.",
+      "numeric_standards": "Prohibited within 2,640 ft of a high-capacity transit (MARTA) station and within the BeltLine Overlay District. The BeltLine is a 22-mile loop encircling the urban core, so the combined exclusion covers much of intown Atlanta's redevelopment corridor.",
+      "entitlement_path": "Prohibited outright in the covered geographies; elsewhere in the city, permitted subject to underlying district regulations (special permits may apply by district).",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Atlanta drew a land-use map, not a moratorium — a permanent, geographically precise exclusion aimed at preserving transit-adjacent land for housing and mixed use. For developers this is actually the easy case: the rule is clear, the excluded zone is mappable, and the rest of the metro remains open. The harder Georgia risk now sits in the suburban counties (see DeKalb, Coweta, Douglas, Cobb entries), where the rules are still moving.",
+      "sources": [
+        {"label": "Atlanta City Council — official release (ordinance numbers)", "url": "https://citycouncil.atlantaga.gov/Home/Components/News/News/3928/"},
+        {"label": "Georgia Public Broadcasting (Sept. 4, 2024)", "url": "https://www.gpb.org/news/2024/09/04/atlanta-city-council-bans-data-centers-along-beltline"},
+        {"label": "Axios Atlanta (Sept. 5, 2024)", "url": "https://www.axios.com/local/atlanta/2024/09/05/atlanta-data-center-ban-beltline-central-business-district"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2024-09-03",
+      "change_note": "Adopted by City Council Sept. 3, 2024."
+    },
+    {
+      "id": "ga-coweta-moratorium-2025",
+      "state": "GA",
+      "jurisdiction": "Coweta County",
+      "jurisdiction_type": "county",
+      "action_type": "moratorium",
+      "instrument_kind": "resolution",
+      "status": "expired",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "180-day data center moratorium (May 2025) — superseded by December 2025 ordinance",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": null,
+        "summary": "Temporary pause. The Board of Commissioners unanimously adopted a 180-day moratorium in May 2025 to evaluate data center policies and zoning codes amid a wave of proposals (five projects pending at one point, including the ~$17B 'Project Sail'). The moratorium ran its course and the county adopted a permanent data center ordinance in December 2025 (tracked separately)."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Carve-out treatment for already-filed applications not verified against the moratorium resolution text. Notably, the county approved the massive Project Sail data center during this period, indicating projects already in the pipeline continued to move."
+      },
+      "vesting_context": "Georgia: common-law vesting — building permit issuance or substantial good-faith expenditures in reliance on existing zoning. Georgia courts have also recognized reliance on the probability of issuance in some circumstances, which makes the filing-vs-permit distinction during a moratorium especially contested.",
+      "numeric_standards": "180-day term (May-November 2025, approximate; exact adoption date not yet verified).",
+      "entitlement_path": "During the moratorium: new applications paused. Post-moratorium path defined by the December 2025 ordinance (see related record).",
+      "next_hearing": null,
+      "vote_tally": "Unanimous (per AJC reporting)",
+      "litigation": "Coweta residents filed an appeal challenging the Project Sail data center approval on land subject to rural conservation protections (reported by CBS Atlanta); that challenge targets a specific project rather than the moratorium itself.",
+      "editorial_analysis": "Editorial analysis: Coweta ran the now-standard sequence — pause, study, regulate — in barely seven months, faster than most Georgia peers. The tell is that Project Sail was approved anyway: moratoria in growth-hungry counties are increasingly procedural cover for writing rules, not genuine stop signs for anchor projects with state-level economic development backing. The December ordinance, not this expired pause, is what governs underwriting now.",
+      "sources": [
+        {"label": "AJC — Coweta issues data center moratorium", "url": "https://www.ajc.com/news/business/coweta-county-issues-moratorium-to-pause-data-center-projects/2J464ISZIVB4VMFSBXZXNVHZXE/"},
+        {"label": "GPB — wave of GA data center ordinances (Oct. 2025)", "url": "https://www.gpb.org/news/2025/10/22/wave-of-data-center-ordinances-sweep-through-ga-counties-how-strict-are-they"},
+        {"label": "CBS Atlanta — residents appeal Project Sail approval", "url": "https://www.cbsnews.com/atlanta/news/coweta-county-residents-file-appeal-to-stop-massive-data-center-on-protected-rural-land/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-12-15",
+      "change_note": "Superseded by adoption of permanent ordinance in December 2025 (exact date pending verification)."
+    },
+    {
+      "id": "ga-coweta-ordinance-2025",
+      "state": "GA",
+      "jurisdiction": "Coweta County",
+      "jurisdiction_type": "county",
+      "action_type": "ordinance_amendment",
+      "instrument_kind": "ordinance",
+      "status": "adopted",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "Data center ordinance (December 2025) — siting, buffering, design, noise standards",
+      "scope_decode": {
+        "prohibits_new_applications": false,
+        "prohibits_pending_applications": false,
+        "prohibits_permit_issuance": false,
+        "summary": "Not a prohibition. The permanent ordinance adopted in December 2025 allows data centers in light industrial and industrial zoning districts, subject to requirements on location, buffering, design standards, noise, lighting, traffic and utility capacity."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Not verified against adopted text. Projects approved during/before the 2025 moratorium window (e.g., Project Sail) proceed under their own approvals."
+      },
+      "vesting_context": "Georgia: common-law vesting — a building permit or substantial good-faith expenditures under prior rules anchors rights; new standards apply prospectively to unvested projects.",
+      "numeric_standards": "Setback of 300 ft from any homes (per Times-Herald reporting on the adopted text; residents had pushed for 1,000 ft from residences, schools, churches and parks). Noise, lighting, buffering, traffic and utility-capacity standards included; specific decibel limits not yet verified.",
+      "entitlement_path": "Permitted in light industrial and industrial districts subject to use standards; rezoning to industrial remains the gateway fight for greenfield sites.",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: A 300-foot residential setback is on the permissive end of the 2025 Georgia ordinance wave (compare Troup County's reported 1,500 ft), signaling Coweta wants the projects and wrote rules an engineer can design around. The miss for opponents — no school/church/park setback — tells you where the next amendment pressure lands. For site selectors, Coweta now offers something scarce in metro Atlanta: adopted, legible rules.",
+      "sources": [
+        {"label": "Times-Herald — noise and power concerns in ordinance", "url": "https://www.times-herald.com/news/noise-power-usage-are-key-concerns-for-data-center-ordinance/article_95e7eb31-7ca2-4489-b000-4d0d042de8aa.html"},
+        {"label": "Northwest Georgia News — GA ordinances ranked by restrictiveness", "url": "https://www.northwestgeorgianews.com/calhoun_times/news/local/all-georgia-data-center-ordinances----from-most-to-least-restrictive/article_935d360f-88a5-42a7-91e8-82f597fe4bbf.html"},
+        {"label": "GPB — wave of GA data center ordinances", "url": "https://www.gpb.org/news/2025/10/22/wave-of-data-center-ordinances-sweep-through-ga-counties-how-strict-are-they"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-12-15",
+      "change_note": "Adopted December 2025; exact date and ordinance number pending verification."
+    },
+    {
+      "id": "ga-douglas-moratorium-2025",
+      "state": "GA",
+      "jurisdiction": "Douglas County",
+      "jurisdiction_type": "county",
+      "action_type": "moratorium",
+      "instrument_kind": "resolution",
+      "status": "extended",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "90-day data center moratorium (March 2025), extended 90 days (August 2025)",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": null,
+        "summary": "Temporary pause. Adopted in March 2025 in response to the volume of pending data center projects; commissioners extended it another 90 days in August 2025, citing unresolved questions including ratepayer impact of new power-generation infrastructure (county planning staff noted such infrastructure takes 40-50 years to pay off)."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Carve-out language not verified against resolution text. The county's stated rationale for extension — preventing developers from 'slipping in before new rules' — suggests the county was actively trying to close the pending-application window, not preserve it."
+      },
+      "vesting_context": "Georgia: common-law vesting. Where a county extends a moratorium specifically to prevent filings before new rules take effect, applicants' strongest position remains a pre-moratorium building permit or substantial documented expenditures.",
+      "numeric_standards": "Initial term 90 days (March 2025); extended 90 days (August 2025). Status after the second term not yet verified — confirm whether a permanent ordinance has been adopted.",
+      "entitlement_path": "New data center entitlements paused during moratorium; permanent framework pending.",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Douglas is notable for openly tying its pause to utility-ratepayer math rather than the usual noise/water framing — a preview of where the policy debate is heading as Georgia Power's load forecasts become county-commission talking points. The explicit goal of beating developers to the filing window is also a warning: in counties signaling rule changes, the cost of waiting a quarter can be the project.",
+      "sources": [
+        {"label": "Douglas County Sentinel — moratorium extended over ratepayer impact", "url": "https://www.douglascountysentinel.com/douglasville_sentinel/data-center-moratorium-extended-to-determine-impact-on-ratepayers/article_3d610d7f-cec8-5be2-a4dc-9f3591440adc.html"},
+        {"label": "GPB — wave of GA data center ordinances", "url": "https://www.gpb.org/news/2025/10/22/wave-of-data-center-ordinances-sweep-through-ga-counties-how-strict-are-they"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-08-15",
+      "change_note": "Extension approved August 2025 (exact date pending verification); current status after second 90-day term unverified."
+    },
+    {
+      "id": "ga-dekalb-moratorium-2025",
+      "state": "GA",
+      "jurisdiction": "DeKalb County",
+      "jurisdiction_type": "county",
+      "action_type": "moratorium",
+      "instrument_kind": "resolution",
+      "status": "extended",
+      "adopted_date": "2025-07-08",
+      "expiry_date": "2026-06-23",
+      "title": "Data center moratorium (July 2025), extended through June 23, 2026",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": true,
+        "summary": "Active pause. Initial 100-day moratorium adopted July 8, 2025 (4-3) on 'the permitting or other authorization of any new data centers, or the expansion of any existing data centers' in unincorporated DeKalb. Extended multiple times; on Dec. 16, 2025 the Board unanimously approved Commissioner Bolton's substitute motion extending the block on new licenses or permits for data centers through June 23, 2026, while a Chapter 27 text amendment (definitions, regulatory guidelines, development standards) is finalized."
+      },
+      "pending_application_carveout": {
+        "quote": "…the permitting or other authorization of any new data centers, or the expansion of any existing data centers, in unincorporated DeKalb County.",
+        "note": "The operative language (quoted from the county's July 2025 action as summarized in its own agenda materials) reaches permit issuance and 'other authorization,' and expressly covers expansions of existing facilities — broader than a typical applications-only pause. Whether complete applications filed before July 8, 2025 are being processed has not been verified; the breadth of the language argues against assuming a carve-out."
+      },
+      "vesting_context": "Georgia: common-law vesting. Because DeKalb's language blocks permit issuance (not just new applications), even applicants who filed before the moratorium face the vesting question head-on: without an issued permit or substantial qualifying expenditures, Georgia law gives a pending applicant little to stand on.",
+      "numeric_standards": "Initial term 100 days (July 8, 2025); current extension through June 23, 2026. Proposed Chapter 27 amendment (definitions and development standards) heard Jan. 27, 2026; adoption pending.",
+      "entitlement_path": "All new data center permitting and expansion authorization paused in unincorporated DeKalb pending Chapter 27 amendments.",
+      "next_hearing": null,
+      "vote_tally": "Initial: 4-3 (July 8, 2025); Dec. 16, 2025 extension: unanimous",
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: DeKalb has the broadest active pause in metro Atlanta — it reaches expansions and permit issuance, not just new filings, and it has now run nearly a year. The June 23, 2026 expiry is the date to watch: the county has twice extended rather than adopt standards, and a third extension without an adopted Chapter 27 amendment would start raising the takings/reasonable-duration arguments that have not yet been tested in the Georgia data center context.",
+      "sources": [
+        {"label": "DeKalb County — moratorium extension agenda item (official PDF)", "url": "https://www.dekalbcountyga.gov/sites/default/files/2025-12/2025-1694%20Data%20Center%20Moratorium%20Extension.pdf"},
+        {"label": "AJC — DeKalb extends moratorium 6 months (Dec. 2025)", "url": "https://www.ajc.com/news/2025/12/dekalb-extends-data-center-moratorium-6-months/"},
+        {"label": "Engage DeKalb — Data Center Text Amendment (official)", "url": "https://engagedekalb.dekalbcountyga.gov/data-center-text-amendment"},
+        {"label": "Rough Draft Atlanta — extension coverage", "url": "https://roughdraftatlanta.com/2025/12/16/dekalb-county-data-center-pause/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-12-16",
+      "change_note": "Extended through June 23, 2026 by unanimous vote Dec. 16, 2025."
+    },
+    {
+      "id": "ga-newton-moratorium",
+      "state": "GA",
+      "jurisdiction": "Newton County",
+      "jurisdiction_type": "county",
+      "action_type": "moratorium",
+      "instrument_kind": "resolution",
+      "status": "adopted",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "30-day moratorium on data center applications",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": false,
+        "prohibits_permit_issuance": null,
+        "summary": "Short pause on intake. The Board of Commissioners voted unanimously to impose a 30-day moratorium on 'the acceptance of applications, requests or submissions proposing the development of data centers' while the county updates its ordinances. Prospective by its terms — it stops new intake rather than halting items already accepted. Note the structural quirk: Newton's existing ordinance confines data centers to the Stanton Springs overlay, so developers have been routing projects through municipal annexations (Covington, Social Circle, Porterdale) instead of the county; Covington enacted its own moratorium in January."
+      },
+      "pending_application_carveout": {
+        "quote": "…moratorium on the acceptance of applications, requests or submissions proposing the development of data centers…",
+        "note": "Language quoted as reported by The Covington News. An acceptance moratorium is the narrowest form: applications already accepted continue processing, and the real action has moved to city annexation requests outside the county's reach."
+      },
+      "vesting_context": "Georgia: common-law vesting. An acceptance freeze raises few vesting issues by itself; the live Georgia question here is jurisdictional — annexation into a city mid-application changes which government's rules apply at all.",
+      "numeric_standards": "30-day term. Adoption date and any extension not yet verified.",
+      "entitlement_path": "County: data centers limited to the Stanton Springs overlay. Developers have pursued municipal annexation as the alternative entitlement path.",
+      "next_hearing": null,
+      "vote_tally": "Unanimous",
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Newton illustrates the annexation arbitrage that county-level ordinances can't reach — when the county locks data centers into one overlay, projects simply ask the cities for annexation. Any restriction analysis in Georgia has to map the municipal layer, not just the county code. This record's dates are thin; treat it as a flag for the jurisdiction rather than a settled timeline.",
+      "sources": [
+        {"label": "The Covington News — Newton enacts moratoriums", "url": "https://www.covnews.com/news/county/newton-county-enacts-moratoriums-data-centers-convenience-stores/"},
+        {"label": "Rockdale Newton Citizen — moratorium on applications", "url": "https://www.rockdalenewtoncitizen.com/news/newton-county-puts-moratorium-on-data-center-applications/article_9dec6ba2-6c6c-408f-afbd-d10a63f09add.html"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-10-22",
+      "change_note": "Record added from regional reporting; adoption date and current status pending verification."
+    },
+    {
+      "id": "ga-cobb-moratorium-2026",
+      "state": "GA",
+      "jurisdiction": "Cobb County",
+      "jurisdiction_type": "county",
+      "action_type": "moratorium",
+      "instrument_kind": "resolution",
+      "status": "proposed",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "Proposed 180-day pause on data center rezonings and building permits",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": true,
+        "summary": "Proposed as of February 2026 reporting: a temporary ban on new rezoning petitions AND building permits for data center projects in unincorporated Cobb while staff drafts updated rules (expected to narrow where large campuses can locate and add noise, generator-emission and water-use-reporting requirements). Drafted to expire after 180 days or upon adoption of new rules, whichever is sooner. Adoption status not yet verified."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Draft language reaching building permits (not just rezonings) would, if adopted as described, sweep in projects that are zoned but not yet permitted — the most exposed position under Georgia's permit-based vesting doctrine. Verify the adopted text."
+      },
+      "vesting_context": "Georgia: common-law vesting — building permit issuance or substantial good-faith expenditures. A permit-issuance pause is precisely the scenario where zoned-but-unpermitted projects discover they hold less than they assumed.",
+      "numeric_standards": "Proposed 180-day term, early-termination on adoption of new rules. No adopted standards yet.",
+      "entitlement_path": "Currently governed by existing county code; if the pause is adopted, both legislative (rezoning) and ministerial (building permit) paths would close temporarily.",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Cobb arriving this late to the moratorium wave — after DeKalb, Douglas, Coweta and Newton — confirms the metro-Atlanta pattern has fully propagated. A pause that reaches building permits is the aggressive variant; if adopted, expect immediate pressure from any zoned project mid-design, and watch whether the final text grandfathers complete permit applications. Status here is proposal-stage reporting; verify before relying.",
+      "sources": [
+        {"label": "Hoodline — Cobb eyes 180-day moratorium (Feb. 2026)", "url": "https://hoodline.com/2026/02/cobb-leaders-poised-to-slam-brakes-on-data-center-boom-in-unincorporated-areas/"},
+        {"label": "Northwest Georgia News — GA ordinances ranked", "url": "https://www.northwestgeorgianews.com/calhoun_times/news/local/all-georgia-data-center-ordinances----from-most-to-least-restrictive/article_935d360f-88a5-42a7-91e8-82f597fe4bbf.html"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2026-02-15",
+      "change_note": "Proposal reported February 2026; adoption status pending verification."
+    },
+    {
+      "id": "tx-hill-county-moratorium-2026",
+      "state": "TX",
+      "jurisdiction": "Hill County",
+      "jurisdiction_type": "county",
+      "action_type": "moratorium",
+      "instrument_kind": "resolution",
+      "status": "repealed",
+      "adopted_date": "2026-05-12",
+      "expiry_date": null,
+      "title": "One-year data center moratorium — rescinded after federal lawsuit; review checklist adopted",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": null,
+        "summary": "Adopted May 12, 2026 (3-2, commissioners court) as a moratorium of up to one year on data center development in rural Hill County — reportedly the first Texas county to attempt one. Rescinded unanimously June 4, 2026 after developer RCM Hill, LLC sued in federal court. Replaced the same day with a development review checklist requiring information on water use, traffic, noise and economic effects, plus expanded public-notice requirements (notice to nearby residents and local media for major projects)."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Moot after rescission. The deeper point: in Texas, counties largely lack the zoning and police powers that make carve-out analysis meaningful — RCM Hill's suit argued the county had no statutory authority to impose the moratorium at all, and the county folded in three weeks."
+      },
+      "vesting_context": "Texas: Loc. Gov't Code ch. 245 — permit rights vest at the filing of the first permit application in a series, freezing the regulations applicable to the project. Separately, Texas counties (unlike home-rule cities) hold only powers expressly granted or necessarily implied by statute, and have no general zoning authority — the threshold defect RCM Hill's federal suit targeted here.",
+      "numeric_standards": "Moratorium: up to 1 year (rescinded after ~3 weeks). Replacement checklist: disclosure of expected water use, traffic impacts, noise levels, economic effects; notice to nearby residents and local media for major projects. Reported developer position: ~$1M spent acquiring 800+ acres.",
+      "entitlement_path": "No county zoning in Texas; development proceeds subject to platting, permitting and the new informational checklist. The checklist is process, not a discretionary approval gate.",
+      "next_hearing": null,
+      "vote_tally": "Moratorium: 3-2 (May 12, 2026); rescission: unanimous (June 4, 2026)",
+      "litigation": "RCM Hill, LLC v. Hill County (federal): filed late May 2026, alleging the county exceeded its statutory authority; per KERA and Texas Tribune reporting, the suit remained active even after the moratorium was rescinded.",
+      "editorial_analysis": "Editorial analysis: The fastest collapse of a data center moratorium on record, and the clearest demonstration that the Texas county toolkit is fundamentally different from Virginia's or Georgia's: no zoning power, ch. 245 vesting on first filing, and a developer bar ready to litigate. Expect opposition energy in Texas to flow toward cities (which do have zoning — see Harlingen, Fort Worth) and toward the Legislature, not county courthouses. The surviving lawsuit may yet produce a published opinion that settles county authority statewide.",
+      "sources": [
+        {"label": "Texas Tribune — Hill County rescinds moratorium (June 5, 2026)", "url": "https://www.texastribune.org/2026/06/05/texas-hill-county-moratorium-rescinded-data-centers/"},
+        {"label": "Texas Tribune — moratorium adopted (May 12, 2026)", "url": "https://www.texastribune.org/2026/05/12/texas-hill-county-approves-data-center-construction-pause-ai/"},
+        {"label": "KWTX — RCM Hill lawsuit filed", "url": "https://www.kwtx.com/2026/05/28/illegal-under-texas-law-data-center-developer-files-lawsuit-against-hill-county-moratorium/"},
+        {"label": "KERA — checklist adopted with rescission", "url": "https://www.keranews.org/energy-environment/2026-06-05/hill-county-drops-data-center-moratorium-after-lawsuit-adopts-new-review-requirements"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2026-06-05",
+      "change_note": "Rescinded June 4, 2026; replacement review checklist adopted; federal suit remains active."
+    },
+    {
+      "id": "tx-harlingen-moratorium-2026",
+      "state": "TX",
+      "jurisdiction": "City of Harlingen",
+      "jurisdiction_type": "municipal",
+      "action_type": "moratorium",
+      "instrument_kind": "ordinance",
+      "status": "adopted",
+      "adopted_date": "2026-05-20",
+      "expiry_date": null,
+      "title": "120-day moratorium on data center applications",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": null,
+        "prohibits_permit_issuance": null,
+        "summary": "Active pause on applications. Adopted with one dissenting vote (reported May 21, 2026; the commission voted unanimously on April 1, 2026 to begin the statutory process, followed by two public hearings). Pauses data center project applications for 120 days while the city studies impacts on the community, natural resources and the environment, and modernizes its land-use regulations — prompted by at least two data center prospects in Cameron County, one reported at ~$14B."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Carve-out treatment for complete applications on file before adoption not yet verified against the ordinance. Texas's moratorium statute (Loc. Gov't Code ch. 212, subch. E) imposes procedural requirements (public hearings, findings) that Harlingen visibly followed — and ch. 245 independently protects projects whose first permit application predates the pause."
+      },
+      "vesting_context": "Texas: Loc. Gov't Code ch. 245 — rights vest at filing of the first permit application in a series, locking in then-current regulations for the project. A data center prospect that filed anything in the permit chain before May 20, 2026 has a strong statutory argument that the moratorium and any later-adopted standards cannot be applied to it.",
+      "numeric_standards": "120-day term from adoption (expiry date not stated in cited reporting; verify against ordinance text). Two public hearings held before adoption.",
+      "entitlement_path": "City zoning applies (unlike Texas counties). New data center applications paused; the city has signaled new land-use regulations for data centers as the end product.",
+      "next_hearing": null,
+      "vote_tally": "Approved with one dissenting vote (May 2026)",
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Harlingen is the careful counter-example to Hill County — a city with actual zoning power, following the ch. 212 moratorium procedure step by step (initiation vote, dual hearings, findings) before adopting. That procedural discipline makes this pause far more defensible, and it previews the playbook other Texas cities will copy as hyperscale interest moves into secondary markets like the Rio Grande Valley. The ch. 245 first-filing question is still the whole game for the two prospects already circling.",
+      "sources": [
+        {"label": "MyRGV — Harlingen sets moratorium (May 21, 2026)", "url": "https://myrgv.com/local-news/2026/05/21/harlingen-sets-moratorium-as-two-data-centers-show-interest-in-county/"},
+        {"label": "KRGV — 120-day moratorium approved", "url": "https://www.krgv.com/news/harlingen-officials-approve-120-day-moratorium-to-study-impact-of-potential-data-centers/"},
+        {"label": "MyRGV — process initiated, hearings called (Apr. 2, 2026)", "url": "https://myrgv.com/local-news/2026/04/02/harlingen-calls-for-public-hearings-on-proposed-data-center-moratorium/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2026-05-21",
+      "change_note": "Adoption reported May 21, 2026; adopted date shown per reporting of the prior day's vote — verify against ordinance."
+    },
+    {
+      "id": "tx-fort-worth-regs-2026",
+      "state": "TX",
+      "jurisdiction": "City of Fort Worth",
+      "jurisdiction_type": "municipal",
+      "action_type": "ordinance_amendment",
+      "instrument_kind": "ordinance",
+      "status": "proposed",
+      "adopted_date": null,
+      "expiry_date": null,
+      "title": "Proposed data center regulations — zoning, noise, water, incentives package",
+      "scope_decode": {
+        "prohibits_new_applications": false,
+        "prohibits_pending_applications": false,
+        "prohibits_permit_issuance": false,
+        "summary": "Proposed standards, not a pause. City staff unveiled a regulatory package (reported early June 2026) covering zoning, noise standards, water utility requirements and economic development incentives. Key proposals: mandatory closed-loop cooling for all new data centers; standby generator testing limited to weekdays 8 a.m.-5 p.m. (with TCEQ-regulated and emergency exceptions); prohibition of cryptocurrency mining as a primary use. Residents had separately pushed for a full moratorium, which the city has not adopted; the council has not yet voted on the package."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Not yet drafted/published. Under Texas Loc. Gov't Code ch. 245, projects with a first permit application on file before any new ordinance takes effect would generally be exempt from the new standards regardless of what transition language says — the statute is the carve-out."
+      },
+      "vesting_context": "Texas: Loc. Gov't Code ch. 245 — first-application vesting freezes applicable regulations project-wide. With four data center developments (10 buildings, 3M+ sq ft) already in the city and more in the pipeline, the practical reach of the new rules will be limited to projects that have not yet started their permit series when the ordinance passes — an incentive to file now.",
+      "numeric_standards": "As proposed: closed-loop cooling required for all new data centers; generator testing weekdays 8 a.m.-5 p.m. only (emergency/TCEQ exceptions); cryptocurrency mining prohibited as primary use. Specific dBA limits and setbacks not yet published.",
+      "entitlement_path": "Fort Worth's current code does not specifically define or regulate data centers; projects proceed under general industrial zoning (an April 2026 zoning commission approval advanced a major project under existing rules). The package would create a defined use with tailored standards.",
+      "next_hearing": null,
+      "vote_tally": null,
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Fort Worth is writing rules for a market that already exists inside its limits — which, combined with ch. 245, means the ordinance will mostly govern the next generation of projects, not the current one. The closed-loop cooling mandate is the consequential piece: it converts the water fight into an engineering spec and may become the model provision for water-stressed Texas cities. Watch for the filing surge between publication of the draft and the council vote.",
+      "sources": [
+        {"label": "Fort Worth Inc. — proposed data center rules", "url": "https://fortworthinc.com/real-estate/fort-worth-moves-to-tighten-rules-on-data-center-development/"},
+        {"label": "Fort Worth Report — data center advances at zoning commission (Apr. 2026)", "url": "https://fortworthreport.org/2026/04/13/data-center-moves-forward-after-fort-worth-zoning-commission-vote/"},
+        {"label": "CBS Texas — residents push for moratorium", "url": "https://www.cbsnews.com/texas/news/fort-worth-residents-moratorium-data-center/"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2026-06-05",
+      "change_note": "Staff package unveiled per reporting in early June 2026; no council vote scheduled yet as far as verified."
+    },
+    {
+      "id": "ky-oldham-moratorium-2025",
+      "state": "KY",
+      "jurisdiction": "Oldham County",
+      "jurisdiction_type": "county",
+      "action_type": "moratorium",
+      "instrument_kind": "resolution",
+      "status": "extended",
+      "adopted_date": "2025-07-01",
+      "expiry_date": null,
+      "title": "150-day data center moratorium — pending application expressly NOT exempted; extended Nov. 2025",
+      "scope_decode": {
+        "prohibits_new_applications": true,
+        "prohibits_pending_applications": true,
+        "prohibits_permit_issuance": null,
+        "summary": "Active, and unusually broad. Adopted July 1, 2025 (4-2, Fiscal Court): 150-day pause on any application to build a data center. Critically, the court struck draft language that would have exempted the already-filed Western Hospitality Partners application ('Project Lincoln,' a proposed ~$6B, 600 MW campus on 267 acres, with a 100 MW first phase) — deliberately sweeping a pending application into the pause. On Nov. 18, 2025 the Fiscal Court approved a further moratorium extending the pause until data center regulations are adopted (no fixed end date)."
+      },
+      "pending_application_carveout": {
+        "quote": null,
+        "note": "Affirmatively refused. Most moratoria exempt complete applications already on file; Oldham's Fiscal Court struck that exact exemption from the draft, capturing WHP's pending Project Lincoln application. WHP subsequently dropped the project after sustained public backlash (per WDRB). This is the cleanest recent example of a pending application providing no protection absent a vesting statute."
+      },
+      "vesting_context": "Kentucky: no ch. 245-style statute; vesting follows common-law principles generally requiring permit issuance plus substantial reliance. Kentucky is outside Vested's primer states (TX/VA/GA) — treat this note as orientation, and verify Kentucky doctrine with counsel before relying.",
+      "numeric_standards": "Initial term: 150 days (July 1 - late Nov. 2025). Nov. 18, 2025 extension: open-ended until regulations are adopted. Captured project: reported 600 MW / $6B across 267 acres (100 MW initial application).",
+      "entitlement_path": "All data center applications paused county-wide until the Fiscal Court adopts data center regulations.",
+      "next_hearing": null,
+      "vote_tally": "4-2 (Fiscal Court, July 1, 2025)",
+      "litigation": null,
+      "editorial_analysis": "Editorial analysis: Oldham is the cautionary tale for the 'we filed, we're safe' assumption: the Fiscal Court struck the pending-application exemption on the record, the captured project died, and the moratorium then went open-ended. June 2026 primary elections in Kentucky were fought partly on data center politics, so the regulatory end-state remains genuinely uncertain. In states without statutory vesting, the carve-out clause — not the filing date — is the entire risk analysis.",
+      "sources": [
+        {"label": "Louisville Public Media — moratorium passes, exemption struck (July 2, 2025)", "url": "https://www.lpm.org/news/2025-07-02/oldham-county-passes-sweeping-data-center-moratorium-executive-fired-over-recording"},
+        {"label": "Data Center Dynamics — 150-day moratorium", "url": "https://www.datacenterdynamics.com/en/news/kentuckys-oldham-county-passes-150-day-data-center-moratorium/"},
+        {"label": "WDRB — Project Lincoln dropped after backlash", "url": "https://www.wdrb.com/news/business/controversial-oldham-county-data-center-project-dropped-after-backlash/article_f3bc4301-b632-48cf-a005-2d24aeebc01c.html"}
+      ],
+      "last_verified": "2026-06-11",
+      "verification_method": "manual review of cited public sources",
+      "changed_date": "2025-11-18",
+      "change_note": "Nov. 18, 2025: extended until regulations adopted (open-ended)."
+    }
+  ]
+}

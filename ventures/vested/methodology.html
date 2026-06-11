@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Methodology &amp; Vesting Primer — Vested</title>
+  <meta name="description" content="How Vested sources, verifies, and updates its data center entitlement records, plus a per-state vested-rights primer for Texas, Virginia, and Georgia.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand-row">
+        <span class="brand">Vested</span>
+        <span class="tagline">The heatmap tells you where the fight is. Vested tells you what the law says, whether your project is caught by it, and what to file next.</span>
+      </div>
+      <nav>
+        <a href="index.html">Tracker</a>
+        <a href="methodology.html" class="active">Methodology &amp; Vesting Primer</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="coverage">
+    <div class="coverage-inner">
+      <strong>Standing rule:</strong> every record shows its sources, its as-of date, and what we could
+      <em>not</em> verify. Real-but-incomplete beats complete-but-fake.
+    </div>
+  </div>
+
+  <main>
+    <div class="prose">
+
+      <p class="framing">
+        Compiled from public records for informational purposes. Editorial analysis, not legal advice.
+        No attorney-client relationship is formed. Verify against official ordinance text.
+        Each record shows an as-of date.
+      </p>
+
+      <h2>Data sourcing</h2>
+      <p>Records are compiled from, in order of preference:</p>
+      <ul>
+        <li><strong>Official government sources:</strong> county and municipal ordinance/resolution texts, agenda packets, planning department project pages, and adopted-text repositories (e.g., Loudoun County's Data Center Standards &amp; Locations page, Prince William County's planning office DPA pages, DeKalb County agenda PDFs).</li>
+        <li><strong>Law firm client alerts</strong> from land use practices actively appearing in these matters (Holland &amp; Knight, McGuireWoods, Venable, Bean Kinney &amp; Korman, and others). These are secondary sources but tend to be precise on instrument numbers, effective dates, and transition rules.</li>
+        <li><strong>Local press of record</strong> (e.g., Texas Tribune, AJC, GPB, Fauquier Now, Prince William Times, regional broadcast outlets) for votes, tallies, hearing dates, and litigation developments.</li>
+      </ul>
+      <p>Every record carries at least one source URL, placed adjacent to the substantive fields it supports. Where we relied on a secondary source for a legally significant detail (an ordinance number, a carve-out's exact reach), the record says so.</p>
+
+      <h2>Verification method</h2>
+      <p>Each record's <code>verification_method</code> field currently reads <em>"manual review of cited public sources."</em> That means a human read the cited materials and transcribed the facts; it does not mean we have independently obtained certified copies of every ordinance. Fields we could not confirm are stored as <code>null</code> and rendered as <strong>"Not yet verified"</strong> &mdash; we never fill gaps with plausible-looking ordinance numbers, dates, or vote tallies. Where a status label is an imperfect fit (e.g., a rezoning <em>judicially voided ab initio</em> shown under the &ldquo;repealed&rdquo; filter), the scope decode states the precise posture.</p>
+
+      <h2>Update cadence</h2>
+      <p><strong>Weekly.</strong> Covered jurisdictions are re-checked weekly against agendas, dockets, and local press; each record's <code>last_verified</code> date is refreshed when re-checked, and <code>changed_date</code> is updated only when the underlying government action actually changed. The &ldquo;Changed this week&rdquo; view is derived strictly from <code>changed_date</code> &mdash; if nothing changed, the view is empty. We do not manufacture news to fill a newsletter.</p>
+
+      <h2>Per-state vesting primer</h2>
+      <p>The single most consequential question in any moratorium or downzoning fight is whether a project's rights had already <em>vested</em> when the rules changed. The doctrine differs sharply by state. This primer is orientation, not advice; the cases turn on facts and local procedure.</p>
+
+      <h3>Texas — statutory vesting at first filing</h3>
+      <p><span class="statute">Tex. Loc. Gov't Code ch. 245</span> freezes the regulatory regime for a project at the filing of the <em>first permit application in a series</em>. File a preliminary plat (or other qualifying first application) and, in general, later-adopted ordinances cannot be applied to that project. Two practical corollaries dominate Texas records in this tracker: (1) a Texas moratorium mostly governs projects that have not yet started their permit chain, so the race is to file <em>anything</em> qualifying before adoption; and (2) Texas <em>counties</em> — unlike home-rule cities — have no general zoning power and only the authority statutes expressly give them, which is why Hill County's 2026 county-level moratorium drew an immediate authority-based lawsuit and was rescinded within three weeks. Cities adopting moratoria must also follow the procedural requirements of <span class="statute">Loc. Gov't Code ch. 212, subch. E</span> (hearings and findings), as Harlingen did.</p>
+
+      <h3>Virginia — statutory vesting, but only after a "significant affirmative governmental act"</h3>
+      <p><span class="statute">Va. Code § 15.2-2307</span> vests rights only where there is (1) a <em>significant affirmative governmental act</em> — an approved rezoning with proffers, an approved special exception or special use permit, an approved site plan, and the like — plus (2) good-faith reliance and (3) substantial expense in furtherance of the project. A <strong>pending application generally does not vest</strong> in Virginia. That is why Virginia jurisdictions tightening their ordinances (Loudoun's ZOAM-2024-0001, Fairfax's 2024 amendment, Prince William's DCOZOD reduction) negotiate explicit <em>grandfathering resolutions</em> — the statute will not save in-process projects on its own. Note Virginia terminology: the discretionary instrument is a <strong>special exception or special use permit</strong> (some localities label theirs a conditional use permit, but the state-law concept is the SUP/special exception); "CUP" usage from other states does not map cleanly. A separate Virginia lesson from the Digital Gateway litigation: an approval that is <em>void ab initio</em> (e.g., for defective public notice under <span class="statute">Va. Code § 15.2-2204</span>) is treated as never having existed and cannot anchor vesting at all.</p>
+
+      <h3>Georgia — common-law vesting at permit or substantial expenditure</h3>
+      <p>Georgia has no chapter-245-style statute. Vested rights arise at common law: generally upon <strong>issuance of a building permit</strong>, or upon <strong>substantial expenditures made in good-faith reliance</strong> on existing zoning (Georgia courts have in some circumstances recognized reliance on the probability of permit issuance). The practical consequence shows up across this tracker's Georgia records: a moratorium that pauses <em>acceptance of applications</em> (Newton) is far less dangerous to in-flight projects than one that blocks <em>permit issuance and expansions</em> (DeKalb) — under Georgia doctrine, the zoned-but-unpermitted project is the exposed one. Georgia uses county and municipal zoning side by side, and annexation into a city can change the applicable regime mid-project, an arbitrage developers actively use in metro Atlanta.</p>
+
+      <h3>Other states appearing in the tracker</h3>
+      <p>Where a record sits outside the three primer states (e.g., Kentucky's Oldham County), the record's vesting note is orientation only and is flagged as such. Kentucky, like Georgia, follows common-law principles that generally require an issued permit plus substantial reliance — which is how Oldham County could deliberately sweep an already-filed application into its moratorium by striking the draft carve-out.</p>
+
+      <h2>Why the carve-out field gets its own callout</h2>
+      <p>Most moratoria expressly exempt complete applications already on file when the pause takes effect. Whether yours does — and whether "on file" means accepted, complete, or merely submitted — is frequently the entire dispute. Vested quotes the operative carve-out language where we have it, paraphrases (and says so) where we do not, and flags the counter-examples: Oldham County, KY struck its pending-application exemption on the record; DeKalb County, GA wrote its pause to reach permit issuance and expansions, not just new filings.</p>
+
+      <h2>Status vocabulary</h2>
+      <ul>
+        <li><strong>Action types:</strong> moratorium, ordinance amendment, overlay district, comprehensive plan, staff pause, litigation.</li>
+        <li><strong>Instrument kinds:</strong> ordinance, resolution, staff action — these are legally distinct (an ordinance amends law; a resolution often expresses policy or imposes a temporary pause; a staff action may have no legislative footing at all), and we label them honestly rather than calling everything an "ordinance."</li>
+        <li><strong>Statuses:</strong> proposed, adopted, extended, expired, repealed, pending litigation. Judicial invalidation is shown under "repealed" for filtering, with the precise posture stated in the record.</li>
+      </ul>
+
+      <h2>Corrections</h2>
+      <p>If you find an error — a wrong date, a misread carve-out, a stale status — we want it. Corrections ship in the next weekly cycle and the record's change log notes the fix.</p>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <strong>Disclaimer.</strong> Vested is compiled from public records for informational purposes.
+      Entries labeled &ldquo;Editorial analysis&rdquo; are opinion and market commentary &mdash; not legal advice.
+      No attorney-client relationship is formed by accessing or using this site. Local zoning records change
+      frequently and summaries may lag; always verify against the official ordinance text and the jurisdiction&rsquo;s
+      records before acting. Each record carries an as-of (&ldquo;last verified&rdquo;) date. Fields we have not
+      confirmed are shown as &ldquo;Not yet verified,&rdquo; never guessed.
+      <br>&copy; 2026 Vested. Return to the <a href="index.html">Tracker</a>.
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+{
+  "matter": {
+    "id": "harborline-dexter-2026",
+    "name": "Harborline Acquisitions — 1100 Dexter Ave N (Suite 400 Lease Diligence)",
+    "client": "Harborline Acquisitions LLC (prospective purchaser)",
+    "property": "Suite 400, 1100 Dexter Avenue North, Seattle, Washington 98109",
+    "premisesRsf": 12125,
+    "landlord": "Dexter Lakeview Properties LLC, a Washington limited liability company",
+    "tenant": "Meridian Analytics, Inc., a Delaware corporation",
+    "jurisdiction": "Washington",
+    "asOf": "2026-06-11",
+    "description": "Acquisition diligence on the Meridian Analytics office lease file. Five documents: the 2019 Office Lease, the 2019 Commencement Date Memorandum, two amendments (2021, 2023), and the tenant's 2026 estoppel certificate delivered for the pending sale."
+  },
+  "framing": "CrossCheck is decision-support software for licensed attorneys. Flags are candidates for review, not conclusions. Final dispositions and the resulting report are the reviewing attorney's own work product. Documents are processed locally in demo mode; no client documents are used for model training.",
+  "notChecked": [
+    "Assignment and subletting (consent standards, recapture, transfer premiums)",
+    "Co-tenancy and operating covenants",
+    "Insurance requirements and waiver of subrogation",
+    "Casualty and condemnation provisions",
+    "SNDA and lien priority terms",
+    "Exclusive use and restrictive covenants",
+    "Signage rights",
+    "Parking allocations",
+    "Hazardous materials and environmental provisions",
+    "Holdover, surrender, and restoration obligations"
+  ],
+  "categories": [
+    { "id": "rent", "label": "Base Rent" },
+    { "id": "term", "label": "Term / Expiration" },
+    { "id": "renewal", "label": "Renewal Option" },
+    { "id": "deposit", "label": "Security Deposit" },
+    { "id": "opex", "label": "Operating Expenses / CAM Cap" }
+  ],
+  "documents": [
+    {
+      "id": "lease",
+      "title": "Office Lease",
+      "short": "Lease",
+      "date": "2019-03-01",
+      "dateDisplay": "March 1, 2019",
+      "kind": "operative",
+      "modifiesLease": false,
+      "file": "docs/office-lease.html",
+      "parties": "Dexter Lakeview Properties LLC (Landlord) and Meridian Analytics, Inc. (Tenant)",
+      "summary": "Original office lease for Suite 400 (12,125 RSF). Seven-year initial term, NNN with operating-expense pass-throughs and a controllable-expense cap, base rent with annual 3% escalations, $48,500 security deposit, one 5-year renewal option, assignment subject to landlord consent."
+    },
+    {
+      "id": "cdm",
+      "title": "Commencement Date Memorandum",
+      "short": "Comm. Memo",
+      "date": "2019-07-10",
+      "dateDisplay": "July 10, 2019",
+      "kind": "operative",
+      "modifiesLease": true,
+      "file": "docs/commencement-memo.html",
+      "parties": "Same parties as the Lease",
+      "summary": "Fixes the Commencement Date as June 1, 2019 and the Expiration Date as May 31, 2026, confirming the rent schedule dates under Lease § 4.1."
+    },
+    {
+      "id": "amd1",
+      "title": "First Amendment to Office Lease",
+      "short": "First Amend.",
+      "date": "2021-09-15",
+      "dateDisplay": "September 15, 2021",
+      "kind": "operative",
+      "modifiesLease": true,
+      "file": "docs/first-amendment.html",
+      "parties": "Same parties as the Lease",
+      "summary": "Extends the term by 24 months to May 31, 2028 and restates the Base Rent schedule through the extended term, continuing the 3% annual escalations."
+    },
+    {
+      "id": "amd2",
+      "title": "Second Amendment to Office Lease",
+      "short": "Second Amend.",
+      "date": "2023-11-01",
+      "dateDisplay": "November 1, 2023",
+      "kind": "operative",
+      "modifiesLease": true,
+      "file": "docs/second-amendment.html",
+      "parties": "Same parties as the Lease",
+      "summary": "Replaces the Base Rent schedule effective January 1, 2024 with a reduced schedule, and reduces the Security Deposit from $48,500 to $40,000 (excess credited against January 2024 rent)."
+    },
+    {
+      "id": "estoppel",
+      "title": "Tenant Estoppel Certificate",
+      "short": "Estoppel",
+      "date": "2026-03-16",
+      "dateDisplay": "March 16, 2026",
+      "kind": "factual",
+      "modifiesLease": false,
+      "file": "docs/estoppel-certificate.html",
+      "parties": "Meridian Analytics, Inc. (Tenant), addressed to Harborline Acquisitions LLC and its lender",
+      "summary": "Tenant's factual certification of lease status as of March 16, 2026, delivered in connection with the pending sale. An estoppel certifies facts as of its date; it does not amend the lease."
+    }
+  ],
+  "provisions": [
+    {
+      "id": "lease-rent",
+      "docId": "lease",
+      "section": "§ 4.1",
+      "anchor": "sec-4-1",
+      "category": "rent",
+      "label": "Base Rent schedule (Lease Years 1–7)",
+      "quote": "Tenant shall pay Base Rent in the monthly amounts set forth below, commencing $24,250.00 per month for Lease Year 1 and increasing three percent (3%) on each anniversary of the Commencement Date, through $28,955.77 per month for Lease Year 7.",
+      "facts": {
+        "rentSchedule": [
+          { "from": "2019-06-01", "to": "2020-05-31", "monthly": 24250.0 },
+          { "from": "2020-06-01", "to": "2021-05-31", "monthly": 24977.5 },
+          { "from": "2021-06-01", "to": "2022-05-31", "monthly": 25726.83 },
+          { "from": "2022-06-01", "to": "2023-05-31", "monthly": 26498.63 },
+          { "from": "2023-06-01", "to": "2024-05-31", "monthly": 27293.59 },
+          { "from": "2024-06-01", "to": "2025-05-31", "monthly": 28112.4 },
+          { "from": "2025-06-01", "to": "2026-05-31", "monthly": 28955.77 }
+        ]
+      }
+    },
+    {
+      "id": "lease-term",
+      "docId": "lease",
+      "section": "§ 3.1",
+      "anchor": "sec-3-1",
+      "category": "term",
+      "label": "Initial Term (84 months)",
+      "quote": "The initial term of this Lease shall be eighty-four (84) months, commencing on the Commencement Date and expiring on the last day of the eighty-fourth (84th) full calendar month thereafter, subject to confirmation in the Commencement Date Memorandum.",
+      "facts": { "expiration": "2026-05-31" }
+    },
+    {
+      "id": "lease-renewal",
+      "docId": "lease",
+      "section": "§ 3.2",
+      "anchor": "sec-3-2",
+      "category": "renewal",
+      "label": "Renewal Option (one 5-year option; 9-month notice)",
+      "quote": "Tenant shall have one (1) option to extend the Term for a period of five (5) years at the Fair Market Rate, exercisable only by written notice delivered to Landlord no later than nine (9) months prior to the expiration of the Term, time being of the essence.",
+      "facts": { "renewalOptions": 1, "renewalYears": 5, "noticeMonthsBeforeExpiration": 9 }
+    },
+    {
+      "id": "lease-opex",
+      "docId": "lease",
+      "section": "§ 6.3",
+      "anchor": "sec-6-3",
+      "category": "opex",
+      "label": "Cap on Controllable Operating Expenses (body: 4%)",
+      "quote": "Controllable Operating Expenses shall not increase by more than four percent (4%) per calendar year over the amount of Controllable Operating Expenses for the immediately preceding calendar year, determined on a cumulative and compounding basis.",
+      "facts": { "camCapPct": 4 }
+    },
+    {
+      "id": "lease-opex-exc",
+      "docId": "lease",
+      "section": "Exhibit C, ¶ 3",
+      "anchor": "exc-3",
+      "category": "opex",
+      "label": "Cap on Controllable Operating Expenses (Exhibit C: 5%)",
+      "quote": "Notwithstanding anything in the Lease to the contrary, increases in Controllable Operating Expenses shall be capped at five percent (5%) per calendar year on a cumulative and compounding basis.",
+      "facts": { "camCapPct": 5 }
+    },
+    {
+      "id": "lease-deposit",
+      "docId": "lease",
+      "section": "§ 7.1",
+      "anchor": "sec-7-1",
+      "category": "deposit",
+      "label": "Security Deposit ($48,500)",
+      "quote": "Concurrently with Tenant's execution of this Lease, Tenant shall deposit with Landlord the sum of Forty-Eight Thousand Five Hundred and No/100 Dollars ($48,500.00) as security for Tenant's faithful performance of its obligations under this Lease.",
+      "facts": { "securityDeposit": 48500 }
+    },
+    {
+      "id": "lease-assignment",
+      "docId": "lease",
+      "section": "§ 11.1",
+      "anchor": "sec-11-1",
+      "category": "assignment",
+      "label": "Assignment and Subletting (landlord consent required)",
+      "quote": "Tenant shall not assign this Lease or sublet all or any portion of the Premises without Landlord's prior written consent, which consent shall not be unreasonably withheld, conditioned, or delayed.",
+      "facts": {}
+    },
+    {
+      "id": "cdm-dates",
+      "docId": "cdm",
+      "section": "¶ 2",
+      "anchor": "para-2",
+      "category": "term",
+      "label": "Commencement and Expiration Dates fixed",
+      "relation": { "type": "confirms", "targets": ["lease-term"] },
+      "quote": "The Commencement Date of the Lease is June 1, 2019, and the Expiration Date of the Lease is May 31, 2026.",
+      "facts": { "commencement": "2019-06-01", "expiration": "2026-05-31" }
+    },
+    {
+      "id": "amd1-term",
+      "docId": "amd1",
+      "section": "§ 3",
+      "anchor": "sec-3",
+      "category": "term",
+      "label": "Term extended 24 months; new Expiration Date May 31, 2028",
+      "relation": { "type": "supersedes", "targets": ["cdm-dates", "lease-term"] },
+      "quote": "The Term of the Lease is hereby extended for a period of twenty-four (24) months, such that the Expiration Date of the Lease shall be May 31, 2028.",
+      "facts": { "expiration": "2028-05-31" }
+    },
+    {
+      "id": "amd1-rent",
+      "docId": "amd1",
+      "section": "§ 4",
+      "anchor": "sec-4",
+      "category": "rent",
+      "label": "Base Rent schedule restated through May 31, 2028",
+      "relation": { "type": "supersedes", "targets": ["lease-rent"] },
+      "quote": "Effective as of June 1, 2021, Section 4.1 of the Lease is deleted and replaced with the schedule set forth in this Section 4, continuing the three percent (3%) annual escalations through the extended Term, with monthly Base Rent of $28,955.77 for the period June 1, 2025 through May 31, 2026, $29,824.44 for the period June 1, 2026 through May 31, 2027, and $30,719.17 for the period June 1, 2027 through May 31, 2028.",
+      "facts": {
+        "rentSchedule": [
+          { "from": "2021-06-01", "to": "2022-05-31", "monthly": 25726.83 },
+          { "from": "2022-06-01", "to": "2023-05-31", "monthly": 26498.63 },
+          { "from": "2023-06-01", "to": "2024-05-31", "monthly": 27293.59 },
+          { "from": "2024-06-01", "to": "2025-05-31", "monthly": 28112.4 },
+          { "from": "2025-06-01", "to": "2026-05-31", "monthly": 28955.77 },
+          { "from": "2026-06-01", "to": "2027-05-31", "monthly": 29824.44 },
+          { "from": "2027-06-01", "to": "2028-05-31", "monthly": 30719.17 }
+        ]
+      }
+    },
+    {
+      "id": "amd2-rent",
+      "docId": "amd2",
+      "section": "§ 3",
+      "anchor": "sec-3",
+      "category": "rent",
+      "label": "Base Rent schedule replaced effective January 1, 2024",
+      "relation": { "type": "supersedes", "targets": ["amd1-rent"] },
+      "quote": "Effective as of January 1, 2024, the Base Rent schedule set forth in Section 4 of the First Amendment is deleted in its entirety and replaced with the following: $26,000.00 per month (January 1, 2024 – May 31, 2024); $26,780.00 per month (June 1, 2024 – May 31, 2025); $27,583.40 per month (June 1, 2025 – May 31, 2026); $28,410.90 per month (June 1, 2026 – May 31, 2027); $29,263.23 per month (June 1, 2027 – May 31, 2028).",
+      "facts": {
+        "rentSchedule": [
+          { "from": "2024-01-01", "to": "2024-05-31", "monthly": 26000.0 },
+          { "from": "2024-06-01", "to": "2025-05-31", "monthly": 26780.0 },
+          { "from": "2025-06-01", "to": "2026-05-31", "monthly": 27583.4 },
+          { "from": "2026-06-01", "to": "2027-05-31", "monthly": 28410.9 },
+          { "from": "2027-06-01", "to": "2028-05-31", "monthly": 29263.23 }
+        ]
+      }
+    },
+    {
+      "id": "amd2-deposit",
+      "docId": "amd2",
+      "section": "§ 4",
+      "anchor": "sec-4",
+      "category": "deposit",
+      "label": "Security Deposit reduced to $40,000",
+      "relation": { "type": "supersedes", "targets": ["lease-deposit"] },
+      "quote": "The Security Deposit held by Landlord under Section 7.1 of the Lease is hereby reduced from $48,500.00 to Forty Thousand and No/100 Dollars ($40,000.00). Landlord shall credit the difference of $8,500.00 against the installment of Base Rent due January 1, 2024.",
+      "facts": { "securityDeposit": 40000 }
+    }
+  ],
+  "estoppel": {
+    "docId": "estoppel",
+    "date": "2026-03-16",
+    "certifications": [
+      {
+        "id": "est-docs",
+        "section": "¶ 2",
+        "anchor": "para-2",
+        "label": "Lease documents / amendments",
+        "field": "amendments",
+        "listedDocs": ["cdm", "amd1"],
+        "quote": "The Lease has not been amended, modified, or supplemented except by the Commencement Date Memorandum dated July 10, 2019 and the First Amendment to Office Lease dated September 15, 2021. The documents described in this Paragraph 2 constitute the entire agreement between Landlord and Tenant with respect to the Premises."
+      },
+      {
+        "id": "est-term",
+        "section": "¶ 3",
+        "anchor": "para-3",
+        "label": "Commencement and expiration dates",
+        "field": "expiration",
+        "value": "2028-05-31",
+        "quote": "The Commencement Date of the Lease was June 1, 2019. The Term of the Lease expires on May 31, 2028."
+      },
+      {
+        "id": "est-rent",
+        "section": "¶ 4",
+        "anchor": "para-4",
+        "label": "Current monthly Base Rent",
+        "field": "monthlyRent",
+        "value": 28955.77,
+        "quote": "The current monthly Base Rent payable under the Lease is $28,955.77."
+      },
+      {
+        "id": "est-paid",
+        "section": "¶ 5",
+        "anchor": "para-5",
+        "label": "Rent paid through",
+        "field": "rentPaidThrough",
+        "informational": true,
+        "value": "2026-03-31",
+        "quote": "Base Rent and all additional rent have been paid through March 31, 2026. No rent has been paid more than one (1) month in advance."
+      },
+      {
+        "id": "est-deposit",
+        "section": "¶ 6",
+        "anchor": "para-6",
+        "label": "Security deposit",
+        "field": "securityDeposit",
+        "value": 48500,
+        "quote": "Landlord holds a security deposit under the Lease in the amount of $48,500.00."
+      },
+      {
+        "id": "est-renewal",
+        "section": "¶ 7",
+        "anchor": "para-7",
+        "label": "Renewal option",
+        "field": "renewalOption",
+        "verifyOnly": true,
+        "quote": "Tenant has one (1) remaining option to extend the term of the Lease for a period of five (5) years, on the terms stated in the Lease. Tenant has not exercised such option as of the date of this Certificate."
+      },
+      {
+        "id": "est-defaults",
+        "section": "¶ 8",
+        "anchor": "para-8",
+        "label": "No defaults (knowledge-qualified)",
+        "field": "defaults",
+        "informational": true,
+        "quote": "To Tenant's actual knowledge, neither Landlord nor Tenant is in default under the Lease, and no event has occurred that, with the giving of notice or the passage of time, would constitute such a default."
+      }
+    ]
+  }
+}

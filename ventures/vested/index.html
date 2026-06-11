@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vested — Data Center Entitlement Intelligence</title>
+  <meta name="description" content="County-level structured database of U.S. data center zoning actions — moratoriums, ordinance amendments, overlays — with legally literate decode.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand-row">
+        <span class="brand">Vested</span>
+        <span class="tagline">The heatmap tells you where the fight is. Vested tells you what the law says, whether your project is caught by it, and what to file next.</span>
+      </div>
+      <nav>
+        <a href="index.html" class="active">Tracker</a>
+        <a href="methodology.html">Methodology &amp; Vesting Primer</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="coverage">
+    <div class="coverage-inner" id="coverageLine">
+      <strong>Coverage:</strong> loading dataset&hellip;
+    </div>
+  </div>
+
+  <main>
+    <h1 class="page-title">Data center entitlement actions</h1>
+    <p class="page-sub">
+      Moratoriums, ordinance amendments, overlay districts and entitlement litigation, decoded record by record.
+      Click any row for the full decode: scope flags, pending-application carve-out, per-state vesting context,
+      numeric standards, and sources adjacent to every claim. Where a fact is unknown we say
+      <em>Not yet verified</em> &mdash; we do not invent ordinance numbers, dates, or vote tallies.
+    </p>
+
+    <div class="view-tabs" role="tablist">
+      <button id="tabAll" class="active" role="tab">All actions</button>
+      <button id="tabWeek" role="tab">Changed this week</button>
+    </div>
+
+    <div class="week-note" id="weekNote" style="display:none"></div>
+
+    <div class="controls">
+      <div class="control">
+        <label for="fState">State</label>
+        <select id="fState"><option value="">All states</option></select>
+      </div>
+      <div class="control">
+        <label for="fType">Action type</label>
+        <select id="fType"><option value="">All types</option></select>
+      </div>
+      <div class="control">
+        <label for="fStatus">Status</label>
+        <select id="fStatus"><option value="">All statuses</option></select>
+      </div>
+      <div class="control">
+        <label for="fSearch">Search</label>
+        <input id="fSearch" type="search" placeholder="jurisdiction, ordinance, setback, carve-out&hellip;">
+      </div>
+      <div class="spacer"></div>
+      <button class="btn secondary" id="btnCopyWeek" title="Copy a plain-text summary of this week's changes for pasting into email">Copy this week's changes</button>
+      <button class="btn" id="btnExport" title="Download the currently filtered table as CSV">Export CSV</button>
+    </div>
+
+    <p class="result-count" id="resultCount"></p>
+
+    <div class="table-wrap" id="tableWrap">
+      <table class="actions">
+        <thead>
+          <tr>
+            <th>Jurisdiction</th>
+            <th>Action</th>
+            <th>Status</th>
+            <th>Adopted</th>
+            <th>Last verified</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" id="emptyState" style="display:none"></div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <strong>Disclaimer.</strong> Vested is compiled from public records for informational purposes.
+      Entries labeled &ldquo;Editorial analysis&rdquo; are opinion and market commentary &mdash; not legal advice.
+      No attorney-client relationship is formed by accessing or using this site. Local zoning records change
+      frequently and summaries may lag; always verify against the official ordinance text and the jurisdiction&rsquo;s
+      records before acting. Each record carries an as-of (&ldquo;last verified&rdquo;) date. Fields we have not
+      confirmed are shown as &ldquo;Not yet verified,&rdquo; never guessed.
+      <br>&copy; 2026 Vested. See <a href="methodology.html">Methodology</a> for sourcing and verification practices.
+    </div>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrossCheck — Lease Diligence Workbench</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">Cross<span>Check</span></div>
+  <div class="tagline">Lease diligence workbench for attorneys — assembly by software, judgment by counsel</div>
+  <div class="live-badge" id="live-badge" title="Optional local extraction server (server.py)">demo mode · local data</div>
+</header>
+
+<div class="matter-bar" id="matter-bar">Loading matter&hellip;</div>
+
+<nav class="tabs" id="tabs">
+  <button data-view="overview" class="active">Matter &amp; Documents</button>
+  <button data-view="terms">Operative Terms</button>
+  <button data-view="review">Review Queue <span class="count" id="flag-count">–</span></button>
+  <button data-view="report">Report</button>
+</nav>
+
+<main>
+  <section class="view active" id="view-overview">
+    <h2 class="view-title">Matter overview</h2>
+    <p class="view-sub" id="matter-desc"></p>
+
+    <div class="panel">
+      <h3>Document set</h3>
+      <table class="doc-table">
+        <thead>
+          <tr><th>Document</th><th>Date</th><th>Role</th><th>Summary</th></tr>
+        </thead>
+        <tbody id="doc-rows"></tbody>
+      </table>
+      <p style="font-size:12.5px;color:var(--muted);margin:10px 0 0">
+        Click any document title to read the full rendered text. An <em>operative</em> document creates or changes lease obligations;
+        a <em>factual certification</em> (the estoppel) states facts as of its date and does not amend the lease.
+      </p>
+    </div>
+
+    <div class="panel">
+      <h3>What CrossCheck does not check (v1)</h3>
+      <ul id="not-checked-list" class="consistent-list"></ul>
+      <p style="font-size:12.5px;color:var(--muted);margin:8px 0 0">
+        These provisions appear in the documents (e.g., Lease § 11.1 assignment) but are outside the v1 comparison engine.
+        They remain the reviewing attorney's responsibility.
+      </p>
+    </div>
+
+    <div class="panel" id="live-panel" hidden>
+      <h3>Live extraction (optional, local server detected)</h3>
+      <p style="font-size:13px;color:var(--muted);margin:0 0 10px">
+        Paste the text of a lease document below to extract a provision inventory via the local <code>server.py</code> bridge.
+        Results are shown for review only; they are not merged into the demo matter.
+      </p>
+      <textarea id="live-text" placeholder="Paste document text here&hellip;"></textarea>
+      <div style="margin-top:8px;display:flex;gap:10px;align-items:center">
+        <label for="live-doctype" style="font-size:13px">Document type:</label>
+        <select id="live-doctype">
+          <option value="lease">Lease</option>
+          <option value="amendment">Amendment</option>
+          <option value="estoppel">Estoppel certificate</option>
+          <option value="other">Other</option>
+        </select>
+        <button class="primary" id="live-extract">Extract provisions</button>
+        <span id="live-status" style="font-size:12.5px;color:var(--muted)"></span>
+      </div>
+      <div id="live-result"></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-terms">
+    <h2 class="view-title">Operative terms timeline</h2>
+    <p class="view-sub">
+      For each economic term, the chain below shows which provision controls today and how it got there.
+      A later amendment superseding an earlier provision is the documents working as intended — lineage, not conflict.
+      Only genuine contradictions appear in the Review Queue.
+    </p>
+    <div id="chains"></div>
+  </section>
+
+  <section class="view" id="view-review">
+    <h2 class="view-title">Review queue</h2>
+    <p class="view-sub">
+      Each flag is a candidate discrepancy, shown with both passages and citations. Every flag requires an attorney
+      disposition, and the report cannot be generated until all flags are dispositioned and a reviewer is named.
+      For estoppel flags, the framing is always: <em>the estoppel certifies X; the operative documents show Y</em> —
+      an estoppel certifies facts, it does not amend the lease.
+    </p>
+
+    <div class="gate" id="gate">
+      <div class="progress" id="gate-progress"></div>
+      <input type="text" id="reviewer-name" placeholder="Reviewing attorney (required)" autocomplete="name">
+      <button class="primary" id="generate-report" disabled>Generate report</button>
+      <div class="gate-why" id="gate-why"></div>
+    </div>
+
+    <div id="flags"></div>
+
+    <div class="panel">
+      <h3>Certifications with no discrepancy found</h3>
+      <ul class="consistent-list" id="consistent-list"></ul>
+    </div>
+  </section>
+
+  <section class="view" id="view-report">
+    <h2 class="view-title">Report</h2>
+    <p class="view-sub">The report is the reviewing attorney's work product. Use Print / Save as PDF for the deliverable.</p>
+    <div class="report-actions" id="report-actions" hidden>
+      <button id="print-report">Print / Save as PDF</button>
+      <span style="font-size:12.5px;color:var(--muted)">The print stylesheet outputs the report only.</span>
+    </div>
+    <div class="report-locked" id="report-locked">
+      Report locked — disposition all flags in the Review Queue and enter the reviewing attorney's name, then select
+      <strong>Generate report</strong>.
+    </div>
+    <div id="report-output" hidden></div>
+  </section>
+</main>
+
+<footer class="framing" id="framing"></footer>
+
+<script src="app.js"></script>
+</body>
+</html>
