@@ -225,6 +225,35 @@ body {
 .spar-ta:focus { outline: none; border-color: var(--amber-border); }
 .spar-btns { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
 
+/* ---------- 3D walkthrough ---------- */
+.viz {
+  position: relative; height: 40vh; min-height: 220px; max-height: 380px;
+  background: #05070a; border-bottom: 1px solid var(--card-border);
+  overflow: hidden; touch-action: pan-y;
+}
+.viz canvas { display: block; width: 100% !important; height: 100% !important; }
+.viz-label {
+  position: absolute; top: 10px; left: 14px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  color: var(--amber); text-shadow: 0 0 12px rgba(245,166,35,0.45);
+  pointer-events: none;
+}
+.viz-toggle {
+  position: absolute; top: 8px; right: 10px;
+  background: rgba(10,14,19,0.7); border: 1px solid var(--card-border);
+  border-radius: 8px; color: var(--muted); font-family: inherit;
+  font-size: 11px; font-weight: 700; padding: 4px 9px;
+}
+.viz-hint {
+  position: absolute; bottom: 8px; right: 12px;
+  font-size: 10px; color: var(--muted); opacity: 0.6; pointer-events: none;
+}
+.viz-restore {
+  display: block; margin: 10px 20px 0; padding: 8px 12px;
+  background: none; border: 1px dashed var(--card-border); border-radius: 10px;
+  color: var(--muted); font-family: inherit; font-size: 12px; width: calc(100% - 40px);
+}
+
 /* ---------- settings ---------- */
 .settings-input {
   display: block; width: 100%; margin-bottom: 10px;

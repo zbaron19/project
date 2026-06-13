@@ -167,6 +167,36 @@
     return row;
   }
 
+  /* ---------- 3D walkthrough viewport ---------- */
+  function vizPref() {
+    try { return localStorage.getItem('cl_3d') !== 'off'; } catch (e) { return true; }
+  }
+  function mountViz(run, step) {
+    var zone = step.t === 'walk' ? 'ext' : (window.Tour ? Tour.zoneFor(run.ep.id, step.i) : 'ext');
+    if (!vizPref()) {
+      var on = el('button', 'viz-restore', 'Show 3D walkthrough');
+      on.onclick = function () {
+        try { localStorage.setItem('cl_3d', 'on'); } catch (e) {}
+        renderStep(run);
+      };
+      app.appendChild(on);
+      return;
+    }
+    if (!(window.World && World.mount)) return;
+    var vp = el('div', 'viz');
+    app.appendChild(vp);
+    if (!World.mount(vp)) { vp.remove(); return; }
+    var label = World.flyTo(zone) || '';
+    vp.appendChild(el('div', 'viz-label', esc(label)));
+    var off = el('button', 'viz-toggle', '2D');
+    off.onclick = function () {
+      try { localStorage.setItem('cl_3d', 'off'); } catch (e) {}
+      renderStep(run);
+    };
+    vp.appendChild(off);
+    vp.appendChild(el('div', 'viz-hint', 'drag to look around'));
+  }
+
   function renderStep(run) {
     clear();
     var ep = run.ep;
@@ -175,6 +205,7 @@
       if (confirm('Leave the episode? Progress in it is lost.')) renderHome();
     }));
     app.appendChild(phaseBar(run));
+    if (step.t === 'walk' || step.t === 'concept') mountViz(run, step);
     var scene = el('div', 'scene');
 
     if (step.t === 'walk') {

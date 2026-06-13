@@ -1,11 +1,14 @@
 /* Critical Load — offline cache */
-var CACHE = 'critical-load-v2';
+var CACHE = 'critical-load-v3';
 var ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
   './spar-live.js',
+  './three.min.js',
+  './world.js',
+  './tour.js',
   './data1.js',
   './data2.js',
   './data3.js',

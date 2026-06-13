@@ -43,6 +43,17 @@ open `http://localhost:8000`.
 - **Glossary** collects your banked term cards.
 - Grades persist per episode (best kept). Reset lives on the home screen.
 
+## 3D walkthrough
+
+The Walk and Teardown phases play inside a stylized low-poly 3D model of the
+Helios campus (Three.js, vendored locally — still fully offline). As Dee
+explains each system the camera flies to the real equipment: substation yard,
+MV switchgear, generator yard, UPS gallery, data hall, chiller plant, cooling
+towers, meet-me room, and the NOC. The zone under discussion pulses; drag to
+look around. A `2D` button in the viewport corner switches back to text-only
+mode (remembered per device), and devices without WebGL fall back
+automatically.
+
 ## Live AI sparring (optional)
 
 Tap **Spar AI** on the home screen and enter your Anthropic API key to make
