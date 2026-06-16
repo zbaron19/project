@@ -1,0 +1,10 @@
+{
+  "name": "@ai-visibility/shopify",
+  "version": "0.0.0",
+  "private": true,
+  "description": "App #2 — Shopify app (Remix). Scaffold placeholder; built in Prompts 8–10 via Shopify CLI template.",
+  "type": "module",
+  "dependencies": {
+    "@ai-visibility/core": "workspace:*"
+  }
+}

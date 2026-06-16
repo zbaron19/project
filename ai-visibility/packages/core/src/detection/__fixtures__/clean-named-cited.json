@@ -1,0 +1,9 @@
+{
+  "engine": "perplexity",
+  "prompt": "best emergency plumber in Tacoma WA",
+  "rawText": "For emergency plumbing in Tacoma, Joe's Plumbing is a top choice with 24/7 service and licensed technicians.",
+  "citations": [
+    { "url": "https://joesplumbing.com", "title": "Joe's Plumbing — 24/7 Emergency" },
+    { "url": "https://tacomaplumbingpros.com", "title": "Tacoma Plumbing Pros" }
+  ]
+}

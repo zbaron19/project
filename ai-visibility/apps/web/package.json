@@ -1,0 +1,10 @@
+{
+  "name": "@ai-visibility/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "App #1 — local/SMB visibility tool (Cloudflare Workers). Scaffold placeholder; built in Prompts 6–7.",
+  "type": "module",
+  "dependencies": {
+    "@ai-visibility/core": "workspace:*"
+  }
+}

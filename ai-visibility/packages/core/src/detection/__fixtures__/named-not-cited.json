@@ -1,0 +1,9 @@
+{
+  "engine": "perplexity",
+  "prompt": "best emergency plumber in Tacoma WA",
+  "rawText": "Joe's Plumbing is frequently recommended for urgent repairs, alongside a few other local outfits.",
+  "citations": [
+    { "url": "https://rapidrooter.com", "title": "Rapid Rooter" },
+    { "url": "https://www.tacomaplumbingpros.com/emergency", "title": "Tacoma Plumbing Pros" }
+  ]
+}

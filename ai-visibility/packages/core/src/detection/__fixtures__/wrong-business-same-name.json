@@ -1,0 +1,8 @@
+{
+  "engine": "perplexity",
+  "prompt": "best emergency plumber in Tacoma WA",
+  "rawText": "Joe's Plumbing in Miami, Florida has excellent reviews for emergency calls.",
+  "citations": [
+    { "url": "https://miamijoesplumbing.example", "title": "Joe's Plumbing of Miami" }
+  ]
+}

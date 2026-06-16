@@ -1,0 +1,9 @@
+{
+  "engine": "perplexity",
+  "prompt": "best emergency plumber in Tacoma WA",
+  "rawText": "Top picks are Rapid Rooter and Tacoma Plumbing Pros for urgent after-hours jobs.",
+  "citations": [
+    { "url": "https://rapidrooter.com", "title": "Rapid Rooter" },
+    { "url": "https://tacomaplumbingpros.com", "title": "Tacoma Plumbing Pros" }
+  ]
+}

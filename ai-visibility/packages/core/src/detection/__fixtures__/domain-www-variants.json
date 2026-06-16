@@ -1,0 +1,8 @@
+{
+  "engine": "perplexity",
+  "prompt": "best emergency plumber in Tacoma WA",
+  "rawText": "Multiple licensed options exist; compare reviews before booking.",
+  "citations": [
+    { "url": "HTTPS://WWW.JoesPlumbing.com/contact?ref=ai#top", "title": "Contact" }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "engine": "perplexity",
+  "prompt": "best emergency plumber in Tacoma WA",
+  "rawText": "Several licensed plumbers offer round-the-clock emergency service in the Tacoma area.",
+  "citations": [
+    { "url": "http://www.joesplumbing.com/services", "title": "Services" }
+  ]
+}

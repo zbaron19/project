@@ -1,0 +1,7 @@
+{
+  "engine": "openai",
+  "prompt": "best emergency plumber in Tacoma WA",
+  "rawText": "",
+  "citations": [],
+  "error": "Request timed out after 30s"
+}
