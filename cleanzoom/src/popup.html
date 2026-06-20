@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="popup.css">
+  <title>CleanZoom</title>
+</head>
+<body>
+  <header class="cz-head">
+    <img src="../icons/icon32.png" width="24" height="24" alt="">
+    <span>CleanZoom</span>
+  </header>
+
+  <label class="cz-row cz-toggle">
+    <span>Enabled</span>
+    <input type="checkbox" id="enabled">
+    <span class="cz-switch"></span>
+  </label>
+
+  <label class="cz-row cz-toggle">
+    <span>Off on <b id="site">this site</b></span>
+    <input type="checkbox" id="siteOff">
+    <span class="cz-switch"></span>
+  </label>
+
+  <div class="cz-row cz-hint">Hover any image to preview it full-size.</div>
+
+  <button id="opts" class="cz-link">All settings →</button>
+
+  <footer class="cz-foot">No tracking. Nothing leaves your browser.</footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

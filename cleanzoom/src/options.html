@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="options.css">
+  <title>CleanZoom — Settings</title>
+</head>
+<body>
+  <main>
+    <h1><img src="../icons/icon48.png" width="28" height="28" alt=""> CleanZoom settings</h1>
+
+    <section class="card">
+      <div class="field">
+        <label for="delayMs">Hover delay before preview</label>
+        <div class="control">
+          <input type="range" id="delayMs" min="0" max="800" step="50">
+          <output id="delayMsOut"></output>
+        </div>
+        <p class="help">How long to rest on an image before the preview appears.</p>
+      </div>
+
+      <div class="field">
+        <label for="modifier">Activation key</label>
+        <div class="control">
+          <select id="modifier">
+            <option value="none">Always (no key)</option>
+            <option value="alt">Hold Alt</option>
+            <option value="shift">Hold Shift</option>
+            <option value="ctrl">Hold Ctrl / ⌘</option>
+          </select>
+        </div>
+        <p class="help">Require holding a key so previews only appear on demand.</p>
+      </div>
+
+      <div class="field">
+        <label for="maxSizePct">Maximum preview size</label>
+        <div class="control">
+          <input type="range" id="maxSizePct" min="40" max="100" step="5">
+          <output id="maxSizePctOut"></output>
+        </div>
+        <p class="help">Caps the preview to this share of your screen.</p>
+      </div>
+
+      <div class="field">
+        <label for="minThumbPx">Ignore images smaller than</label>
+        <div class="control">
+          <input type="range" id="minThumbPx" min="0" max="200" step="8">
+          <output id="minThumbPxOut"></output>
+        </div>
+        <p class="help">Skips tiny icons, avatars, and sprite images.</p>
+      </div>
+
+      <label class="field checkbox">
+        <input type="checkbox" id="onlyIfLarger">
+        <span>Only preview when a larger image actually exists</span>
+      </label>
+    </section>
+
+    <section class="card">
+      <div class="field">
+        <label for="disabledSites">Disabled sites</label>
+        <textarea id="disabledSites" rows="4" placeholder="one hostname per line, e.g. mail.google.com"></textarea>
+        <p class="help">CleanZoom stays off on these hostnames.</p>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button id="reset" class="ghost">Reset to defaults</button>
+      <span id="status" class="status"></span>
+    </div>
+
+    <p class="privacy">CleanZoom runs entirely on your device. It makes no network
+      requests of its own, has no analytics, and never collects or transmits any
+      data. Settings are stored only in your browser.</p>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>
