@@ -341,18 +341,21 @@ def main() -> int:
     run_links: set[str] = set()
     run_titles: set[str] = set()
     for it in all_items:
-        if it["link"] in seen:
-            continue
-        if it["link"] in run_links:
-            continue
         norm_title = re.sub(r"[^a-z0-9]+", " ", it["title"].lower()).strip()
-        if norm_title and norm_title in run_titles:
+        title_key = f"t:{norm_title}" if norm_title else ""
+        # Dedup against history. Google News rotates its article-link tokens
+        # between fetches, so the headline is the stable key, not the URL.
+        if it["link"] in seen or (title_key and title_key in seen):
+            continue
+        # Dedup within this run (same story across multiple feeds/queries).
+        if it["link"] in run_links or (norm_title and norm_title in run_titles):
             continue
         pub = it.get("published")
         if pub and pub < cutoff:
             continue
         if not is_relevant(it):
             continue
+        it["_title_key"] = title_key
         run_links.add(it["link"])
         if norm_title:
             run_titles.add(norm_title)
@@ -375,9 +378,12 @@ def main() -> int:
     dated_path.write_text(brief)
     LATEST_PATH.write_text(brief)
 
-    # Update seen state
+    # Update seen state — record both the link and the title key so the next
+    # run can dedup even when Google News hands back a fresh link token.
     for it in fresh:
         seen[it["link"]] = now.isoformat()
+        if it.get("_title_key"):
+            seen[it["_title_key"]] = now.isoformat()
     state["seen"] = prune_seen(seen)
     save_state(state)
 
