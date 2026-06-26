@@ -40,12 +40,12 @@ BRIEFS_DIR = ROOT / "briefs"
 #      in parse_feed, so the brief still attributes by outlet, not "Google News".
 FEEDS = [
     # --- Direct trade-press feeds ---
+    # (Data Center Frontier and The Register reorganized their feeds and now
+    # 404; their articles still come through via the Google News searches below.)
     ("Data Center Dynamics", "https://www.datacenterdynamics.com/rss/"),
-    ("Data Center Frontier", "https://www.datacenterfrontier.com/feed/"),
     ("Data Center Knowledge", "https://www.datacenterknowledge.com/rss.xml"),
     ("Utility Dive", "https://www.utilitydive.com/feeds/news/"),
     ("Facilities Dive", "https://www.facilitiesdive.com/feeds/news/"),
-    ("The Register", "https://www.theregister.com/data_centre/headlines.atom"),
     ("Canary Media", "https://www.canarymedia.com/feed"),
     ("Stateline", "https://stateline.org/feed/"),
 
