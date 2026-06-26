@@ -101,38 +101,36 @@ def md_to_html(md: str) -> str:
 # --- page assembly ---------------------------------------------------------
 
 STYLE = """
-:root { color-scheme: light dark; }
+:root { color-scheme: light; }
 * { box-sizing: border-box; }
 body {
   font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   max-width: 760px; margin: 0 auto; padding: 1.25rem 1.1rem 4rem;
-  color: #1a1a1a; background: #fafafa;
+  color: #1c2024; background: #eef1f4;
 }
-@media (prefers-color-scheme: dark) {
-  body { color: #e8e8e8; background: #161616; }
-  a { color: #6db3f2; }
-  .card, details { background: #1f1f1f; border-color: #333; }
-  .muted { color: #9a9a9a; }
-}
-header h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
-.muted { color: #666; font-size: .9rem; }
-a { color: #1462b8; }
-h2 { font-size: 1.25rem; margin: 1.5rem 0 .25rem; }
-h3 { font-size: 1.02rem; margin: 1.3rem 0 .4rem; padding-bottom: .2rem;
-     border-bottom: 1px solid rgba(128,128,128,.25); }
+header h1 { font-size: 1.6rem; margin: 0 0 .3rem; color: #0f1419; }
+.muted { color: #5b6470; font-size: .9rem; }
+a { color: #1559c4; }
+a:hover { text-decoration: underline; }
+h2 { font-size: 1.25rem; margin: 1.6rem 0 .3rem; color: #0f1419; }
+h3 { font-size: 1.02rem; margin: 1.3rem 0 .4rem; padding-bottom: .25rem;
+     color: #0f1419; border-bottom: 1px solid #e2e6ea; }
 ul { padding-left: 1.2rem; margin: .4rem 0; }
-li { margin: .35rem 0; }
-hr { border: none; border-top: 1px solid rgba(128,128,128,.25); margin: 1.5rem 0; }
-.card { background: #fff; border: 1px solid #e3e3e3; border-radius: 12px;
-        padding: 1rem 1.2rem; margin: 1rem 0; }
-details { background: #fff; border: 1px solid #e3e3e3; border-radius: 10px;
-          padding: .25rem .9rem; margin: .5rem 0; }
-details > summary { cursor: pointer; font-weight: 600; padding: .55rem 0; list-style: none; }
+li { margin: .4rem 0; color: #1c2024; }
+strong { color: #0f1419; }
+hr { border: none; border-top: 1px solid #e2e6ea; margin: 1.6rem 0; }
+.card { background: #fff; color: #1c2024; border: 1px solid #dfe3e8;
+        border-radius: 12px; padding: 1.1rem 1.3rem; margin: 1rem 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+details { background: #fff; color: #1c2024; border: 1px solid #dfe3e8;
+          border-radius: 10px; padding: .25rem .95rem; margin: .55rem 0; }
+details > summary { cursor: pointer; font-weight: 600; padding: .6rem 0;
+                    color: #0f1419; list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
-details > summary::before { content: "▸ "; color: #888; }
+details > summary::before { content: "▸ "; color: #9099a3; }
 details[open] > summary::before { content: "▾ "; }
-.archive-h { margin-top: 2.5rem; }
-footer { margin-top: 3rem; font-size: .82rem; }
+.archive-h { margin-top: 2.5rem; color: #0f1419; }
+footer { margin-top: 3rem; font-size: .82rem; color: #5b6470; }
 """
 
 
