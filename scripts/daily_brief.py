@@ -31,15 +31,29 @@ LATEST_PATH = ROOT / "LATEST_BRIEF.md"
 BRIEFS_DIR = ROOT / "briefs"
 
 # Curated RSS feeds. Add/remove freely; failures on any one feed are non-fatal.
+#
+# Two kinds of feed:
+#   1. Direct trade-press RSS/Atom feeds (source name is fixed per feed).
+#   2. Google News topic searches — a broad catch-all that surfaces local and
+#      regional reporting the trade press misses. For these the real outlet
+#      (e.g. "Richmond Times-Dispatch") is read from each item's <source> tag
+#      in parse_feed, so the brief still attributes by outlet, not "Google News".
 FEEDS = [
+    # --- Direct trade-press feeds ---
     ("Data Center Dynamics", "https://www.datacenterdynamics.com/rss/"),
-    ("Data Center Frontier", "https://www.datacenterfrontier.com/rss.xml"),
+    ("Data Center Frontier", "https://www.datacenterfrontier.com/feed/"),
     ("Data Center Knowledge", "https://www.datacenterknowledge.com/rss.xml"),
     ("Utility Dive", "https://www.utilitydive.com/feeds/news/"),
-    ("Reuters Energy", "https://www.reutersagency.com/feed/?best-topics=energy"),
-    ("Bisnow", "https://www.bisnow.com/feed"),
-    ("GlobeSt", "https://www.globest.com/feed/"),
+    ("Facilities Dive", "https://www.facilitiesdive.com/feeds/news/"),
+    ("The Register", "https://www.theregister.com/data_centre/headlines.atom"),
+    ("Canary Media", "https://www.canarymedia.com/feed"),
     ("Stateline", "https://stateline.org/feed/"),
+
+    # --- Google News topic searches (recent, U.S.-biased; per-outlet attribution) ---
+    ("Google News", "https://news.google.com/rss/search?q=%22data+center%22+%28zoning+OR+moratorium+OR+rezoning+OR+%22land+use%22+OR+ordinance%29+when:3d&hl=en-US&gl=US&ceid=US:en"),
+    ("Google News", "https://news.google.com/rss/search?q=%22data+center%22+%28power+OR+grid+OR+substation+OR+interconnection+OR+utility+OR+nuclear%29+when:3d&hl=en-US&gl=US&ceid=US:en"),
+    ("Google News", "https://news.google.com/rss/search?q=%22data+center%22+%28lease+OR+acquisition+OR+REIT+OR+financing+OR+%22joint+venture%22%29+when:3d&hl=en-US&gl=US&ceid=US:en"),
+    ("Google News", "https://news.google.com/rss/search?q=%22data+center%22+%28tax+OR+incentive+OR+abatement+OR+%22economic+development%22%29+when:3d&hl=en-US&gl=US&ceid=US:en"),
 ]
 
 # Section keyword routing. Order matters — first match wins.
@@ -185,8 +199,18 @@ def parse_feed(source: str, raw: bytes) -> list[dict]:
         link = (it.findtext("link") or "").strip()
         desc = strip_html(it.findtext("description") or "")
         pub = parse_date(it.findtext("pubDate"))
+        # Per-item source (Google News and some aggregators set <source>). When
+        # present, prefer the real outlet over the configured feed name, and
+        # strip Google's " - Outlet" headline suffix for readability.
+        item_source = source
+        src_el = it.find("source")
+        if src_el is not None and (src_el.text or "").strip():
+            item_source = src_el.text.strip()
+            suffix = f" - {item_source}"
+            if title.endswith(suffix):
+                title = title[: -len(suffix)].strip()
         if title and link:
-            items.append({"source": source, "title": title, "link": link, "summary": desc, "published": pub})
+            items.append({"source": item_source, "title": title, "link": link, "summary": desc, "published": pub})
     # Atom
     for it in root.findall("atom:entry", ns):
         title = (it.findtext("atom:title", default="", namespaces=ns) or "").strip()
@@ -312,16 +336,26 @@ def main() -> int:
             errors.append(f"{source}: {type(e).__name__}: {e}")
             print(f"[err] {source}: {e}", file=sys.stderr)
 
-    # Filter: date window + relevance + dedup
+    # Filter: date window + relevance + dedup (against history and within this run)
     fresh: list[dict] = []
+    run_links: set[str] = set()
+    run_titles: set[str] = set()
     for it in all_items:
         if it["link"] in seen:
+            continue
+        if it["link"] in run_links:
+            continue
+        norm_title = re.sub(r"[^a-z0-9]+", " ", it["title"].lower()).strip()
+        if norm_title and norm_title in run_titles:
             continue
         pub = it.get("published")
         if pub and pub < cutoff:
             continue
         if not is_relevant(it):
             continue
+        run_links.add(it["link"])
+        if norm_title:
+            run_titles.add(norm_title)
         fresh.append(it)
 
     # Sort newest first
