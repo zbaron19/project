@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Millie — AI Front Desk</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
+<style>
+  :root {
+    --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222221;
+    --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+    --blue: #3987e5; --good: #0ca30c; --warn: #fab219; --critical: #d03b3b;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--page); color: var(--ink);
+    font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 24px; max-width: 1240px; margin: 0 auto;
+  }
+  header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+  .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .logo span { color: var(--blue); }
+  .bizname { color: var(--ink-2); font-size: 15px; }
+  .badges { margin-left: auto; display: flex; gap: 8px; }
+  .badge { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+  .badge.on { color: var(--good); border-color: rgba(12,163,12,.35); }
+
+  .grid { display: grid; grid-template-columns: 1fr 360px; gap: 18px; align-items: start; }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  @media (max-width: 800px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .tile .label { color: var(--muted); font-size: 12px; }
+  .tile .value { font-size: 26px; font-weight: 700; margin-top: 2px; }
+  .tile .sub { color: var(--ink-2); font-size: 12px; margin-top: 2px; }
+  .tile.hero { border-color: rgba(57,135,229,.4); }
+  .tile.hero .value { color: var(--blue); font-size: 30px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 18px; }
+  .card h2 { font-size: 13px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+
+  /* chart */
+  #chart { position: relative; }
+  #chart svg { display: block; width: 100%; }
+  .tip {
+    position: absolute; pointer-events: none; background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px;
+    font-size: 12px; color: var(--ink); display: none; white-space: nowrap; z-index: 5;
+  }
+  .tip .d { color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--grid); }
+  td { padding: 7px 8px; border-bottom: 1px solid var(--grid); color: var(--ink-2); }
+  td.strong { color: var(--ink); }
+  tr.clickable { cursor: pointer; }
+  tr.clickable:hover td { background: var(--surface-2); }
+  .num { font-variant-numeric: tabular-nums; }
+  .pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--ink-2); }
+  .pill.booked { color: #7db8f0; border-color: rgba(57,135,229,.4); }
+  .pill.urgent { color: #f08f8f; border-color: rgba(208,59,59,.45); }
+  .pill.message { color: var(--warn); border-color: rgba(250,178,25,.35); }
+
+  /* simulator */
+  .phone { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; position: sticky; top: 18px; }
+  .phone h2 { font-size: 13px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: .06em; }
+  .phone .hint { color: var(--muted); font-size: 12px; margin: 6px 0 10px; }
+  #chatlog { height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 6px 2px; }
+  .msg { max-width: 85%; padding: 8px 11px; border-radius: 12px; font-size: 13px; }
+  .msg.millie { background: var(--surface-2); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg.caller { background: #1c5cab; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .msg.sys { align-self: center; color: var(--muted); font-size: 11px; background: none; }
+  .chatrow { display: flex; gap: 8px; margin-top: 10px; }
+  .chatrow input {
+    flex: 1; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+    color: var(--ink); padding: 9px 12px; font-size: 13px; outline: none;
+  }
+  .chatrow input:focus { border-color: var(--blue); }
+  button {
+    background: var(--blue); color: #fff; border: 0; border-radius: 8px;
+    padding: 9px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  button.ghost { background: transparent; color: var(--ink-2); border: 1px solid var(--border); }
+  button:disabled { opacity: .5; cursor: default; }
+  .quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .quick button { background: transparent; border: 1px solid var(--border); color: var(--ink-2); font-weight: 400; font-size: 12px; padding: 5px 9px; }
+  .quick button:hover { border-color: var(--blue); color: var(--ink); }
+
+  /* transcript modal */
+  #modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 20; }
+  #modal .inner { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; width: min(560px, 92vw); max-height: 80vh; overflow-y: auto; padding: 20px; }
+  #modal h3 { font-size: 14px; margin-bottom: 4px; }
+  #modal .meta { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+  .foot { color: var(--muted); font-size: 12px; margin-top: 26px; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Millie<span>.</span></div>
+  <div class="bizname" id="bizname">—</div>
+  <div class="badges">
+    <div class="badge" id="badge-claude">Claude</div>
+    <div class="badge" id="badge-twilio">Phone line</div>
+  </div>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<div class="grid">
+  <div>
+    <div class="card">
+      <h2>Calls answered — last 14 days</h2>
+      <div id="chart"><div class="tip" id="tip"></div></div>
+    </div>
+
+    <div class="card">
+      <h2>Recent calls</h2>
+      <table id="calls-table">
+        <thead><tr><th>When</th><th>Caller</th><th>Summary</th><th>Outcome</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Upcoming &amp; recent bookings</h2>
+      <table id="bookings-table">
+        <thead><tr><th>Scheduled</th><th>Customer</th><th>Service</th><th style="text-align:right">Est. value</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Texts Millie sent (outbox)</h2>
+      <table id="outbox-table">
+        <thead><tr><th>To</th><th>Message</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="phone">
+    <h2>📞 Try a call</h2>
+    <div class="hint">You're the caller. Millie answers exactly like she does on the real phone line.</div>
+    <div id="chatlog"></div>
+    <div class="chatrow">
+      <input id="say" placeholder="Say something…" autocomplete="off">
+      <button id="send">Say</button>
+    </div>
+    <div class="quick">
+      <button data-say="Hi, my kitchen sink is clogged">Clogged sink</button>
+      <button data-say="My water heater burst and it's flooding!">Emergency</button>
+      <button data-say="How much do you charge for drain clearing?">Price question</button>
+      <button data-say="Can I leave a message for the owner?">Leave message</button>
+      <button id="newcall" class="ghost" style="font-weight:600">↺ New call</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal"><div class="inner">
+  <h3 id="modal-title">Call transcript</h3>
+  <div class="meta" id="modal-meta"></div>
+  <div id="modal-body" style="display:flex;flex-direction:column;gap:8px"></div>
+</div></div>
+
+<div class="foot">Millie — the AI front desk for local service businesses. Every number above updates live as calls come in.</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+let BIZ = null, CALL_ID = null;
+
+const fmt$ = (n) => "$" + Math.round(n).toLocaleString();
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+async function api(path, opts) {
+  const r = await fetch("/api" + path, opts);
+  if (!r.ok) throw new Error(path + " " + r.status);
+  return r.json();
+}
+
+function tile(label, value, sub, hero) {
+  return `<div class="tile${hero ? " hero" : ""}"><div class="label">${label}</div>
+    <div class="value">${value}</div><div class="sub">${sub || ""}</div></div>`;
+}
+
+function drawChart(days) {
+  const W = 720, H = 190, padL = 30, padB = 24, padT = 12;
+  const max = Math.max(1, ...days.map(d => d.count));
+  const innerW = W - padL - 8, innerH = H - padT - padB;
+  const bw = innerW / days.length;
+  const barW = Math.min(26, bw - 6);
+  let bars = "", labels = "", grid = "";
+  const steps = Math.min(4, max);
+  for (let i = 1; i <= steps; i++) {
+    const v = Math.round(max * i / steps);
+    const y = padT + innerH - (v / max) * innerH;
+    grid += `<line x1="${padL}" y1="${y}" x2="${W - 8}" y2="${y}" stroke="var(--grid)" stroke-width="1"/>` +
+            `<text x="${padL - 6}" y="${y + 4}" text-anchor="end" font-size="10" fill="var(--muted)">${v}</text>`;
+  }
+  days.forEach((d, i) => {
+    const h = (d.count / max) * innerH;
+    const x = padL + i * bw + (bw - barW) / 2;
+    const y = padT + innerH - h;
+    bars += `<path d="M${x},${padT + innerH} L${x},${y + 4} Q${x},${y} ${x + 4},${y} L${x + barW - 4},${y} Q${x + barW},${y} ${x + barW},${y + 4} L${x + barW},${padT + innerH} Z"
+      fill="var(--blue)" data-i="${i}" opacity="${d.count ? 1 : 0}"/>` +
+      `<rect x="${padL + i * bw}" y="${padT}" width="${bw}" height="${innerH}" fill="transparent" data-i="${i}" class="hit"/>`;
+    if (i % 2 === 0) {
+      const dt = new Date(d.date + "T00:00:00");
+      labels += `<text x="${x + barW / 2}" y="${H - 6}" text-anchor="middle" font-size="10" fill="var(--muted)">${dt.toLocaleDateString(undefined, {month:"numeric", day:"numeric"})}</text>`;
+    }
+  });
+  const svg = `<svg viewBox="0 0 ${W} ${H}">
+    ${grid}
+    <line x1="${padL}" y1="${padT + innerH}" x2="${W - 8}" y2="${padT + innerH}" stroke="var(--baseline)" stroke-width="1"/>
+    ${bars}${labels}</svg>`;
+  const chart = $("#chart");
+  chart.querySelectorAll("svg").forEach(el => el.remove());
+  chart.insertAdjacentHTML("beforeend", svg);
+
+  const tip = $("#tip");
+  chart.querySelectorAll(".hit").forEach(hit => {
+    hit.addEventListener("mousemove", (e) => {
+      const d = days[+hit.dataset.i];
+      const dt = new Date(d.date + "T00:00:00");
+      tip.innerHTML = `<span class="d">${dt.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"})}</span><br>${d.count} call${d.count === 1 ? "" : "s"}`;
+      tip.style.display = "block";
+      const rect = chart.getBoundingClientRect();
+      tip.style.left = Math.min(e.clientX - rect.left + 12, rect.width - 130) + "px";
+      tip.style.top = (e.clientY - rect.top - 40) + "px";
+    });
+    hit.addEventListener("mouseleave", () => tip.style.display = "none");
+  });
+}
+
+function pill(outcome) {
+  const cls = outcome === "booked" ? "booked" : outcome === "urgent" ? "urgent" : outcome === "message" ? "message" : "";
+  return `<span class="pill ${cls}">${esc(outcome || "answered")}</span>`;
+}
+
+function when(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined, {month:"short", day:"numeric"}) + " " +
+         d.toLocaleTimeString(undefined, {hour:"numeric", minute:"2-digit"});
+}
+
+async function refresh() {
+  const ov = await api("/overview/" + BIZ.id);
+  const s = ov.stats;
+  $("#bizname").textContent = ov.business.name + " · " + ov.business.trade;
+  $("#badge-claude").className = "badge" + (ov.claude_connected ? " on" : "");
+  $("#badge-claude").textContent = ov.claude_connected ? "Claude connected" : "Claude off (rule engine)";
+  $("#badge-twilio").className = "badge" + (ov.twilio_connected ? " on" : "");
+  $("#badge-twilio").textContent = ov.twilio_connected ? "Phone line live" : "Phone line: demo mode";
+
+  $("#tiles").innerHTML =
+    tile("Revenue Millie saved", fmt$(s.revenue_saved), "calls that would have been missed", true) +
+    tile("Jobs booked", s.bookings_14d, fmt$(s.booked_value) + " scheduled") +
+    tile("Calls answered", s.calls_14d, "last 14 days, zero missed") +
+    tile("After-hours calls", s.after_hours_calls, s.urgent_leads + " urgent escalation" + (s.urgent_leads === 1 ? "" : "s"));
+
+  drawChart(ov.calls_per_day);
+
+  $("#calls-table tbody").innerHTML = ov.recent_calls.map(c =>
+    `<tr class="clickable" data-call="${c.id}">
+      <td class="num">${when(c.started_at)}${c.after_hours ? ' <span class="pill">after hrs</span>' : ""}</td>
+      <td class="num">${esc(c.caller || "—")}</td>
+      <td>${esc(c.summary || c.intent || "—")}</td>
+      <td>${pill(c.outcome)}</td></tr>`).join("");
+  document.querySelectorAll("[data-call]").forEach(tr =>
+    tr.addEventListener("click", () => showTranscript(tr.dataset.call)));
+
+  $("#bookings-table tbody").innerHTML = ov.recent_bookings.map(b =>
+    `<tr><td class="num strong">${when(b.slot_start)}</td><td>${esc(b.customer_name)}</td>
+     <td>${esc(b.service)}</td><td class="num" style="text-align:right">${fmt$(b.est_value)}</td></tr>`).join("");
+
+  const outbox = await api("/outbox/" + BIZ.id);
+  $("#outbox-table tbody").innerHTML = outbox.slice(0, 8).map(m =>
+    `<tr><td class="num">${esc(m.to_number)}</td><td>${esc(m.body)}</td>
+     <td>${m.sent ? '<span class="pill booked">sent</span>' : '<span class="pill">queued (demo)</span>'}</td></tr>`).join("")
+    || '<tr><td colspan="3" style="color:var(--muted)">Nothing yet — book a job in the simulator →</td></tr>';
+}
+
+async function showTranscript(callId) {
+  const data = await api("/call/" + callId);
+  $("#modal-title").textContent = "Call transcript — " + (data.call.summary || data.call.intent || "call");
+  $("#modal-meta").textContent = when(data.call.started_at) + " · " + (data.call.caller || "unknown number") + " · " + data.call.outcome;
+  $("#modal-body").innerHTML = data.turns.length
+    ? data.turns.map(t => `<div class="msg ${t.role === "millie" ? "millie" : "caller"}">${esc(t.text)}</div>`).join("")
+    : '<div class="msg sys">No transcript recorded (seeded demo call)</div>';
+  $("#modal").style.display = "flex";
+}
+$("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") $("#modal").style.display = "none"; });
+
+// ---------- simulator ----------
+function addMsg(role, text) {
+  const log = $("#chatlog");
+  log.insertAdjacentHTML("beforeend", `<div class="msg ${role}">${esc(text)}</div>`);
+  log.scrollTop = log.scrollHeight;
+}
+
+async function newCall() {
+  $("#chatlog").innerHTML = '<div class="msg sys">☎ ringing…</div>';
+  const r = await api("/sim/start", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({business_id: BIZ.id})});
+  CALL_ID = r.call_id;
+  addMsg("millie", r.reply);
+  $("#say").disabled = false; $("#send").disabled = false;
+  $("#say").focus();
+}
+
+async function say(text) {
+  if (!text.trim() || CALL_ID == null) return;
+  addMsg("caller", text);
+  $("#say").value = "";
+  const r = await api("/sim/turn", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({call_id: CALL_ID, text})});
+  addMsg("millie", r.reply);
+  if (r.done) {
+    addMsg("sys", "— call ended —");
+    CALL_ID = null;
+    $("#say").disabled = true; $("#send").disabled = true;
+    refresh();
+  }
+}
+
+$("#send").addEventListener("click", () => say($("#say").value));
+$("#say").addEventListener("keydown", (e) => { if (e.key === "Enter") say($("#say").value); });
+$("#newcall").addEventListener("click", newCall);
+document.querySelectorAll(".quick [data-say]").forEach(b =>
+  b.addEventListener("click", () => { if (CALL_ID == null) { newCall().then(() => say(b.dataset.say)); } else say(b.dataset.say); }));
+
+(async function init() {
+  BIZ = (await api("/businesses"))[0];
+  await refresh();
+  await newCall();
+})();
+</script>
+</body>
+</html>
