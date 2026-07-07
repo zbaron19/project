@@ -1,0 +1,89 @@
+<title>Skylight — tonight's sky</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0e1a">
+<style>
+/*__CSS__*/
+</style>
+
+<div class="wrap">
+  <header>
+    <h1 class="wordmark">Sky<span class="star">✦</span>light</h1>
+    <div class="head-right">
+      <button id="redbtn" title="Red light preserves your night vision while you're outside">Night vision</button>
+      <button id="locbtn">Location</button>
+    </div>
+  </header>
+
+  <div id="locpanel" class="locpanel">
+    <button id="geobtn">Use my location</button>
+    <div class="cities" id="citybox"></div>
+    <div class="manual">
+      <input type="number" id="latin" placeholder="latitude" step="0.01" min="-90" max="90">
+      <input type="number" id="lonin" placeholder="longitude" step="0.01" min="-180" max="180">
+      <button id="applylatlon">Set</button>
+    </div>
+    <div class="hint">Longitude is negative in the Americas. Your location is saved on this device only.</div>
+  </div>
+
+  <div class="dome-holder">
+    <canvas id="dome" width="600" height="600" aria-label="Sky chart for the selected time and place"></canvas>
+    <div id="objcard" class="obj-card" style="display:none"></div>
+  </div>
+  <p class="dome-caption">Hold overhead · north at top, east at left · tap anything</p>
+
+  <div class="timebar">
+    <div class="readout">
+      <span class="when" id="whenlabel"></span>
+      <span class="controls">
+        <input type="date" id="datepick" aria-label="Pick a date">
+        <button id="nowbtn">Now</button>
+      </span>
+    </div>
+    <input type="range" id="timeslider" min="-720" max="1440" step="5" value="0"
+      aria-label="Scrub time, minutes from now">
+  </div>
+
+  <section>
+    <p class="eyebrow">The briefing</p>
+    <h2 class="datehead" id="datehead"></h2>
+    <p class="locline"><span id="locname"></span></p>
+    <div class="briefing" id="briefing"></div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Sun <span class="thin">· twilight</span></p>
+    <div class="statgrid" id="sunstats"></div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Moon</p>
+    <div class="moonrow">
+      <canvas id="moonphase" width="84" height="84" aria-hidden="true"></canvas>
+      <div class="moonfacts" id="moonfacts"></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Planets <span class="thin">· tonight</span></p>
+    <table class="ptable"><tbody id="ptable"></tbody></table>
+  </section>
+
+  <section>
+    <p class="eyebrow">Meteor showers</p>
+    <div id="meteors"></div>
+  </section>
+
+  <footer>
+    Positions computed on this device from Meeus' algorithms and JPL orbital
+    elements — accurate to a few arcminutes, far finer than the eye can point.
+    Star chart: 5,044 stars to magnitude 6 from the HYG database (Hipparcos),
+    figures from d3-celestial. Works offline; nothing you do here leaves your
+    device. Times shown in this device's timezone.
+  </footer>
+</div>
+
+<script>
+/*__DATA__*/
+/*__ASTRO__*/
+/*__APP__*/
+</script>
