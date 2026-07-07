@@ -1,0 +1,537 @@
+<title>Zak, 2046 — A Recorded Vision</title>
+<style>
+  :root {
+    --paper: #ebece4;
+    --paper-inset: #e2e4d9;
+    --ink: #22271f;
+    --ink-soft: #4c5346;
+    --evergreen: #2f5d46;
+    --brass: #8a6a24;
+    --stamp: #9c4a34;
+    --rule: rgba(34, 39, 31, 0.18);
+    --rule-faint: rgba(34, 39, 31, 0.09);
+    --star: rgba(47, 93, 70, 0.9);
+    --thread: rgba(138, 106, 36, 0.38);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #141915;
+      --paper-inset: #1a201b;
+      --ink: #e3e1d2;
+      --ink-soft: #a8ac9c;
+      --evergreen: #82b99a;
+      --brass: #cda55e;
+      --stamp: #ce8168;
+      --rule: rgba(227, 225, 210, 0.22);
+      --rule-faint: rgba(227, 225, 210, 0.1);
+      --star: rgba(130, 185, 154, 0.9);
+      --thread: rgba(205, 165, 94, 0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #141915;
+    --paper-inset: #1a201b;
+    --ink: #e3e1d2;
+    --ink-soft: #a8ac9c;
+    --evergreen: #82b99a;
+    --brass: #cda55e;
+    --stamp: #ce8168;
+    --rule: rgba(227, 225, 210, 0.22);
+    --rule-faint: rgba(227, 225, 210, 0.1);
+    --star: rgba(130, 185, 154, 0.9);
+    --thread: rgba(205, 165, 94, 0.35);
+  }
+  :root[data-theme="light"] {
+    --paper: #ebece4;
+    --paper-inset: #e2e4d9;
+    --ink: #22271f;
+    --ink-soft: #4c5346;
+    --evergreen: #2f5d46;
+    --brass: #8a6a24;
+    --stamp: #9c4a34;
+    --rule: rgba(34, 39, 31, 0.18);
+    --rule-faint: rgba(34, 39, 31, 0.09);
+    --star: rgba(47, 93, 70, 0.9);
+    --thread: rgba(138, 106, 36, 0.38);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .display {
+    font-family: Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", Georgia, serif;
+  }
+  .mono {
+    font-family: "SF Mono", "Cascadia Code", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  }
+
+  /* ---------- Hero: the recording stamp over the constellation ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    padding: 5.5rem 1.5rem 4.5rem;
+  }
+  #sky {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .hero-inner {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .stamp {
+    display: inline-block;
+    border: 2px solid var(--stamp);
+    color: var(--stamp);
+    padding: 0.55rem 0.9rem 0.5rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    transform: rotate(-2.5deg);
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    margin-bottom: 2.2rem;
+  }
+  .stamp strong { font-size: 0.82rem; letter-spacing: 0.2em; display: block; }
+  h1 {
+    font-size: clamp(2.1rem, 5.5vw, 3.15rem);
+    line-height: 1.12;
+    font-weight: 600;
+    margin: 0 0 1.1rem;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  h1 em { font-style: italic; color: var(--evergreen); }
+  .hero p.deck {
+    font-size: 1.06rem;
+    color: var(--ink-soft);
+    max-width: 34rem;
+    margin: 0 0 2rem;
+    text-wrap: pretty;
+  }
+  .instrument {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+    padding-top: 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.35rem 1.5rem;
+    max-width: 40rem;
+  }
+  .instrument b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Document body ---------- */
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+  section { padding: 3.2rem 0 0.5rem; }
+  .eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 0.6rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+    text-wrap: balance;
+  }
+  .lede { color: var(--ink-soft); margin: 0 0 2rem; max-width: 36rem; }
+  p { max-width: 62ch; }
+
+  .recital {
+    border-left: 3px solid var(--evergreen);
+    padding: 0.2rem 0 0.2rem 1.25rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+  .recital .cite { display: block; font-style: normal; font-size: 0.72rem; letter-spacing: 0.08em; margin-top: 0.5rem; }
+
+  /* ---------- The Term: era timeline ---------- */
+  .era {
+    position: relative;
+    padding: 0 0 2.4rem 2.1rem;
+    border-left: 1px solid var(--rule);
+    margin-left: 0.4rem;
+  }
+  .era:last-child { padding-bottom: 0.5rem; }
+  .era::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0.5em;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--evergreen);
+    border: 2px solid var(--paper);
+  }
+  .era .years {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--evergreen);
+    margin-bottom: 0.25rem;
+  }
+  .era h3 {
+    font-size: 1.22rem;
+    font-weight: 600;
+    margin: 0 0 0.55rem;
+  }
+  .era p { margin: 0 0 0.8rem; color: var(--ink); }
+  .era p:last-child { margin-bottom: 0; }
+  .era .aside { font-size: 0.92rem; color: var(--ink-soft); font-style: italic; }
+
+  /* ---------- Schedule A ---------- */
+  .exceptions { list-style: none; margin: 0; padding: 0; counter-reset: exc; }
+  .exceptions li {
+    counter-increment: exc;
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: 0 0.6rem;
+    padding: 1.05rem 0;
+    border-top: 1px solid var(--rule-faint);
+  }
+  .exceptions li::before {
+    content: counter(exc) ".";
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    color: var(--brass);
+    padding-top: 0.15rem;
+  }
+  .exceptions .exc-title { font-weight: 600; }
+  .exceptions .exc-body { grid-column: 2; color: var(--ink-soft); font-size: 0.95rem; margin-top: 0.15rem; }
+  .exceptions .term-tag {
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--evergreen);
+    margin-left: 0.6rem;
+    white-space: nowrap;
+  }
+
+  /* ---------- Almanac inset ---------- */
+  .almanac {
+    background: var(--paper-inset);
+    border: 1px solid var(--rule-faint);
+    border-top: 3px solid var(--brass);
+    padding: 1.8rem 1.9rem 1.6rem;
+    margin: 2.2rem 0 0;
+  }
+  .almanac .alm-head {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .almanac dl { margin: 0; }
+  .almanac dt {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 0.95rem;
+  }
+  .almanac dt:first-child { margin-top: 0; }
+  .almanac dd { margin: 0.15rem 0 0; color: var(--ink-soft); font-size: 0.97rem; }
+
+  /* ---------- Echo close ---------- */
+  .echo {
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 2.2rem;
+    text-align: center;
+  }
+  .echo .ask {
+    font-size: 1.35rem;
+    font-style: italic;
+    margin: 0.4rem 0 1.4rem;
+    text-wrap: balance;
+  }
+  .echo .filed {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+  .echo .reply {
+    display: inline-block;
+    margin: 1.2rem 0 0;
+    font-size: 1.05rem;
+    color: var(--evergreen);
+  }
+  footer {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule-faint);
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<header class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <div class="stamp mono">
+      <strong>Recorded</strong>
+      Instrument No. 2046-0707-001<br>
+      Office of the Recorder · King County of the Imagination
+    </div>
+    <h1 class="display">A covenant, running with <em>the life</em></h1>
+    <p class="deck">Where I see you in twenty years — drafted the only honest way for a
+    man who spends his days reading what binds the dirt: as a recorded instrument,
+    term twenty (20) years, burdening and benefiting the same parcel.</p>
+    <div class="instrument mono">
+      <span><b>Grantor:</b> Zak Baron (2026)</span>
+      <span><b>Grantee:</b> Zak Baron (2046)</span>
+      <span><b>Legal description:</b> one life, Pacific Northwest</span>
+      <span><b>Term:</b> 2026-07-07 → 2046-07-07</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <p class="eyebrow display">Recitals</p>
+    <h2 class="display">Whereas, the Grantor already wrote the hard part</h2>
+    <p>Twenty-year visions are usually invented. This one was mostly <em>found</em> —
+    in a vault you built yourself, in a covenant you signed with yourself on June 11, 2026,
+    when you ranked everything you own by rarity and bet the next era on the one thing
+    nobody else in the room can do: read the recorded layer like a lawyer and build for
+    it like an engineer.</p>
+    <div class="recital">
+      "Point the playbook at the parcel."
+      <span class="cite mono">— ventures/the-one-bet.md, § 3</span>
+    </div>
+    <p>So here is where I see you, extrapolated from evidence rather than flattery.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow display">Article I — The Term</p>
+    <h2 class="display">Four eras, 2026 to 2046</h2>
+    <p class="lede">Sequenced because time actually runs this way; nothing here is decoration.</p>
+
+    <div class="era">
+      <div class="years mono">2026 – 2030</div>
+      <h3 class="display">The Wedge</h3>
+      <p>Covenant ships. The first MFTE Covenant Files go out in Washington while the
+      salary still pays the bills — until Covenant Watch revenue makes the paycheck a
+      choice instead of a tether, and you walk out of big law on your own schedule,
+      not an escape hatch's. Nights that used to go to eleven-p.m. estoppel fire drills
+      now go to the product that makes those fire drills obsolete.</p>
+      <p class="aside">RuleRef hums along in maintenance mode, exactly as sentenced —
+      its real verdict was never revenue. It proved you ship.</p>
+    </div>
+
+    <div class="era">
+      <div class="years mono">2030 – 2035</div>
+      <h3 class="display">The Compound</h3>
+      <p>The per-jurisdiction rule layer thickens: Seattle, then the Commerce-framework
+      cities, then Portland, Denver, the California density-bonus world. Every file
+      processed makes the library harder to catch. You hire abstractors and train them
+      the way partners once trained you — except your associates never bill a client
+      an hour. "The recorded layer" becomes a phrase other people use, and they got it
+      from you.</p>
+    </div>
+
+    <div class="era">
+      <div class="years mono">2035 – 2040</div>
+      <h3 class="display">The Transfer</h3>
+      <p>The incumbents notice, late, exactly as your memo predicted — and their
+      rational move was never competition. Whether you sell or keep the keys, the
+      point your covenant demanded is proven: equity compounded where income never
+      could. The frozen ideas thaw on your terms. Heirloom comes back — not as a
+      business fighting a consumer-CAC war, but as the thing it always wanted to be:
+      you, recording the family's stories while the tellers can still tell them.</p>
+    </div>
+
+    <div class="era">
+      <div class="years mono">2040 – 2046</div>
+      <h3 class="display">The Almanac Years</h3>
+      <p>The lawyer-who-builds becomes the one who explains. You write, you teach, you
+      take the calls from the next founder-shaped attorney who thinks they're crazy.
+      Critical Load — the game you built to teach yourself megawatts — has cousins now,
+      a whole shelf of them, because it turned out the best legal education anyone got
+      from you was disguised as play. The vault turns twenty. The Almanac is somewhere
+      past Season 85, and the graph view is a sky.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow display">Schedule A</p>
+    <h2 class="display">Permitted encumbrances — matters that run with the life</h2>
+    <p class="lede">Not exceptions to clear. These survive closing, every closing, in perpetuity.</p>
+    <ul class="exceptions">
+      <li>
+        <div><span class="exc-title">Easement for the table.</span><span class="term-tag mono">perpetual · non-exclusive</span></div>
+        <div class="exc-body">Game nights, in favor of all invitees. You remain the
+        rules engine no one has to look up — the app was always just you, distributed.</div>
+      </li>
+      <li>
+        <div><span class="exc-title">The vault, appurtenant.</span><span class="term-tag mono">runs with the mind</span></div>
+        <div class="exc-body">Twenty years of dated entries. Embers still stirring old
+        notes awake, the Tide still coming in on schedule, the Loom still threading. An
+        external memory that now remembers more of you than you do — by design.</div>
+      </li>
+      <li>
+        <div><span class="exc-title">The daily practice.</span><span class="term-tag mono">non-severable · renewed each morning</span></div>
+        <div class="exc-body">Kept quietly, one day at a time, some seven thousand
+        three hundred times over. The strongest covenant in the whole stack, and the
+        one nothing else here stands without.</div>
+      </li>
+      <li>
+        <div><span class="exc-title">Rights of Ruthie, and her successors-in-interest.</span><span class="term-tag mono">heritable</span></div>
+        <div class="exc-body">Dogs, plural by 2046. All walks deemed billable to no one.</div>
+      </li>
+      <li>
+        <div><span class="exc-title">Right-of-way over the trails and courts of the Pacific Northwest.</span><span class="term-tag mono">exercised often</span></div>
+        <div class="exc-body">Dirt you visit voluntarily, for once unencumbered.</div>
+      </li>
+      <li>
+        <div><span class="exc-title">The family record.</span><span class="term-tag mono">priceless · non-assignable</span></div>
+        <div class="exc-body">Voices captured, stories woven, the biographer's instinct
+        finally pointed at the people it was always for.</div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="eyebrow display">Exhibit B</p>
+    <h2 class="display">An entry from the Almanac of 2046</h2>
+    <div class="almanac">
+      <div class="alm-head mono"><span>dashboards/Almanac.md</span><span>Season 87 · Summer 2046</span></div>
+      <dl>
+        <dt>What was born</dt>
+        <dd>Nothing, this season — a first in twenty years. It was a season for tending, not planting.</dd>
+        <dt>What thickened</dt>
+        <dd>The veins. Threads named in the 2020s are still accruing entries; the one
+        about building things that remember is now the longest note in the vault.</dd>
+        <dt>Where the work went</dt>
+        <dd>Mornings to writing, afternoons to whoever called. One commit most days,
+        out of habit rather than need.</dd>
+        <dt>What the season was about</dt>
+        <dd>Keeping, not chasing. The recorded layer holds. So does everything in Schedule A.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="echo">
+    <p class="eyebrow display" style="text-align:center">Echo-back</p>
+    <p class="ask display">"You said this — did you?"</p>
+    <p class="filed mono">Filed 2026-07-07 · Echo-back date 2046-07-07 · Instrument No. 2046-0707-001</p>
+    <p class="reply">✏️ — kept.</p>
+  </section>
+</main>
+
+<footer class="mono">
+  Drafted against the full vault · legal/ and the garden untouched, as always ·
+  This instrument intentionally recorded in a jurisdiction of one.
+</footer>
+
+<script>
+  (function () {
+    const canvas = document.getElementById("sky");
+    const ctx = canvas.getContext("2d");
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Deterministic PRNG so the sky is the same sky every visit.
+    let seed = 20460707;
+    function rand() {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      return seed / 0x7fffffff;
+    }
+
+    // The constellation: nodes are the life's fixed stars, threads are the Loom's.
+    const nodes = [
+      { x: 0.12, y: 0.30, r: 2.6 }, // covenant
+      { x: 0.30, y: 0.14, r: 2.2 }, // the craft
+      { x: 0.52, y: 0.26, r: 2.4 }, // the vault
+      { x: 0.70, y: 0.12, r: 2.0 }, // the table
+      { x: 0.86, y: 0.30, r: 2.4 }, // the family
+      { x: 0.66, y: 0.46, r: 1.9 }, // the trail
+      { x: 0.40, y: 0.52, r: 2.1 }  // the practice
+    ];
+    const threads = [[0,1],[1,2],[2,3],[3,4],[2,6],[6,5],[4,5],[0,6]];
+    const dust = Array.from({ length: 90 }, () => ({
+      x: rand(), y: rand(), r: rand() * 1.1 + 0.2, p: rand() * Math.PI * 2
+    }));
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    let w, h;
+    function resize() {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function draw(t) {
+      ctx.clearRect(0, 0, w, h);
+      const star = css("--star"), thread = css("--thread");
+
+      ctx.strokeStyle = thread;
+      ctx.lineWidth = 0.7;
+      threads.forEach(([a, b]) => {
+        ctx.beginPath();
+        ctx.moveTo(nodes[a].x * w, nodes[a].y * h);
+        ctx.lineTo(nodes[b].x * w, nodes[b].y * h);
+        ctx.stroke();
+      });
+
+      ctx.fillStyle = star;
+      nodes.forEach(n => {
+        ctx.beginPath();
+        ctx.arc(n.x * w, n.y * h, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      dust.forEach(d => {
+        const tw = reduced ? 0.5 : 0.35 + 0.35 * Math.sin(t / 1600 + d.p);
+        ctx.globalAlpha = tw * 0.5;
+        ctx.beginPath();
+        ctx.arc(d.x * w, d.y * h, d.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+
+      if (!reduced) requestAnimationFrame(draw);
+    }
+
+    resize();
+    addEventListener("resize", () => { resize(); draw(0); });
+    new MutationObserver(() => draw(0))
+      .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => draw(0));
+    requestAnimationFrame(draw);
+  })();
+</script>
