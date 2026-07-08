@@ -234,6 +234,97 @@ def minimum_budget(loans):
     return sum(ln["principal"] * ln["rate"] / 12.0 for ln in loans)
 
 
+# ---------------------------------------------------------- IDR estimator
+
+# 2025 HHS poverty guidelines, 48 contiguous states + DC (per-person add-on
+# varies slightly year to year - override with --poverty-line if this drifts).
+POVERTY_BASE_2025 = 15650
+POVERTY_PER_ADDITIONAL = 5500
+
+# RAP (Repayment Assistance Plan, effective July 2026) payment brackets:
+# a percentage of AGI determined by which bracket AGI falls into. Reduced by
+# $50/month per dependent child. Confirm current bracket edges at
+# studentaid.gov before relying on this - OBBBA left room for annual updates.
+RAP_BRACKETS = [
+    (10_000, 0.01), (20_000, 0.02), (30_000, 0.03), (40_000, 0.04),
+    (50_000, 0.05), (60_000, 0.06), (70_000, 0.07), (80_000, 0.08),
+    (90_000, 0.09), (float("inf"), 0.10),
+]
+
+
+def poverty_guideline(family_size, base=POVERTY_BASE_2025):
+    return base + POVERTY_PER_ADDITIONAL * max(family_size - 1, 0)
+
+
+def standard_payment(balance, annual_rate, years=10):
+    """Level monthly payment to amortize `balance` over `years` at `annual_rate`."""
+    r = annual_rate / 12.0
+    n = years * 12
+    if r == 0:
+        return balance / n
+    factor = (1 + r) ** n
+    return balance * r * factor / (factor - 1)
+
+
+def ibr_payment(agi, family_size, balance, annual_rate, pct, cap_to_standard=True):
+    """Monthly IBR-style payment: pct of income above 150% of the poverty
+    line, divided by 12, capped at the standard 10-year payment (IBR/PAYE/ICR
+    never require more than that - this cap does NOT apply to RAP).
+    """
+    poverty = poverty_guideline(family_size)
+    discretionary = max(agi - 1.5 * poverty, 0)
+    payment = discretionary * pct / 12.0
+    if cap_to_standard:
+        payment = min(payment, standard_payment(balance, annual_rate))
+    return payment
+
+
+def rap_payment(agi, dependents=0):
+    for cap, pct in RAP_BRACKETS:
+        if agi <= cap:
+            return max(agi * pct / 12.0 - 50 * dependents, 0.0)
+    return 0.0
+
+
+def idr_report(loans, agi, family_size, dependents):
+    total_p = sum(l["principal"] for l in loans)
+    total_owed = total_p + sum(l["accrued"] for l in loans)
+    w_rate = sum(l["principal"] * l["rate"] for l in loans) / total_p if total_p else 0.0
+    std = standard_payment(total_owed, w_rate)
+    new_ibr = ibr_payment(agi, family_size, total_owed, w_rate, pct=0.10)
+    old_ibr = ibr_payment(agi, family_size, total_owed, w_rate, pct=0.15)
+    rap = rap_payment(agi, dependents)
+
+    lines = [
+        f"At AGI **{fmt(agi)}**, family size **{family_size}**:\n",
+        "| Plan | Monthly payment | Notes |",
+        "|---|---|---|",
+        f"| Standard (10yr) | {fmt(std)} | fixed, amortizes the {fmt(total_owed)} balance |",
+        f"| IBR (new, 10%) | {fmt(new_ibr)} | capped at the standard payment above |",
+        f"| IBR (old, 15%) | {fmt(old_ibr)} | capped at the standard payment above |",
+        f"| RAP | {fmt(rap)} | % of AGI directly - **no cap** at this income |",
+        "",
+    ]
+    if min(new_ibr, old_ibr) >= std - 0.01:
+        lines.append(
+            "At this income, both IBR variants hit the standard-payment cap - "
+            "IBR buys you nothing over the plain 10-year plan except the cap itself "
+            "(which is doing all the work here, not the income-driven formula)."
+        )
+    if rap > std:
+        lines.append(
+            f"RAP has no standard-payment cap, so at this AGI it comes out "
+            f"**{fmt(rap - std)}/month higher** than just paying the standard plan."
+        )
+    lines.append(
+        "\nIDR only pays off if you're pursuing forgiveness (PSLF or the "
+        "20/25/30-year timeline) - it is a floor on required payment, not a "
+        "financing strategy, once your income pushes the calculated payment "
+        "above the standard amount."
+    )
+    return "\n".join(lines)
+
+
 # --------------------------------------------------------------- reports
 
 
@@ -308,6 +399,9 @@ def main():
     ap.add_argument("--budgets", help="comma-separated budgets, e.g. 2000,3000,4000")
     ap.add_argument("--strategy", choices=STRATEGIES, default="avalanche")
     ap.add_argument("--schedule", action="store_true", help="show per-loan payoff order")
+    ap.add_argument("--agi", type=float, help="household AGI - triggers an IDR payment estimate")
+    ap.add_argument("--family-size", type=int, default=1, help="for the IDR poverty-line calc")
+    ap.add_argument("--dependents", type=int, default=0, help="dependent children, for RAP's $50/mo reduction")
     ap.add_argument("--report", help="write full markdown report to this path")
     args = ap.parse_args()
 
@@ -345,6 +439,11 @@ def main():
             out.append("## Payoff schedule\n")
             out.append(schedule_report(loans, sched_budget, args.strategy, start))
             out.append("")
+
+    if args.agi:
+        out.append("## Income-driven repayment estimate\n")
+        out.append(idr_report(loans, args.agi, args.family_size, args.dependents))
+        out.append("")
 
     text = "\n".join(out)
     print(text)
