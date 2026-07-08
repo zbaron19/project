@@ -1,0 +1,3 @@
+# Personal loan data stays local — never commit it.
+*
+!.gitignore
