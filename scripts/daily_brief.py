@@ -8,11 +8,25 @@ by keyword, and writes a markdown brief to:
   - LATEST_BRIEF.md (project root, mobile-app shortcut)
   - briefs/YYYY-MM-DD.md (dated archive)
 
+Run with no arguments and that is exactly what happens — the cron path is
+unchanged. Two optional flags add the editorial layer in scripts/editorial.py:
+
+  --cluster      group items covering the same story, rank them against
+                 profile.md, and bury the rest. Entirely local.
+  --editorial    the above, plus one small-model call per story for a
+                 "why this matters to you" line and a term worth learning.
+                 Needs ANTHROPIC_API_KEY; falls back to --cluster without one.
+
+  --from-brief briefs/YYYY-MM-DD.md   rebuild from a brief already in the
+                 archive instead of fetching feeds, for side-by-side
+                 comparison. Never writes to the archive or the state file.
+
 Zero external deps — stdlib only. Designed to run in GitHub Actions on a daily cron.
 """
 
 from __future__ import annotations
 
+import argparse
 import datetime as dt
 import json
 import os
@@ -312,7 +326,75 @@ def build_brief(date_str: str, by_section: dict[str, list[dict]], errors: list[s
     return "\n".join(lines)
 
 
-def main() -> int:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        description="Build the daily U.S. data center news brief.",
+    )
+    p.add_argument(
+        "--cluster",
+        action="store_true",
+        help="group items covering the same story and rank against profile.md (local, no API key)",
+    )
+    p.add_argument(
+        "--editorial",
+        action="store_true",
+        help="--cluster plus a per-story model call for why-it-matters (needs ANTHROPIC_API_KEY)",
+    )
+    p.add_argument(
+        "--from-brief",
+        metavar="PATH",
+        help="rebuild from an existing brief file instead of fetching feeds; never writes the archive or state",
+    )
+    p.add_argument("--out", metavar="PATH", help="write the brief here instead of the usual locations")
+    p.add_argument("--model", default=None, help="model for the editorial pass (default: Haiku 4.5)")
+    p.add_argument(
+        "--max-api-items",
+        type=int,
+        default=None,
+        metavar="N",
+        help="cap how many stories get an API call (default: 12)",
+    )
+    p.add_argument("--no-learn", action="store_true", help="skip the 'Learn this' call")
+    p.add_argument("--dry-run", action="store_true", help="print the brief, write nothing")
+    return p.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    replaying = bool(args.from_brief)
+    use_editorial = args.editorial or args.cluster
+
+    if replaying:
+        import editorial as editorial_mod
+
+        src = Path(args.from_brief)
+        if not src.exists():
+            print(f"[err] no such brief: {src}", file=sys.stderr)
+            return 1
+        fresh = editorial_mod.parse_brief(src)
+        date_str = src.stem
+        if not fresh:
+            print(f"[err] no items parsed out of {src}", file=sys.stderr)
+            return 1
+        print(f"[replay] {len(fresh)} items from {src}", file=sys.stderr)
+        if not use_editorial:
+            print(
+                "[warn] --from-brief without --cluster/--editorial just reformats; "
+                "add --cluster to see the difference",
+                file=sys.stderr,
+            )
+        return finish(
+            date_str,
+            fresh,
+            errors=[],
+            args=args,
+            use_editorial=use_editorial,
+            write_archive=False,
+            state=None,
+            seen={},
+            now=dt.datetime.now(dt.timezone.utc),
+        )
+
     now = dt.datetime.now(dt.timezone.utc)
     cutoff = now - dt.timedelta(hours=WINDOW_HOURS)
     date_str = now.strftime("%Y-%m-%d")
@@ -364,30 +446,95 @@ def main() -> int:
     # Sort newest first
     fresh.sort(key=lambda x: x.get("published") or dt.datetime.min.replace(tzinfo=dt.timezone.utc), reverse=True)
 
-    # Categorize
+    return finish(
+        date_str,
+        fresh,
+        errors=errors,
+        args=args,
+        use_editorial=use_editorial,
+        write_archive=True,
+        state=state,
+        seen=seen,
+        now=now,
+    )
+
+
+def finish(
+    date_str: str,
+    fresh: list[dict],
+    *,
+    errors: list[str],
+    args: argparse.Namespace,
+    use_editorial: bool,
+    write_archive: bool,
+    state: dict | None,
+    seen: dict[str, str],
+    now: dt.datetime,
+) -> int:
+    """Render the collected items and write them where they belong."""
+    # Categorize. The section is also stamped onto each item so the editorial
+    # layer can show what the aggregator thought a story was about.
     by_section: dict[str, list[dict]] = {}
     for it in fresh:
-        section = categorize(it)
+        section = it.get("section") or categorize(it)
+        it["section"] = section
         by_section.setdefault(section, []).append(it)
 
-    brief = build_brief(date_str, by_section, errors)
+    if use_editorial:
+        import editorial as editorial_mod
 
-    # Write outputs
-    BRIEFS_DIR.mkdir(parents=True, exist_ok=True)
-    dated_path = BRIEFS_DIR / f"{date_str}.md"
-    dated_path.write_text(brief)
-    LATEST_PATH.write_text(brief)
+        kwargs: dict = {
+            "errors": errors,
+            "use_api": args.editorial,
+            "learn_slot": not args.no_learn,
+            "now": now,
+        }
+        if args.model:
+            kwargs["model"] = args.model
+        if args.max_api_items is not None:
+            kwargs["max_api_items"] = args.max_api_items
+        brief = editorial_mod.build(date_str, fresh, **kwargs)
+    else:
+        brief = build_brief(date_str, by_section, errors)
+
+    if args.dry_run:
+        print(brief)
+        print(f"[dry-run] {len(fresh)} items, {len(errors)} feed errors", file=sys.stderr)
+        return 0
+
+    written: list[str] = []
+    if args.out:
+        out_path = Path(args.out)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(brief)
+        written.append(str(out_path))
+    elif write_archive:
+        BRIEFS_DIR.mkdir(parents=True, exist_ok=True)
+        dated_path = BRIEFS_DIR / f"{date_str}.md"
+        dated_path.write_text(brief)
+        LATEST_PATH.write_text(brief)
+        written.extend([str(dated_path), "LATEST_BRIEF.md"])
+    else:
+        # Replay with no destination: stdout, so it can be piped or diffed.
+        print(brief)
 
     # Update seen state — record both the link and the title key so the next
-    # run can dedup even when Google News hands back a fresh link token.
-    for it in fresh:
-        seen[it["link"]] = now.isoformat()
-        if it.get("_title_key"):
-            seen[it["_title_key"]] = now.isoformat()
-    state["seen"] = prune_seen(seen)
-    save_state(state)
+    # run can dedup even when Google News hands back a fresh link token. Only
+    # the real archive-writing run touches state; a replay or a --out render
+    # must not consume today's items.
+    if state is not None and write_archive and not args.out:
+        for it in fresh:
+            seen[it["link"]] = now.isoformat()
+            if it.get("_title_key"):
+                seen[it["_title_key"]] = now.isoformat()
+        state["seen"] = prune_seen(seen)
+        save_state(state)
 
-    print(f"[done] wrote {dated_path} and LATEST_BRIEF.md — {len(fresh)} fresh items, {len(errors)} feed errors", file=sys.stderr)
+    target = " and ".join(written) if written else "stdout"
+    print(
+        f"[done] wrote {target} — {len(fresh)} fresh items, {len(errors)} feed errors",
+        file=sys.stderr,
+    )
     return 0
 
 
