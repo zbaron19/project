@@ -3,1464 +3,808 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Operation Two Things</title>
-<meta name="description" content="The complete operational plan of record for Juan's bachelor party. Two agenda items.">
+<title>Juan's Last Lap</title>
+<meta name="description" content="Juan's bachelor party — San Diego, Sept 25–27, 2026. Burritos, karts, Padres.">
 <style>
-/* ─────────────────────────────────────────────────────────────
-   JBP-2026-001 — stylesheet
-   Palette: foil / char-ink / salsa-racing red / timing amber / guac
-   ───────────────────────────────────────────────────────────── */
-
+/* ══════════════════════════════════════════════════════════════
+   JUAN'S LAST LAP — night race / San Diego sunset
+   Committed single-theme design: every color painted explicitly.
+   ══════════════════════════════════════════════════════════════ */
 :root{
-  --paper:      #efeee8;
-  --surface:    #e5e3da;
-  --surface-2:  #dbd8cd;
-  --ink:        #16120f;
-  --ink-2:      #4a433a;
-  --muted:      #7c7466;
-  --rule:       #c7c2b4;
-  --rule-hard:  #a9a292;
-  --flag:       #c1341a;
-  --flag-soft:  rgba(193,52,26,.10);
-  --signal:     #b07c00;
-  --signal-ink: #f0b000;
-  --verde:      #4f6d27;
-  --tortilla:   #d9b57e;
-  --char:       #6d3f22;
-  --asada:      #8c4a24;
-  --fry:        #e0b04d;
-  --queso:      #efc23c;
-  --guac:       #7d9a4a;
-  --pico:       #c04a30;
-  --foil:       #b9bcbe;
-  --rubber:     #2b2724;
-
-  --display: "Arial Narrow", "Helvetica Neue Condensed", "Liberation Sans Narrow", "Nimbus Sans Narrow", Haettenschweiler, Impact, sans-serif;
-  --body: Georgia, "Iowan Old Style", "Times New Roman", serif;
-  --data: ui-monospace, "SF Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", monospace;
-
-  --measure: 66ch;
-  --gut: clamp(1rem, 4vw, 2.75rem);
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:      #100e0d;
-    --surface:    #1a1715;
-    --surface-2:  #232019;
-    --ink:        #edeae2;
-    --ink-2:      #bab2a4;
-    --muted:      #8d8474;
-    --rule:       #322d27;
-    --rule-hard:  #4b443b;
-    --flag:       #ff5836;
-    --flag-soft:  rgba(255,88,54,.14);
-    --signal:     #ffc42b;
-    --signal-ink: #ffc42b;
-    --verde:      #93b857;
-    --tortilla:   #b8925f;
-    --char:       #5c3520;
-    --asada:      #7a3f1f;
-    --fry:        #c9993f;
-    --queso:      #d9ae2e;
-    --guac:       #6d8a3e;
-    --pico:       #a83e28;
-    --foil:       #7d8184;
-    --rubber:     #33302c;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:      #100e0d;
-  --surface:    #1a1715;
-  --surface-2:  #232019;
-  --ink:        #edeae2;
-  --ink-2:      #bab2a4;
-  --muted:      #8d8474;
-  --rule:       #322d27;
-  --rule-hard:  #4b443b;
-  --flag:       #ff5836;
-  --flag-soft:  rgba(255,88,54,.14);
-  --signal:     #ffc42b;
-  --signal-ink: #ffc42b;
-  --verde:      #93b857;
-  --tortilla:   #b8925f;
-  --char:       #5c3520;
-  --asada:      #7a3f1f;
-  --fry:        #c9993f;
-  --queso:      #d9ae2e;
-  --guac:       #6d8a3e;
-  --pico:       #a83e28;
-  --foil:       #7d8184;
-  --rubber:     #33302c;
+  --asphalt:   #0b0d14;
+  --asphalt-2: #11141f;
+  --asphalt-3: #181c2b;
+  --line:      #262b3d;
+  --cream:     #f4efe4;
+  --cream-dim: #b8b2a2;
+  --muted:     #6f6f80;
+  --sunset-1:  #ff5a3c;
+  --sunset-2:  #ff9a3c;
+  --gold:      #ffc425;
+  --guac:      #9fc45e;
+  --foil:      #9aa2ad;
+  --display: "Arial Narrow","Helvetica Neue Condensed","Liberation Sans Narrow",Haettenschweiler,Impact,sans-serif;
+  --body: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  --data: ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
   color-scheme: dark;
 }
-
 *{box-sizing:border-box}
-
+html{scroll-behavior:smooth}
 body{
   margin:0;
-  background:var(--paper);
-  color:var(--ink);
+  background:var(--asphalt);
+  color:var(--cream);
   font-family:var(--body);
-  font-size:17px;
-  line-height:1.62;
-  -webkit-font-smoothing:antialiased;
+  font-size:16.5px;
+  line-height:1.6;
+  overflow-x:hidden;
 }
-
-/* ── shared primitives ─────────────────────────────────────── */
-
-.wrap{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
-.col{max-width:var(--measure)}
-
-.mono{font-family:var(--data);font-variant-numeric:tabular-nums}
-
-.eyebrow{
-  font-family:var(--data);
-  font-size:.66rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin:0;
-}
-
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.75rem)}
 .disp{
   font-family:var(--display);
   font-stretch:condensed;
   text-transform:uppercase;
+  font-weight:700;
+  line-height:.9;
   letter-spacing:.005em;
-  line-height:.92;
   text-wrap:balance;
   margin:0;
-  font-weight:700;
+}
+.mono{font-family:var(--data);font-variant-numeric:tabular-nums}
+.eyebrow{
+  font-family:var(--data);
+  font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--sunset-2);margin:0 0 1rem;
+}
+a{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ── checkered band ─────────────────────────────────────────── */
+.checkers{
+  height:26px;
+  background:
+    repeating-conic-gradient(var(--cream) 0% 25%, var(--asphalt) 0% 50%)
+    0 0 / 26px 26px;
+  opacity:.92;
+}
+@keyframes slide{to{background-position:52px 0}}
+.checkers--live{animation:slide 1.2s linear infinite}
+
+/* ── nav ────────────────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(11,13,20,.82);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav__in{display:flex;align-items:center;gap:1.5rem;padding:.7rem 0}
+.nav__logo{
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  text-transform:uppercase;font-size:1.05rem;letter-spacing:.06em;
+  color:var(--cream);text-decoration:none;white-space:nowrap;
+}
+.nav__logo b{color:var(--sunset-1)}
+.nav__links{display:flex;gap:1.3rem;margin-left:auto;overflow-x:auto}
+.nav__links a{
+  font-family:var(--data);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cream-dim);text-decoration:none;white-space:nowrap;padding:.3rem 0;
+}
+.nav__links a:hover{color:var(--gold)}
+
+/* ── hero ───────────────────────────────────────────────────── */
+.hero{
+  position:relative;
+  padding:clamp(3.5rem,9vw,7rem) 0 0;
+  background:
+    radial-gradient(1200px 520px at 50% 118%, rgba(255,90,60,.32), transparent 62%),
+    radial-gradient(900px 420px at 82% 108%, rgba(255,196,37,.16), transparent 60%),
+    var(--asphalt);
+  overflow:hidden;
+}
+.hero__grid{
+  position:absolute;inset:auto 0 0 0;height:46%;
+  background:
+    linear-gradient(transparent 0, rgba(11,13,20,.0) 55%, rgba(11,13,20,.6)),
+    repeating-linear-gradient(90deg, rgba(255,154,60,.14) 0 1px, transparent 1px 11.11%),
+    repeating-linear-gradient(0deg, rgba(255,154,60,.10) 0 1px, transparent 1px 26px);
+  transform:perspective(420px) rotateX(58deg);
+  transform-origin:bottom center;
+  pointer-events:none;
+}
+.hero__kicker{
+  display:flex;gap:1rem;flex-wrap:wrap;align-items:center;
+  font-family:var(--data);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--cream-dim);
+}
+.hero__kicker .dot{color:var(--sunset-1)}
+.hero__title{
+  font-size:clamp(4rem,15.5vw,12.5rem);
+  margin-top:1.4rem;
+  transform:skewX(-6deg);
+  background:linear-gradient(92deg,var(--cream) 18%,var(--sunset-2) 52%,var(--sunset-1) 82%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 12px 40px rgba(255,90,60,.25));
+}
+.hero__sub{
+  max-width:56ch;
+  color:var(--cream-dim);
+  font-size:clamp(1rem,2.1vw,1.2rem);
+  line-height:1.65;
+  margin:1.6rem 0 0;
+}
+.hero__sub b{color:var(--cream)}
+.hero__cta{display:flex;gap:1rem;flex-wrap:wrap;margin:2.2rem 0 0}
+.btn{
+  display:inline-block;
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;font-size:1.02rem;
+  padding:.85rem 1.7rem;
+  text-decoration:none;
+  transform:skewX(-6deg);
+  border:1px solid var(--sunset-1);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.btn > span{display:inline-block;transform:skewX(6deg)}
+.btn--hot{background:linear-gradient(90deg,var(--sunset-1),var(--sunset-2));color:#160b06;border:0}
+.btn--ghost{color:var(--cream)}
+.btn:hover{transform:skewX(-6deg) translateY(-2px);box-shadow:0 10px 30px rgba(255,90,60,.28)}
+
+/* countdown */
+.count{
+  display:flex;gap:clamp(.8rem,3vw,2rem);
+  margin:clamp(2.2rem,5vw,3.4rem) 0 clamp(2.6rem,6vw,4rem);
+  position:relative;z-index:2;
+}
+.count div{text-align:left}
+.count .n{
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  font-size:clamp(2.4rem,7vw,4.6rem);line-height:1;
+  color:var(--cream);
+  font-variant-numeric:tabular-nums;
+  display:block;
+}
+.count .k{
+  font-family:var(--data);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--sunset-2);display:block;margin-top:.4rem;
+}
+.count .sep{
+  font-family:var(--display);font-size:clamp(2rem,6vw,3.8rem);
+  color:var(--line);align-self:flex-start;line-height:1.15;
 }
 
-.rule-hair{border:0;border-top:1px solid var(--rule);margin:0}
-.rule-heavy{border:0;border-top:3px solid var(--ink);margin:0}
+/* ── marquee ────────────────────────────────────────────────── */
+.marquee{
+  border-block:1px solid var(--line);
+  background:var(--asphalt-2);
+  overflow:hidden;white-space:nowrap;
+  padding:.85rem 0;
+}
+.marquee__track{display:inline-block;animation:marq 26s linear infinite}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marquee span{
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  text-transform:uppercase;font-size:1.15rem;letter-spacing:.08em;
+  color:var(--cream-dim);padding:0 1.4rem;
+}
+.marquee b{color:var(--sunset-2)}
+.marquee i{font-style:normal;color:var(--guac)}
 
-/* ── cover sheet ───────────────────────────────────────────── */
+/* ── sections ───────────────────────────────────────────────── */
+.sec{padding:clamp(3.6rem,9vw,6.5rem) 0;position:relative}
+.sec--alt{background:var(--asphalt-2)}
+.sec__head{display:flex;align-items:baseline;gap:1.2rem;margin-bottom:clamp(1.6rem,4vw,2.6rem)}
+.lap{
+  font-family:var(--data);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--sunset-1);white-space:nowrap;
+}
+.sec__title{font-size:clamp(2.4rem,7vw,4.6rem);color:var(--cream)}
+.sec__title em{font-style:normal;color:var(--sunset-2)}
+.sec p.lede{max-width:62ch;color:var(--cream-dim);font-size:1.05rem;margin:0 0 1rem}
+.sec p.lede b{color:var(--cream)}
 
-.cover{
-  border-bottom:3px solid var(--ink);
-  padding-top:clamp(1.5rem,4vw,3rem);
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.is-in{opacity:1;transform:none}
+
+/* ── itinerary: ticket stubs ────────────────────────────────── */
+.days{display:grid;gap:1.3rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:2rem}
+.day{
+  background:var(--asphalt-3);
+  border:1px solid var(--line);
+  border-radius:14px;
   position:relative;
   overflow:hidden;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
-.cover__class{
-  font-family:var(--data);
-  font-size:.62rem;
-  letter-spacing:.3em;
-  text-transform:uppercase;
-  color:var(--flag);
-  border-top:1px solid var(--flag);
-  border-bottom:1px solid var(--flag);
-  padding:.4rem 0;
-  display:flex;
-  justify-content:space-between;
-  gap:1rem;
-  flex-wrap:wrap;
+.day:hover{transform:translateY(-6px);border-color:var(--sunset-1);box-shadow:0 18px 44px rgba(0,0,0,.5)}
+.day--main{border-color:var(--sunset-2)}
+.day__head{
+  padding:1.2rem 1.3rem 1rem;
+  border-bottom:1px dashed var(--line);
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  position:relative;
 }
-.cover__title{
-  font-size:clamp(3.2rem,13vw,9.5rem);
-  margin:clamp(1.5rem,4vw,2.5rem) 0 0;
+.day__head::before,.day__head::after{
+  content:"";position:absolute;bottom:-9px;width:18px;height:18px;border-radius:50%;
+  background:var(--asphalt);border:1px solid var(--line);
 }
-.cover__title em{font-style:normal;color:var(--flag)}
-.cover__sub{
-  font-family:var(--data);
-  font-size:clamp(.7rem,1.6vw,.86rem);
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--ink-2);
-  margin:1rem 0 0;
-  padding-bottom:1.6rem;
+.day__head::before{left:-10px}
+.day__head::after{right:-10px}
+.day__name{font-size:1.75rem;color:var(--cream)}
+.day__date{font-family:var(--data);font-size:.68rem;letter-spacing:.18em;color:var(--sunset-2)}
+.day__tag{
+  font-family:var(--data);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#160b06;background:linear-gradient(90deg,var(--sunset-1),var(--sunset-2));
+  padding:.22rem .55rem;border-radius:99px;white-space:nowrap;
 }
+.day ul{list-style:none;margin:0;padding:1.1rem 1.3rem 1.3rem;display:grid;gap:.75rem}
+.day li{display:flex;gap:.9rem;align-items:baseline}
+.day .t{
+  font-family:var(--data);font-size:.68rem;color:var(--muted);
+  flex:0 0 4.6rem;letter-spacing:.06em;font-variant-numeric:tabular-nums;
+}
+.day .w{color:var(--cream-dim);font-size:.94rem;line-height:1.5}
+.day .w b{color:var(--cream);font-weight:600}
+.day .w .hl{color:var(--sunset-2)}
+.day .w .gl{color:var(--guac)}
 
-.docgrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
-  border-top:1px solid var(--rule-hard);
-  border-left:1px solid var(--rule-hard);
-  margin-bottom:0;
+/* ── main event feature panels ──────────────────────────────── */
+.feat{
+  display:grid;gap:clamp(1.6rem,4vw,3rem);
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  align-items:center;
+  margin-top:clamp(2rem,5vw,3rem);
 }
-.docgrid div{
-  border-right:1px solid var(--rule-hard);
-  border-bottom:1px solid var(--rule-hard);
-  padding:.6rem .7rem .7rem;
-}
-.docgrid dt{
-  font-family:var(--data);
-  font-size:.58rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin:0 0 .28rem;
-}
-.docgrid dd{
-  font-family:var(--data);
-  font-size:.82rem;
-  margin:0;
-  font-variant-numeric:tabular-nums;
-  color:var(--ink);
-}
-.docgrid dd.hot{color:var(--flag);font-weight:700}
-
-.stamp{
-  position:absolute;
-  right:clamp(-1rem,2vw,2rem);
-  bottom:6.5rem;
-  border:3px double var(--flag);
-  color:var(--flag);
-  font-family:var(--display);
-  font-stretch:condensed;
-  text-transform:uppercase;
-  text-align:center;
-  padding:.5rem 1.1rem .6rem;
-  transform:rotate(-11deg);
-  opacity:.92;
-  pointer-events:none;
-  line-height:1;
-  animation:stamp .5s cubic-bezier(.2,1.4,.4,1) .35s both;
-}
-.stamp b{display:block;font-size:1.9rem;letter-spacing:.04em}
-.stamp span{display:block;font-family:var(--data);font-size:.55rem;letter-spacing:.14em;margin-top:.3rem}
-@keyframes stamp{
-  from{transform:rotate(-11deg) scale(2.4);opacity:0}
-  to{transform:rotate(-11deg) scale(1);opacity:.92}
-}
-@media (max-width:720px){ .stamp{position:static;transform:rotate(-2deg);display:inline-block;margin:0 0 1.4rem} }
-
-/* ── sticky doc bar ────────────────────────────────────────── */
-
-.docbar{
-  position:sticky;top:0;z-index:50;
-  background:var(--paper);
-  border-bottom:1px solid var(--rule-hard);
-  font-family:var(--data);
-  font-size:.62rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-}
-.docbar__in{
-  display:flex;align-items:center;gap:1.2rem;
-  padding:.55rem 0;overflow-x:auto;
-}
-.docbar b{color:var(--flag);white-space:nowrap}
-.docbar nav{display:flex;gap:1.1rem;white-space:nowrap}
-.docbar a{color:var(--muted);text-decoration:none}
-.docbar a:hover,.docbar a:focus-visible{color:var(--ink)}
-
-/* ── sections ──────────────────────────────────────────────── */
-
-.sec{padding:clamp(2.6rem,7vw,5rem) 0;border-bottom:1px solid var(--rule)}
-.sec__head{display:flex;gap:1.4rem;align-items:baseline;margin-bottom:1.6rem}
-.sec__no{
-  font-family:var(--data);
-  font-size:.78rem;
-  color:var(--flag);
-  letter-spacing:.1em;
-  padding-top:.35rem;
-  flex:0 0 auto;
-}
-.sec__title{font-size:clamp(1.9rem,5.2vw,3.1rem)}
-.sec p{margin:0 0 1.05rem}
-.sec p.col{max-width:var(--measure)}
-.lead{font-size:1.12rem}
-
-.clause{
-  font-family:var(--data);
-  font-size:.66rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin:2.4rem 0 .7rem;
-  padding-bottom:.35rem;
-  border-bottom:1px solid var(--rule);
-}
-.clause b{color:var(--ink)}
-
-/* ── stat strip ────────────────────────────────────────────── */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  border-left:1px solid var(--rule-hard);
-  margin:0;
-}
-.stats div{
-  border-right:1px solid var(--rule-hard);
-  padding:1.1rem 1rem 1.2rem;
-}
-.stats .n{
-  font-family:var(--display);
-  font-stretch:condensed;
-  font-size:clamp(2.6rem,7vw,4rem);
-  line-height:.85;
-  display:block;
-  font-variant-numeric:tabular-nums;
-}
-.stats .n.hot{color:var(--flag)}
-.stats .k{
-  font-family:var(--data);
-  font-size:.57rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:var(--muted);
-  display:block;
-  margin-top:.6rem;
-}
-
-/* ── tables ────────────────────────────────────────────────── */
-
-.tw{overflow-x:auto;margin:1.2rem 0 0;border-top:1px solid var(--ink)}
-table{
-  border-collapse:collapse;
-  width:100%;
-  font-family:var(--data);
-  font-size:.76rem;
-  font-variant-numeric:tabular-nums;
-  min-width:600px;
-}
-thead th{
-  text-align:left;
-  font-weight:400;
-  font-size:.58rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--muted);
-  padding:.6rem .75rem;
-  border-bottom:1px solid var(--rule-hard);
-  vertical-align:bottom;
-  white-space:nowrap;
-}
-tbody td{
-  padding:.55rem .75rem;
-  border-bottom:1px solid var(--rule);
-  vertical-align:top;
-  color:var(--ink-2);
-}
-tbody td:first-child{color:var(--ink)}
-tbody tr:hover td{background:var(--surface)}
-tfoot td{
-  padding:.6rem .75rem;
-  border-top:2px solid var(--ink);
-  font-weight:700;
-  color:var(--ink);
-}
-.num{text-align:right}
-.win td{background:var(--flag-soft)}
-.win td:first-child::after{content:" ◄ SELECTED";color:var(--flag);font-size:.62rem;letter-spacing:.1em}
-
-.tag{
-  display:inline-block;
-  font-size:.58rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  padding:.12rem .4rem;
-  border:1px solid currentColor;
-  white-space:nowrap;
-}
-.tag--hi{color:var(--flag)}
-.tag--md{color:var(--signal)}
-.tag--lo{color:var(--verde)}
-
-.cap{
-  font-family:var(--data);
-  font-size:.62rem;
-  letter-spacing:.1em;
-  color:var(--muted);
-  margin:.6rem 0 0;
-  text-transform:uppercase;
-}
-
-/* ── gantt ─────────────────────────────────────────────────── */
-
-.gantt{margin-top:1.4rem;font-family:var(--data)}
-.gantt__axis{
-  position:relative;height:1.3rem;
-  border-bottom:1px solid var(--rule-hard);
-  margin-left:clamp(98px,18vw,220px);
-}
-.gantt__axis span{
-  position:absolute;top:0;
-  font-size:.58rem;letter-spacing:.1em;color:var(--muted);
-  transform:translateX(-50%);
-}
-.grow{display:flex;align-items:center;border-bottom:1px solid var(--rule);min-height:2.1rem}
-.grow__lab{
-  flex:0 0 clamp(98px,18vw,220px);
-  font-size:.62rem;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:var(--ink-2);
-  padding-right:.8rem;
+.feat__art{
+  background:var(--asphalt-3);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:1rem;
   overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
 }
-.grow__track{position:relative;flex:1 1 auto;height:2.1rem}
-.bar{
-  position:absolute;top:.5rem;height:1.05rem;
-  left:var(--a);width:var(--w);
-  background:var(--ink);
-  transform-origin:left center;
-  transition:transform .5s cubic-bezier(.3,1,.5,1);
+.feat__art svg{display:block;width:100%;height:auto}
+.feat h3{
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  text-transform:uppercase;font-size:clamp(1.9rem,4.6vw,3rem);
+  line-height:.95;margin:0 0 1rem;color:var(--cream);
 }
-.bar span{
-  position:absolute;left:calc(100% + .4rem);top:50%;transform:translateY(-50%);
-  font-size:.56rem;letter-spacing:.08em;color:var(--muted);white-space:nowrap;
+.feat h3 em{font-style:normal;color:var(--sunset-2)}
+.feat p{color:var(--cream-dim);max-width:52ch;margin:0 0 1rem}
+.feat p b{color:var(--cream)}
+.specrow{display:flex;gap:1.8rem;flex-wrap:wrap;margin:1.4rem 0 0;padding:0;list-style:none}
+.specrow .n{
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  font-size:2.2rem;line-height:1;color:var(--gold);display:block;
 }
-.bar--labl span{left:auto;right:calc(100% + .4rem)}
-.bar--phase{background:var(--flag);height:1.4rem;top:.32rem}
-.bar--sub{background:var(--rule-hard);height:.6rem;top:.75rem}
-.bar--float{background:repeating-linear-gradient(90deg,var(--rule-hard) 0 3px,transparent 3px 7px);height:.6rem;top:.75rem}
-.gantt:not(.is-in) .bar{transform:scaleX(0)}
-.gsub .grow__lab{padding-left:1.1rem;color:var(--muted)}
+.specrow .k{
+  font-family:var(--data);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-top:.35rem;
+}
 
-/* ── figure plates ─────────────────────────────────────────── */
-
-.plate{
-  background:var(--surface);
-  border:1px solid var(--rule-hard);
-  margin-top:1.8rem;
+/* ── padres banner ──────────────────────────────────────────── */
+.padres{
+  background:
+    radial-gradient(900px 400px at 22% 130%, rgba(255,196,37,.18), transparent 60%),
+    var(--asphalt-2);
+  border-block:1px solid var(--line);
 }
-.plate__bar{
-  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
-  padding:.5rem .8rem;
-  border-bottom:1px solid var(--rule-hard);
+.padres .sec__title em{color:var(--gold)}
+.scorebug{
+  display:inline-flex;align-items:center;gap:1.2rem;flex-wrap:wrap;
+  border:1px solid var(--line);border-radius:12px;
+  background:var(--asphalt);
+  padding:1rem 1.4rem;margin-top:1.6rem;
   font-family:var(--data);
-  font-size:.58rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:var(--muted);
 }
-.plate__bar b{color:var(--ink)}
-.plate__art{padding:.4rem}
-.plate__art svg{display:block;width:100%;height:auto}
-.plate__key{
-  border-top:1px solid var(--rule-hard);
-  padding:1rem .9rem 1.1rem;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(255px,1fr));
-  gap:.35rem 1.6rem;
-  margin:0;
-  list-style:none;
-  counter-reset:key;
+.scorebug .team{font-size:1rem;letter-spacing:.12em;color:var(--cream);text-transform:uppercase}
+.scorebug .vs{font-size:.62rem;color:var(--muted);letter-spacing:.2em}
+.scorebug .meta{font-size:.66rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase}
+
+/* ── basecamp / map ─────────────────────────────────────────── */
+.base{display:grid;gap:clamp(1.6rem,4vw,3rem);grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:stretch;margin-top:2rem}
+.base__card{
+  background:var(--asphalt-3);border:1px solid var(--line);border-radius:16px;
+  padding:clamp(1.4rem,3vw,2rem);display:flex;flex-direction:column;gap:1rem;
 }
-.plate__key li{
-  font-family:var(--data);
-  font-size:.68rem;
-  line-height:1.45;
-  color:var(--ink-2);
-  display:flex;
-  gap:.55rem;
-  counter-increment:key;
+.addr{
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  text-transform:uppercase;font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1;
+  color:var(--cream);margin:0;
 }
-.plate__key li::before{
-  content:counter(key,decimal-leading-zero);
-  color:var(--flag);
-  flex:0 0 auto;
+.addr small{display:block;font-size:.55em;color:var(--sunset-2);margin-top:.3rem}
+.base__card p{color:var(--cream-dim);margin:0;max-width:48ch}
+.base__card p b{color:var(--cream)}
+.drive{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.drive li{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px dashed var(--line);padding-bottom:.55rem}
+.drive .to{color:var(--cream-dim);font-size:.92rem}
+.drive .min{font-family:var(--data);font-size:.72rem;color:var(--gold);letter-spacing:.08em;white-space:nowrap}
+.base__map{background:var(--asphalt-3);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex}
+.base__map svg{display:block;width:100%;height:auto;margin:auto}
+
+/* ── roster ─────────────────────────────────────────────────── */
+.roster{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:2rem}
+.rost{
+  border:1px solid var(--line);border-radius:12px;background:var(--asphalt-3);
+  padding:.95rem 1rem;transition:transform .2s ease,border-color .2s ease;
 }
-.plate__key b{color:var(--ink);font-weight:700}
-.plate__key--plain{counter-reset:none}
-.plate__key--plain li::before{content:none}
+.rost:hover{transform:translateY(-4px);border-color:var(--sunset-2)}
+.rost .no{font-family:var(--data);font-size:.6rem;color:var(--sunset-1);letter-spacing:.2em}
+.rost .nm{font-family:var(--display);font-stretch:condensed;font-weight:700;text-transform:uppercase;font-size:1.25rem;color:var(--cream);line-height:1.05;margin:.3rem 0 .15rem}
+.rost .rl{font-family:var(--data);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.rost--groom{border-color:var(--gold);background:linear-gradient(160deg,rgba(255,196,37,.12),var(--asphalt-3) 55%)}
+.rost--groom .no{color:var(--gold)}
 
-/* svg helpers */
-.svg-ink{fill:var(--ink)}
-.svg-line{stroke:var(--ink);fill:none}
-.svg-thin{stroke:var(--rule-hard);fill:none;stroke-width:1}
-.svg-lab{font-family:var(--data);font-size:13px;fill:var(--muted);letter-spacing:.1em}
-.svg-num{font-family:var(--data);font-size:13px;fill:var(--paper);font-weight:700}
-.svg-numbg{fill:var(--flag)}
-.svg-lead{stroke:var(--flag);stroke-width:1;fill:none}
-.svg-dim{stroke:var(--muted);stroke-width:1;fill:none;stroke-dasharray:4 3}
-
-/* ── callout box ───────────────────────────────────────────── */
-
-.note{
-  border-left:3px solid var(--flag);
-  background:var(--flag-soft);
-  padding:.9rem 1.1rem;
-  margin:1.6rem 0;
-  font-family:var(--data);
-  font-size:.74rem;
-  line-height:1.6;
-  color:var(--ink-2);
-  max-width:var(--measure);
+/* ── footer ─────────────────────────────────────────────────── */
+footer{padding:3rem 0 4rem;text-align:center}
+footer .big{
+  font-family:var(--display);font-stretch:condensed;font-weight:700;
+  text-transform:uppercase;font-size:clamp(1.6rem,5vw,2.6rem);
+  color:var(--cream);margin:0 0 .6rem;
 }
-.note b{color:var(--flag);letter-spacing:.1em;text-transform:uppercase;font-size:.62rem;display:block;margin-bottom:.35rem}
-
-/* ── out of scope ──────────────────────────────────────────── */
-
-.reject{list-style:none;padding:0;margin:1.4rem 0 0;border-top:1px solid var(--ink)}
-.reject li{
-  display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap;
-  padding:.7rem 0;border-bottom:1px solid var(--rule);
-  font-family:var(--data);font-size:.8rem;
-}
-.reject .what{flex:1 1 210px;color:var(--ink);text-decoration:line-through;text-decoration-color:var(--flag)}
-.reject .why{flex:2 1 300px;color:var(--muted);font-size:.7rem}
-.reject .code{
-  flex:0 0 auto;font-size:.58rem;letter-spacing:.12em;
-  color:var(--flag);border:1px solid var(--flag);padding:.1rem .4rem;
-}
-
-/* ── signature block ───────────────────────────────────────── */
-
-.sigs{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:2rem 2.4rem;margin-top:2rem;
-}
-.sig{border-top:1px solid var(--ink);padding-top:.5rem}
-.sig .who{font-family:var(--data);font-size:.7rem;color:var(--ink)}
-.sig .role{font-family:var(--data);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
-.sig .line{height:2.2rem}
-
-footer{padding:2.5rem 0 4rem;font-family:var(--data);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-footer p{margin:.3rem 0}
-
-a{color:var(--flag)}
-:focus-visible{outline:2px solid var(--flag);outline-offset:2px}
+footer .big b{color:var(--sunset-1)}
+footer p{font-family:var(--data);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:.3rem 0}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
-  .gantt:not(.is-in) .bar{transform:none}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
 
-<!-- ══ COVER SHEET ═══════════════════════════════════════════ -->
-<header class="cover">
-  <div class="wrap">
-    <div class="cover__class">
-      <span>Need to know · Groom excluded</span>
-      <span>Uncontrolled when printed</span>
-      <span>Page 1 of 41</span>
-    </div>
+<div class="checkers" aria-hidden="true"></div>
 
-    <h1 class="disp cover__title">Operation<br><em>Two Things</em></h1>
-    <p class="cover__sub">Bachelor Party Operations Dossier · Juan R. · Saturday 12 September 2026 · San Diego, CA</p>
-
-    <div class="stamp" aria-hidden="true">
-      <b>Approved</b>
-      <span>Scope frozen · 2 items</span>
+<nav class="nav" aria-label="Main">
+  <div class="wrap nav__in">
+    <a class="nav__logo" href="#top">Juan's <b>Last Lap</b></a>
+    <div class="nav__links">
+      <a href="#weekend">Weekend</a>
+      <a href="#burrito">Burritos</a>
+      <a href="#k1">K1 Speed</a>
+      <a href="#padres">Padres</a>
+      <a href="#basecamp">Basecamp</a>
+      <a href="#crew">Crew</a>
     </div>
   </div>
+</nav>
 
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<header class="hero" id="top">
+  <div class="hero__grid" aria-hidden="true"></div>
   <div class="wrap">
-    <dl class="docgrid">
-      <div><dt>Document no.</dt><dd>JBP-2026-001</dd></div>
-      <div><dt>Revision</dt><dd>C (14)</dd></div>
-      <div><dt>Issued</dt><dd>15 AUG 2026</dd></div>
-      <div><dt>Prepared by</dt><dd>Office of the Best Man</dd></div>
-      <div><dt>Agenda items</dt><dd class="hot">2</dd></div>
-      <div><dt>Status</dt><dd>Baselined</dd></div>
-    </dl>
+    <p class="hero__kicker">San Diego, CA <span class="dot">●</span> Sept 25–27, 2026 <span class="dot">●</span> One groom. No brakes.</p>
+    <h1 class="disp hero__title">Juan's<br>Last Lap</h1>
+    <p class="hero__sub">One last weekend of freedom, engineered around the two greatest achievements of Southern California civilization: <b>the California burrito</b> and <b>indoor electric karting</b> — with a <b>Padres game</b> under the lights to bring it home.</p>
+    <div class="hero__cta">
+      <a class="btn btn--hot" href="#weekend"><span>See the weekend</span></a>
+      <a class="btn btn--ghost" href="#basecamp"><span>Find basecamp</span></a>
+    </div>
+    <div class="count" id="count" aria-label="Countdown to the weekend">
+      <div><span class="n" id="cd-d">—</span><span class="k">Days</span></div>
+      <span class="sep">:</span>
+      <div><span class="n" id="cd-h">—</span><span class="k">Hours</span></div>
+      <span class="sep">:</span>
+      <div><span class="n" id="cd-m">—</span><span class="k">Minutes</span></div>
+      <span class="sep">:</span>
+      <div><span class="n" id="cd-s">—</span><span class="k">Seconds</span></div>
+    </div>
   </div>
+  <div class="checkers checkers--live" aria-hidden="true"></div>
 </header>
 
-<!-- ══ DOC BAR ═══════════════════════════════════════════════ -->
-<div class="docbar">
-  <div class="wrap docbar__in">
-    <b>JBP-2026-001</b>
-    <nav aria-label="Sections">
-      <a href="#s1">1.0 Summary</a>
-      <a href="#s2">2.0 Schedule</a>
-      <a href="#s3">3.0 Burrito</a>
-      <a href="#s4">4.0 K1 Speed</a>
-      <a href="#s5">5.0 Risk</a>
-      <a href="#s6">6.0 RACI</a>
-      <a href="#s7">7.0 Budget</a>
-      <a href="#s8">8.0 Contingency</a>
-      <a href="#s9">9.0 Out of scope</a>
-      <a href="#sa">App. A</a>
-    </nav>
+<!-- ══ MARQUEE ═══════════════════════════════════════════════ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>California Burritos</span><span>●</span><span><b>K1 Speed</b></span><span>●</span><span>Padres at Petco</span><span>●</span><span><i>Carne asada</i></span><span>●</span><span>20 laps</span><span>●</span><span>No rice. Ever.</span><span>●</span>
+    <span>California Burritos</span><span>●</span><span><b>K1 Speed</b></span><span>●</span><span>Padres at Petco</span><span>●</span><span><i>Carne asada</i></span><span>●</span><span>20 laps</span><span>●</span><span>No rice. Ever.</span><span>●</span>
   </div>
 </div>
 
-<div class="wrap">
-
-  <!-- ══ 1.0 EXECUTIVE SUMMARY ═══════════════════════════════ -->
-  <section class="sec" id="s1">
-    <div class="sec__head">
-      <span class="sec__no mono">1.0</span>
-      <h2 class="disp sec__title">Executive Summary</h2>
+<!-- ══ WEEKEND ═══════════════════════════════════════════════ -->
+<section class="sec" id="weekend">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <span class="lap">Race program</span>
+      <h2 class="disp sec__title">The <em>Weekend</em></h2>
     </div>
+    <p class="lede rv">Three days, one house, zero decisions required from the groom. Saturday is the main event — <b>karts in the afternoon, first pitch at night</b> — and every day starts and ends within reach of carne asada.</p>
 
-    <p class="col lead">This document constitutes the complete plan of record for the pre-nuptial celebration of Juan R. (hereafter <b>the Groom</b>). It supersedes all prior verbal agreements, all group-chat consensus, and the four-minute voice memo Ellis sent at 1:14&nbsp;a.m. on 3 August.</p>
+    <div class="days">
+      <article class="day rv">
+        <div class="day__head">
+          <div>
+            <h3 class="disp day__name">Friday</h3>
+            <span class="day__date">SEPT 25 · ARRIVAL</span>
+          </div>
+          <span class="day__tag">Green flag</span>
+        </div>
+        <ul>
+          <li><span class="t">4:00 PM</span><span class="w"><b>Check-in at basecamp</b> — claim beds, worst room goes to the last arrival</span></li>
+          <li><span class="t">6:30 PM</span><span class="w"><span class="hl">California burrito run #1</span> — welcome-to-San-Diego edition</span></li>
+          <li><span class="t">8:00 PM</span><span class="w"><b>Casa night</b> — poker, playlist, roast-level toasts</span></li>
+          <li><span class="t">Late</span><span class="w">Strategy meeting nobody will remember</span></li>
+        </ul>
+      </article>
 
-    <p class="col">The programme comprises <b>two (2) agenda items</b>. This figure is final. It has survived fourteen revisions, four planning calls, one spreadsheet, and one intervention. Proposals to introduce a third item are dispositioned in Section&nbsp;9.0 and require no further discussion.</p>
+      <article class="day day--main rv">
+        <div class="day__head">
+          <div>
+            <h3 class="disp day__name">Saturday</h3>
+            <span class="day__date">SEPT 26 · MAIN EVENT</span>
+          </div>
+          <span class="day__tag">Race day</span>
+        </div>
+        <ul>
+          <li><span class="t">9:00 AM</span><span class="w"><span class="gl">Cowles Mountain sunrise-ish hike</span> — trailhead is 5 min from the house (optional, weak)</span></li>
+          <li><span class="t">12:00 PM</span><span class="w"><span class="hl">California burrito run #2</span> — carb-loading is a motorsport term</span></li>
+          <li><span class="t">2:30 PM</span><span class="w"><b>K1 Speed</b> — three heats, points format, winner gets bragging rights forever</span></li>
+          <li><span class="t">6:40 PM</span><span class="w"><b>Padres at Petco Park</b> — seats together, sunset over the bay, ballpark beers</span></li>
+          <li><span class="t">10:30 PM</span><span class="w">Gaslamp victory lap</span></li>
+        </ul>
+      </article>
 
-    <p class="col">Item&nbsp;1 is a California burrito. Item&nbsp;2 is K1&nbsp;Speed. Everything that follows describes those two things at a level of detail commensurate with their importance to the Groom, who has been asking for months what the plan is and will now be handed forty-one pages.</p>
-
-    <div class="stats">
-      <div><span class="n hot">2</span><span class="k">Agenda items</span></div>
-      <div><span class="n">41</span><span class="k">Pages of planning</span></div>
-      <div><span class="n">14</span><span class="k">Document revisions</span></div>
-      <div><span class="n">11</span><span class="k">Risks tracked</span></div>
-      <div><span class="n">9</span><span class="k">Attendees</span></div>
-      <div><span class="n">0</span><span class="k">Decisions req. of Groom</span></div>
+      <article class="day rv">
+        <div class="day__head">
+          <div>
+            <h3 class="disp day__name">Sunday</h3>
+            <span class="day__date">SEPT 27 · COOL-DOWN</span>
+          </div>
+          <span class="day__tag">Checkered</span>
+        </div>
+        <ul>
+          <li><span class="t">9:30 AM</span><span class="w"><span class="hl">California burrito run #3</span> — the recovery burrito is medicinal</span></li>
+          <li><span class="t">11:00 AM</span><span class="w"><b>Lake Murray walk</b> &amp; podium ceremony for Saturday's champion</span></li>
+          <li><span class="t">12:00 PM</span><span class="w">Pack out, group photo, checkout</span></li>
+          <li><span class="t">12:01 PM</span><span class="w">Begin planning the wedding-week burrito run</span></li>
+        </ul>
+      </article>
     </div>
-    <p class="cap">Fig. 0 — Programme metrics at Rev C baseline.</p>
-  </section>
+  </div>
+</section>
 
-  <!-- ══ 2.0 MASTER SCHEDULE ═════════════════════════════════ -->
-  <section class="sec" id="s2">
-    <div class="sec__head">
-      <span class="sec__no mono">2.0</span>
-      <h2 class="disp sec__title">Master Schedule</h2>
+<!-- ══ BURRITO ═══════════════════════════════════════════════ -->
+<section class="sec sec--alt" id="burrito">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <span class="lap">Fuel program</span>
+      <h2 class="disp sec__title">The <em>California Burrito</em></h2>
     </div>
-
-    <p class="col">Integrated timeline, 11:30–17:00 PDT. Two critical-path activities (shown in red) with a 30-minute mandatory settle window between them, per Risk R-07. Float is shown hatched. The schedule is resource-levelled against nine attendees and two vehicles.</p>
-
-    <div class="gantt" id="gantt">
-      <div class="gantt__axis" aria-hidden="true">
-        <span style="left:9.09%">12:00</span>
-        <span style="left:27.27%">13:00</span>
-        <span style="left:45.45%">14:00</span>
-        <span style="left:63.64%">15:00</span>
-        <span style="left:81.82%">16:00</span>
-        <span style="left:100%;transform:translateX(-100%)">17:00</span>
+    <div class="feat">
+      <div class="rv">
+        <h3>Carne asada. Fries. <em>Inside.</em></h3>
+        <p>Invented in San Diego and never improved upon: carne asada, French fries, cheese, and guacamole in a flour tortilla. The fries are not a side — they are a <b>structural component</b>. We will be eating one per day, minimum. This is the floor, not the ceiling.</p>
+        <p><b>House rule:</b> rice in a California burrito is a disqualifying offense. We didn't make the rules. San Diego did.</p>
+        <ul class="specrow">
+          <li><span class="n">3+</span><span class="k">Runs scheduled</span></li>
+          <li><span class="n">~700g</span><span class="k">Per unit</span></li>
+          <li><span class="n">0g</span><span class="k">Rice tolerated</span></li>
+          <li><span class="n">0</span><span class="k">Regrets</span></li>
+        </ul>
       </div>
-
-      <div class="grow">
-        <div class="grow__lab">1.0 Mobilisation</div>
-        <div class="grow__track"><div class="bar" style="--a:0%;--w:13.64%"><span>11:30–12:15</span></div></div>
-      </div>
-
-      <div class="grow">
-        <div class="grow__lab">2.0 Item 1 — Burrito</div>
-        <div class="grow__track"><div class="bar bar--phase" style="--a:13.64%;--w:25.76%"><span>85 min · critical</span></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">2.1 Transit to vendor</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:13.64%;--w:6.06%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">2.2 Queue &amp; order</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:22.73%;--w:6.06%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">2.3 Consumption</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:25.76%;--w:9.09%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">2.4 Foil disposal</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:34.85%;--w:4.55%"></div></div>
-      </div>
-
-      <div class="grow">
-        <div class="grow__lab">3.0 Settle window</div>
-        <div class="grow__track"><div class="bar bar--float" style="--a:39.39%;--w:9.09%"><span>Do not compress</span></div></div>
-      </div>
-
-      <div class="grow">
-        <div class="grow__lab">4.0 Item 2 — K1 Speed</div>
-        <div class="grow__track"><div class="bar bar--phase bar--labl" style="--a:48.48%;--w:42.42%"><span>140 min · critical</span></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">4.1 Registration &amp; waivers</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:48.48%;--w:7.58%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">4.2 Safety briefing</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:56.06%;--w:3.03%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">4.3 Heat 1 — qualifying</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:59.09%;--w:6.06%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">4.4 Heat 2 — points</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:68.18%;--w:6.06%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">4.5 Grand Prix final</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:78.79%;--w:7.58%"></div></div>
-      </div>
-      <div class="grow gsub">
-        <div class="grow__lab">4.6 Podium &amp; dispute</div>
-        <div class="grow__track"><div class="bar bar--sub" style="--a:86.36%;--w:4.55%"></div></div>
-      </div>
-
-      <div class="grow">
-        <div class="grow__lab">5.0 Demobilisation</div>
-        <div class="grow__track"><div class="bar bar--labl" style="--a:90.91%;--w:9.09%"><span>16:30–17:00</span></div></div>
-      </div>
-    </div>
-    <p class="cap">Fig. 1 — Integrated master schedule, Rev C. Critical path: 2.0 → 3.0 → 4.0. Total duration 5 h 30 m.</p>
-
-    <div class="note">
-      <b>Schedule constraint SC-1</b>
-      The settle window (3.0) is not float and shall not be consumed to recover slip in 2.3. Karting within thirty minutes of burrito consumption has been attempted once, by Marco, in 2021, and is documented in Appendix A.
-    </div>
-  </section>
-
-  <!-- ══ 3.0 ITEM 1 — BURRITO ════════════════════════════════ -->
-  <section class="sec" id="s3">
-    <div class="sec__head">
-      <span class="sec__no mono">3.0</span>
-      <h2 class="disp sec__title">Item 1 — California Burrito</h2>
-    </div>
-
-    <p class="col">A California burrito is a flour tortilla containing carne asada, French fries, cheese, and guacamole. It originated in San Diego and is not improved by additions. The specification below is normative; deviations require a change request under Section&nbsp;9.2.</p>
-
-    <!-- ── FIGURE 2: cross-section plate ── -->
-    <figure class="plate" style="margin:0;">
-      <div class="plate__bar">
-        <span>Figure 2 · Section A–A</span>
-        <span><b>California burrito</b> — radial arrangement, as-built</span>
-        <span>Scale 1:2 · Dims in mm</span>
-      </div>
-      <div class="plate__art">
-        <svg viewBox="0 0 900 600" role="img" aria-labelledby="f2t f2d">
-          <title id="f2t">Annotated cross-section of a California burrito</title>
-          <desc id="f2d">A cut-face section showing the tortilla wall, char line, carne asada, French fry lattice, melted cheese, guacamole bead, pico de gallo, the fold seam and the retained foil sleeve, with ten numbered callouts. An inset side elevation shows the cut plane A–A.</desc>
-
-          <!-- inset: side elevation -->
-          <g>
-            <rect x="560" y="34" width="316" height="132" fill="none" class="svg-thin"/>
-            <text x="570" y="26" class="svg-lab">SIDE ELEVATION · 1:6</text>
-            <!-- foil sleeve -->
-            <path d="M578 74 L688 74 Q700 74 700 86 L700 126 Q700 138 688 138 L578 138 Q566 138 566 126 L566 86 Q566 74 578 74 Z" fill="var(--foil)"/>
-            <path d="M580 78 L580 134 M596 76 L596 136 M612 78 L612 134 M628 76 L628 136 M644 78 L644 134 M660 76 L660 136 M676 78 L676 134" stroke="var(--paper)" stroke-width="1.4" opacity=".55"/>
-            <!-- exposed burrito body -->
-            <path d="M700 76 L836 76 Q852 76 852 92 L852 120 Q852 136 836 136 L700 136 Z" fill="var(--tortilla)"/>
-            <path d="M714 80 Q740 92 766 80 M782 132 Q808 120 834 132" class="svg-thin" stroke="var(--char)" stroke-width="3" opacity=".7"/>
-            <ellipse cx="852" cy="106" rx="7" ry="30" fill="var(--char)" opacity=".55"/>
-            <!-- cut plane A-A -->
-            <line x1="768" y1="42" x2="768" y2="170" stroke="var(--flag)" stroke-width="1.5" stroke-dasharray="7 4"/>
-            <text x="758" y="40" class="svg-lab" fill="var(--flag)" text-anchor="end">A</text>
-            <text x="758" y="182" class="svg-lab" fill="var(--flag)" text-anchor="end">A</text>
-          </g>
-
-          <!-- ── main cross-section ── -->
-          <g>
-            <!-- diameter dimension -->
-            <line x1="150" y1="506" x2="450" y2="506" class="svg-dim"/>
-            <line x1="150" y1="498" x2="150" y2="514" class="svg-dim"/>
-            <line x1="450" y1="498" x2="450" y2="514" class="svg-dim"/>
-            <text x="300" y="530" class="svg-lab" text-anchor="middle">Ø 78 ±7</text>
-
-            <!-- foil half-wrap behind -->
-            <path d="M300 170 A150 150 0 0 0 300 470 L300 470 A150 150 0 0 0 300 170 Z" fill="none"/>
-            <path d="M182 254 A150 150 0 0 0 182 386 L158 386 A174 174 0 0 1 158 254 Z" fill="var(--foil)"/>
-            <g stroke="var(--paper)" stroke-width="1.6" opacity=".5"><path d="M176 268 L152 264 M170 300 L146 298 M169 340 L145 342 M176 372 L152 376"/></g>
-
-            <!-- tortilla wall -->
-            <circle cx="300" cy="320" r="150" fill="var(--tortilla)"/>
-            <circle cx="300" cy="320" r="150" fill="none" stroke="var(--char)" stroke-width="2" opacity=".5"/>
-            <!-- char marks on wall -->
-            <path d="M242 178 a150 150 0 0 1 44 -8" stroke="var(--char)" stroke-width="7" fill="none" opacity=".55" stroke-linecap="round"/>
-            <path d="M404 232 a150 150 0 0 1 26 44" stroke="var(--char)" stroke-width="7" fill="none" opacity=".45" stroke-linecap="round"/>
-            <path d="M300 470 a150 150 0 0 1 -52 -9" stroke="var(--char)" stroke-width="7" fill="none" opacity=".5" stroke-linecap="round"/>
-            <circle cx="300" cy="320" r="134" fill="var(--surface-2)"/>
-
-            <clipPath id="fillclip"><circle cx="300" cy="320" r="133"/></clipPath>
-            <g clip-path="url(#fillclip)">
-              <!-- packed mass ground -->
-              <circle cx="300" cy="320" r="133" fill="var(--char)" opacity=".62"/>
-
-              <!-- 6 guacamole bead, upper arc only -->
-              <path d="M176 294 A130 130 0 0 1 424 294" stroke="var(--guac)" stroke-width="46" fill="none" stroke-linecap="round"/>
-              <path d="M200 254 q52 -24 106 -10 q54 14 98 -10" stroke="var(--guac)" stroke-width="18" fill="none" stroke-linecap="round" opacity=".55"/>
-
-              <!-- 5 cheese, melt interface -->
-              <path d="M168 312 q64 -30 130 -12 q74 20 134 -12" stroke="var(--queso)" stroke-width="20" fill="none" stroke-linecap="round"/>
-              <path d="M186 336 q58 20 118 2 q46 -14 90 -2" stroke="var(--queso)" stroke-width="11" fill="none" stroke-linecap="round" opacity=".85"/>
-
-              <!-- 3 carne asada, lower bed -->
-              <g fill="var(--asada)">
-                <rect x="200" y="366" width="54" height="34" rx="7" transform="rotate(-12 227 383)"/>
-                <rect x="268" y="376" width="58" height="32" rx="7" transform="rotate(10 297 392)"/>
-                <rect x="344" y="358" width="50" height="34" rx="7" transform="rotate(-24 369 375)"/>
-                <rect x="222" y="412" width="54" height="30" rx="7" transform="rotate(14 249 427)"/>
-                <rect x="306" y="414" width="52" height="32" rx="7" transform="rotate(-8 332 430)"/>
-                <rect x="368" y="396" width="46" height="30" rx="7" transform="rotate(22 391 411)"/>
-                <rect x="246" y="340" width="50" height="28" rx="7" transform="rotate(-20 271 354)"/>
-                <rect x="176" y="410" width="48" height="30" rx="7" transform="rotate(6 200 425)"/>
-                <rect x="230" y="236" width="52" height="30" rx="7" transform="rotate(-10 256 251)"/>
-                <rect x="300" y="244" width="56" height="30" rx="7" transform="rotate(12 328 259)"/>
-                <rect x="214" y="282" width="50" height="28" rx="7" transform="rotate(8 239 296)"/>
-                <rect x="352" y="266" width="48" height="30" rx="7" transform="rotate(-18 376 281)"/>
-              </g>
-
-              <!-- 4 fry lattice, woven through the mass -->
-              <g fill="var(--fry)" stroke="var(--char)" stroke-opacity=".32" stroke-width="1">
-                <rect x="172" y="352" width="98" height="17" rx="5" transform="rotate(-32 221 360)"/>
-                <rect x="250" y="344" width="104" height="17" rx="5" transform="rotate(26 302 352)"/>
-                <rect x="322" y="352" width="92" height="17" rx="5" transform="rotate(-28 368 360)"/>
-                <rect x="186" y="392" width="102" height="17" rx="5" transform="rotate(-14 237 400)"/>
-                <rect x="274" y="398" width="106" height="17" rx="5" transform="rotate(22 327 406)"/>
-                <rect x="350" y="382" width="84" height="17" rx="5" transform="rotate(-56 392 390)"/>
-                <rect x="216" y="424" width="96" height="17" rx="5" transform="rotate(10 264 432)"/>
-                <rect x="300" y="432" width="92" height="17" rx="5" transform="rotate(-18 346 440)"/>
-                <rect x="226" y="372" width="86" height="17" rx="5" transform="rotate(58 269 380)"/>
-                <rect x="360" y="414" width="78" height="17" rx="5" transform="rotate(-40 399 422)"/>
-                <rect x="188" y="336" width="74" height="17" rx="5" transform="rotate(44 225 344)"/>
-                <rect x="330" y="336" width="70" height="17" rx="5" transform="rotate(64 365 344)"/>
-                <rect x="228" y="264" width="88" height="17" rx="5" transform="rotate(-14 272 272)"/>
-                <rect x="306" y="278" width="84" height="17" rx="5" transform="rotate(20 348 286)"/>
-                <rect x="252" y="216" width="74" height="17" rx="5" transform="rotate(6 289 224)"/>
-              </g>
-
-              <!-- asada riding over the lattice, with char faces -->
-              <g fill="var(--asada)">
-                <rect x="252" y="392" width="56" height="32" rx="7" transform="rotate(-16 280 408)"/>
-                <rect x="330" y="372" width="50" height="30" rx="7" transform="rotate(30 355 387)"/>
-                <rect x="196" y="332" width="48" height="28" rx="7" transform="rotate(-8 220 346)"/>
-              </g>
-              <g fill="var(--char)" opacity=".55">
-                <rect x="256" y="396" width="48" height="7" rx="3" transform="rotate(-16 280 400)"/>
-                <rect x="334" y="376" width="42" height="7" rx="3" transform="rotate(30 355 380)"/>
-                <rect x="204" y="370" width="46" height="7" rx="3" transform="rotate(-12 227 374)"/>
-                <rect x="272" y="380" width="50" height="7" rx="3" transform="rotate(10 297 384)"/>
-                <rect x="310" y="418" width="44" height="7" rx="3" transform="rotate(-8 332 422)"/>
-              </g>
-
-              <!-- 8 sour cream, optional -->
-              <path d="M336 266 q30 -10 52 -32" stroke="var(--paper)" stroke-width="14" fill="none" stroke-linecap="round" opacity=".9"/>
-
-              <!-- 7 pico de gallo, terminal pooling zone -->
-              <g>
-                <circle cx="212" cy="446" r="7" fill="var(--verde)"/>
-                <circle cx="240" cy="456" r="8" fill="var(--pico)"/>
-                <circle cx="268" cy="446" r="6" fill="var(--paper)" opacity=".85"/>
-                <circle cx="296" cy="458" r="8" fill="var(--pico)"/>
-                <circle cx="324" cy="448" r="6" fill="var(--verde)"/>
-                <circle cx="352" cy="456" r="8" fill="var(--pico)"/>
-                <circle cx="380" cy="444" r="6" fill="var(--pico)"/>
-                <circle cx="188" cy="430" r="6" fill="var(--pico)"/>
-              </g>
-
-              <!-- 9 fold seam, overlap band at the closure -->
-              <path d="M424 268 A133 133 0 0 1 424 372 L402 366 A110 110 0 0 0 402 274 Z" fill="var(--tortilla)"/>
-              <path d="M424 268 A133 133 0 0 1 424 372" stroke="var(--char)" stroke-width="1.6" fill="none" opacity=".55"/>
-              <path d="M402 274 A110 110 0 0 1 402 366" stroke="var(--char)" stroke-width="1.6" fill="none" opacity=".55"/>
+      <div class="feat__art rv" aria-hidden="false">
+        <svg viewBox="0 0 640 460" role="img" aria-label="Cutaway illustration of a California burrito">
+          <defs>
+            <clipPath id="cut"><circle cx="320" cy="222" r="150"/></clipPath>
+            <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="#ff9a3c" stop-opacity=".22"/>
+              <stop offset="100%" stop-color="#ff9a3c" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect x="0" y="0" width="640" height="460" fill="#11141f"/>
+          <circle cx="320" cy="222" r="210" fill="url(#glow)"/>
+          <!-- foil -->
+          <path d="M150 260 A170 170 0 0 1 195 118 L214 138 A150 150 0 0 0 174 258 Z" fill="#9aa2ad"/>
+          <path d="M162 232 L138 226 M170 196 L148 186 M186 166 L166 150" stroke="#0b0d14" stroke-width="2" opacity=".4"/>
+          <!-- tortilla -->
+          <circle cx="320" cy="222" r="150" fill="#e8c187"/>
+          <circle cx="320" cy="222" r="150" fill="none" stroke="#8a5a2e" stroke-width="3" opacity=".55"/>
+          <path d="M258 92 a150 150 0 0 1 56 -9" stroke="#8a5a2e" stroke-width="8" fill="none" stroke-linecap="round" opacity=".5"/>
+          <path d="M436 150 a150 150 0 0 1 24 46" stroke="#8a5a2e" stroke-width="8" fill="none" stroke-linecap="round" opacity=".45"/>
+          <path d="M300 371 a150 150 0 0 1 -56 -12" stroke="#8a5a2e" stroke-width="8" fill="none" stroke-linecap="round" opacity=".5"/>
+          <circle cx="320" cy="222" r="132" fill="#6b4a2a"/>
+          <g clip-path="url(#cut)">
+            <circle cx="320" cy="222" r="132" fill="#5c3d22"/>
+            <!-- guac arc -->
+            <path d="M198 196 A128 128 0 0 1 442 196" stroke="#9fc45e" stroke-width="44" fill="none" stroke-linecap="round"/>
+            <!-- cheese -->
+            <path d="M192 214 q66 -28 132 -10 q72 18 130 -12" stroke="#ffc425" stroke-width="18" fill="none" stroke-linecap="round"/>
+            <path d="M212 238 q58 18 116 2 q46 -12 88 0" stroke="#ffc425" stroke-width="10" fill="none" stroke-linecap="round" opacity=".8"/>
+            <!-- asada -->
+            <g fill="#8c4a24">
+              <rect x="216" y="252" width="54" height="32" rx="7" transform="rotate(-12 243 268)"/>
+              <rect x="284" y="262" width="58" height="32" rx="7" transform="rotate(10 313 278)"/>
+              <rect x="356" y="248" width="50" height="32" rx="7" transform="rotate(-22 381 264)"/>
+              <rect x="238" y="298" width="54" height="30" rx="7" transform="rotate(13 265 313)"/>
+              <rect x="318" y="300" width="52" height="30" rx="7" transform="rotate(-8 344 315)"/>
+              <rect x="378" y="284" width="46" height="30" rx="7" transform="rotate(20 401 299)"/>
+              <rect x="252" y="152" width="52" height="28" rx="7" transform="rotate(-8 278 166)"/>
+              <rect x="326" y="160" width="54" height="28" rx="7" transform="rotate(12 353 174)"/>
             </g>
-            <circle cx="300" cy="320" r="133" fill="none" stroke="var(--char)" stroke-width="1.6" opacity=".5"/>
+            <g fill="#3d2413" opacity=".6">
+              <rect x="220" y="256" width="46" height="6" rx="3" transform="rotate(-12 243 259)"/>
+              <rect x="288" y="266" width="50" height="6" rx="3" transform="rotate(10 313 269)"/>
+              <rect x="360" y="252" width="42" height="6" rx="3" transform="rotate(-22 381 255)"/>
+              <rect x="322" y="304" width="44" height="6" rx="3" transform="rotate(-8 344 307)"/>
+            </g>
+            <!-- fries -->
+            <g fill="#f2c14e" stroke="#8a5a2e" stroke-opacity=".3" stroke-width="1">
+              <rect x="192" y="268" width="96" height="16" rx="5" transform="rotate(-30 240 276)"/>
+              <rect x="268" y="258" width="102" height="16" rx="5" transform="rotate(24 319 266)"/>
+              <rect x="340" y="268" width="90" height="16" rx="5" transform="rotate(-26 385 276)"/>
+              <rect x="206" y="308" width="100" height="16" rx="5" transform="rotate(-12 256 316)"/>
+              <rect x="292" y="314" width="102" height="16" rx="5" transform="rotate(20 343 322)"/>
+              <rect x="238" y="286" width="84" height="16" rx="5" transform="rotate(56 280 294)"/>
+              <rect x="352" y="298" width="76" height="16" rx="5" transform="rotate(-46 390 306)"/>
+              <rect x="242" y="180" width="86" height="16" rx="5" transform="rotate(-12 285 188)"/>
+              <rect x="316" y="188" width="82" height="16" rx="5" transform="rotate(18 357 196)"/>
+              <rect x="236" y="332" width="92" height="16" rx="5" transform="rotate(8 282 340)"/>
+            </g>
+            <!-- pico -->
+            <g>
+              <circle cx="238" cy="342" r="7" fill="#d84a2e"/>
+              <circle cx="268" cy="352" r="6" fill="#9fc45e"/>
+              <circle cx="300" cy="346" r="7" fill="#d84a2e"/>
+              <circle cx="332" cy="354" r="6" fill="#f4efe4"/>
+              <circle cx="362" cy="344" r="7" fill="#d84a2e"/>
+            </g>
+            <!-- fold seam -->
+            <path d="M442 172 A128 128 0 0 1 442 272 L420 266 A104 104 0 0 0 420 178 Z" fill="#e8c187"/>
           </g>
-
-          <!-- callouts: left bank -->
-          <g class="svg-lead">
-            <path d="M254 176 L140 116 L120 116"/>
-            <path d="M196 216 L140 176 L120 176"/>
-            <path d="M232 288 L140 236 L120 236"/>
-            <path d="M218 348 L140 300 L120 300"/>
-            <path d="M166 356 L140 372 L120 372"/>
-            <path d="M248 442 L140 440 L120 440"/>
-          </g>
-          <!-- callouts: right bank -->
-          <g class="svg-lead">
-            <path d="M356 206 L500 236 L520 236"/>
-            <path d="M370 252 L500 300 L520 300" stroke-dasharray="5 4"/>
-            <path d="M414 350 L500 372 L520 372"/>
-            <path d="M332 416 L500 448 L520 448"/>
-          </g>
-
-          <g>
-            <g><circle cx="104" cy="116" r="15" class="svg-numbg"/><text x="104" y="121" class="svg-num" text-anchor="middle">2</text></g>
-            <g><circle cx="104" cy="176" r="15" class="svg-numbg"/><text x="104" y="181" class="svg-num" text-anchor="middle">1</text></g>
-            <g><circle cx="104" cy="236" r="15" class="svg-numbg"/><text x="104" y="241" class="svg-num" text-anchor="middle">5</text></g>
-            <g><circle cx="104" cy="300" r="15" class="svg-numbg"/><text x="104" y="305" class="svg-num" text-anchor="middle">4</text></g>
-            <g><circle cx="104" cy="372" r="15" class="svg-numbg"/><text x="104" y="377" class="svg-num" text-anchor="middle">10</text></g>
-            <g><circle cx="104" cy="440" r="15" class="svg-numbg"/><text x="104" y="445" class="svg-num" text-anchor="middle">7</text></g>
-            <g><circle cx="536" cy="236" r="15" class="svg-numbg"/><text x="536" y="241" class="svg-num" text-anchor="middle">6</text></g>
-            <g><circle cx="536" cy="300" r="15" class="svg-numbg"/><text x="536" y="305" class="svg-num" text-anchor="middle">8</text></g>
-            <g><circle cx="536" cy="372" r="15" class="svg-numbg"/><text x="536" y="377" class="svg-num" text-anchor="middle">9</text></g>
-            <g><circle cx="536" cy="448" r="15" class="svg-numbg"/><text x="536" y="453" class="svg-num" text-anchor="middle">3</text></g>
-          </g>
-
-          <text x="596" y="576" class="svg-lab">JBP-2026-001 · FIG. 2 · REV C</text>
+          <circle cx="320" cy="222" r="132" fill="none" stroke="#3d2413" stroke-width="2" opacity=".6"/>
+          <text x="320" y="422" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="13" letter-spacing="3" fill="#6f6f80">SECTION VIEW · FRIES ARE LOAD-BEARING</text>
         </svg>
       </div>
-      <ol class="plate__key">
-        <li><span><b>Flour tortilla</b>, 330 mm, steam-conditioned, single panel</span></li>
-        <li><span><b>Char line</b> — Maillard boundary, 2–4 mm penetration</span></li>
-        <li><span><b>Carne asada</b>, 6–9 mm dice, 210 g nominal</span></li>
-        <li><span><b>French fry lattice</b>, 8 mm cut — structural member</span></li>
-        <li><span><b>Cheese</b>, shredded, melt interface bonds 4 to 3</span></li>
-        <li><span><b>Guacamole</b>, continuous bead, 40 g, upper arc only</span></li>
-        <li><span><b>Pico de gallo</b> — moisture hazard zone, see 3.6</span></li>
-        <li><span><b>Sour cream</b> — optional; unanimous table consent required</span></li>
-        <li><span><b>Fold seam</b>, load-bearing, 20 mm minimum overlap</span></li>
-        <li><span><b>Foil sleeve</b>, 300 mm, 50 % retained during consumption</span></li>
-      </ol>
-    </figure>
-
-    <p class="clause"><b>3.1</b> — Vendor trade study</p>
-    <p class="col">Four candidate vendors were assessed against five weighted criteria. Scoring was performed independently by three evaluators in July. One evaluator was recused for bias.</p>
-
-    <div class="tw">
-      <table>
-        <thead>
-          <tr><th>Vendor</th><th class="num">Asada char</th><th class="num">Fry integrity</th><th class="num">Tortilla</th><th class="num">Queue (min)</th><th class="num">Parking</th><th class="num">Weighted</th></tr>
-        </thead>
-        <tbody>
-          <tr class="win"><td>Lolita's — Sports Arena</td><td class="num">9.4</td><td class="num">9.1</td><td class="num">8.8</td><td class="num">11</td><td class="num">7.5</td><td class="num">8.92</td></tr>
-          <tr><td>Roberto's — Morena</td><td class="num">8.9</td><td class="num">8.2</td><td class="num">9.0</td><td class="num">7</td><td class="num">6.0</td><td class="num">8.31</td></tr>
-          <tr><td>Cotixan — Clairemont</td><td class="num">8.1</td><td class="num">9.3</td><td class="num">8.2</td><td class="num">14</td><td class="num">8.5</td><td class="num">8.24</td></tr>
-          <tr><td>Nico's — Point Loma</td><td class="num">8.6</td><td class="num">7.4</td><td class="num">8.6</td><td class="num">9</td><td class="num">5.5</td><td class="num">7.88</td></tr>
-        </tbody>
-      </table>
     </div>
-    <p class="cap">Table 3.1 — Vendor trade study. Weights: char 0.30, fry 0.25, tortilla 0.20, queue 0.15, parking 0.10.</p>
+  </div>
+</section>
 
-    <p class="clause"><b>3.2</b> — Acceptance tolerances</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Characteristic</th><th>Nominal</th><th>Tolerance</th><th>Method</th><th>Disposition if out</th></tr></thead>
-        <tbody>
-          <tr><td>Gross mass</td><td>700 g</td><td>620–780 g</td><td>Hand estimate</td><td>Accept</td></tr>
-          <tr><td>Overall length</td><td>260 mm</td><td>±20 mm</td><td>Visual</td><td>Accept</td></tr>
-          <tr><td>Section diameter</td><td>78 mm</td><td>±7 mm</td><td>Grip span</td><td>Accept</td></tr>
-          <tr><td>Fry : asada ratio</td><td>0.62</td><td>0.55–0.70</td><td>Bite sampling</td><td>Report only</td></tr>
-          <tr><td>Service temperature</td><td>67 °C</td><td>62–71 °C</td><td>Foil warmth</td><td>Accept</td></tr>
-          <tr><td>Seam failures per unit</td><td>0</td><td>≤ 1</td><td>Observed</td><td>Re-foil, continue</td></tr>
-          <tr><td>Rice content</td><td>0 g</td><td>0 g</td><td>Inspection</td><td><span class="tag tag--hi">Reject</span></td></tr>
-        </tbody>
-      </table>
+<!-- ══ K1 ════════════════════════════════════════════════════ -->
+<section class="sec" id="k1">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <span class="lap">Main event · Sat 2:30 PM</span>
+      <h2 class="disp sec__title">K1 <em>Speed</em></h2>
     </div>
-    <p class="cap">Table 3.2 — Acceptance criteria. Rice is the only rejectable nonconformance.</p>
-
-    <p class="clause"><b>3.3</b> — Order matrix</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Attendee</th><th>Role</th><th>Configuration</th><th>Salsa</th><th>Flag</th></tr></thead>
-        <tbody>
-          <tr><td>Juan R.</td><td>Groom</td><td>Baseline, extra guacamole</td><td>Roja</td><td><span class="tag tag--lo">Nominal</span></td></tr>
-          <tr><td>Dave K.</td><td>Best man</td><td>Baseline</td><td>Verde</td><td><span class="tag tag--lo">Nominal</span></td></tr>
-          <tr><td>Marco V.</td><td>Transport lead</td><td>Baseline, no pico</td><td>Verde</td><td><span class="tag tag--lo">Nominal</span></td></tr>
-          <tr><td>Ellis T.</td><td>Unassigned</td><td>Baseline + sour cream</td><td>Habanero</td><td><span class="tag tag--md">Consent req.</span></td></tr>
-          <tr><td>Tyler B.</td><td>Timing</td><td>Baseline</td><td>Roja</td><td><span class="tag tag--lo">Nominal</span></td></tr>
-          <tr><td>Nate A.</td><td>Vehicle 2</td><td>Baseline, extra asada</td><td>Roja</td><td><span class="tag tag--lo">Nominal</span></td></tr>
-          <tr><td>Sam O.</td><td>Photography</td><td>Baseline</td><td>None</td><td><span class="tag tag--lo">Nominal</span></td></tr>
-          <tr><td>Ro M.</td><td>Budget</td><td>Baseline, fries on side</td><td>Verde</td><td><span class="tag tag--md">Deviation</span></td></tr>
-          <tr><td>Kev L.</td><td>Waivers</td><td>Requested a bowl</td><td>—</td><td><span class="tag tag--hi">Escalated</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cap">Table 3.3 — Order matrix. Kev's request is dispositioned under 9.2 (a bowl is not a burrito).</p>
-
-    <p class="clause"><b>3.4</b> — Nutritional declaration, per unit</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Analyte</th><th class="num">Quantity</th><th class="num">% of daily</th><th>Note</th></tr></thead>
-        <tbody>
-          <tr><td>Energy</td><td class="num">1,180 kcal</td><td class="num">59 %</td><td>Offset by Item 2 (see 4.7)</td></tr>
-          <tr><td>Protein</td><td class="num">52 g</td><td class="num">104 %</td><td>Primarily 3</td></tr>
-          <tr><td>Carbohydrate</td><td class="num">96 g</td><td class="num">35 %</td><td>Primarily 4</td></tr>
-          <tr><td>Fat</td><td class="num">61 g</td><td class="num">78 %</td><td>Distributed</td></tr>
-          <tr><td>Sodium</td><td class="num">2,140 mg</td><td class="num">93 %</td><td>Within programme limits</td></tr>
-          <tr><td>Regret</td><td class="num">0 mg</td><td class="num">0 %</td><td>Not detected</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="clause"><b>3.5</b> — Handling &amp; consumption procedure</p>
-    <p class="col">Consume from the folded end. The foil sleeve shall be retracted in increments not exceeding 40 mm; full removal at commencement is the leading cause of Class&nbsp;II seam failure. Maintain the unit at 15–25° above horizontal throughout. Do not set the unit down. Do not photograph the unit before the second bite — the section face is not presentable until then.</p>
-
-    <div class="note">
-      <b>3.6 Moisture hazard</b>
-      Pico de gallo migrates downward under gravity and pools at the terminal fold, producing the failure mode known internally as "the last three inches." Attendees electing pico accept this risk. No mitigation is available. Napkin allocation is four per attendee, held by Dave.
-    </div>
-  </section>
-
-  <!-- ══ 4.0 ITEM 2 — K1 SPEED ═══════════════════════════════ -->
-  <section class="sec" id="s4">
-    <div class="sec__head">
-      <span class="sec__no mono">4.0</span>
-      <h2 class="disp sec__title">Item 2 — K1 Speed</h2>
-    </div>
-
-    <p class="col">Indoor electric karting. Three heats, points-scoring, inverted grid for the final. Karts are 20&nbsp;hp electric units on a sealed concrete circuit with barrier walls. There is no suspension, no gearbox, and no reason for anyone to be as competitive about this as they are going to be.</p>
-
-    <!-- ── FIGURE 3: kart elevation ── -->
-    <figure class="plate" style="margin:1.8rem 0 0;">
-      <div class="plate__bar">
-        <span>Figure 3 · Side elevation</span>
-        <span><b>Adult electric kart</b> — as configured for heat operation</span>
-        <span>Scale 1:8</span>
-      </div>
-      <div class="plate__art">
-        <svg viewBox="0 0 900 490" role="img" aria-labelledby="f3t f3d">
-          <title id="f3t">Annotated side elevation of an indoor electric go-kart</title>
-          <desc id="f3d">A kart facing right, showing the rear bumper hoop, traction motor, reclined bucket seat, steering column and wheel, floor pan, side pod, battery pack, nose cone, transponder and both slick tyres, with ten numbered callouts, a dashed 95th-percentile occupant envelope and a wheelbase dimension.</desc>
-
-          <!-- ground -->
-          <line x1="40" y1="380" x2="880" y2="380" class="svg-thin"/>
-          <g stroke="var(--rule-hard)" stroke-width="1">
-            <path d="M40 380 l-10 12 M76 380 l-10 12 M112 380 l-10 12 M148 380 l-10 12 M184 380 l-10 12 M220 380 l-10 12 M256 380 l-10 12 M292 380 l-10 12 M328 380 l-10 12 M364 380 l-10 12 M400 380 l-10 12 M436 380 l-10 12 M472 380 l-10 12 M508 380 l-10 12 M544 380 l-10 12 M580 380 l-10 12 M616 380 l-10 12 M652 380 l-10 12 M688 380 l-10 12 M724 380 l-10 12 M760 380 l-10 12 M796 380 l-10 12 M832 380 l-10 12 M868 380 l-10 12"/>
-          </g>
-
-          <!-- occupant envelope, 95th percentile -->
-          <g stroke="var(--muted)" stroke-width="1.5" fill="none" stroke-dasharray="6 5" opacity=".75">
-            <circle cx="404" cy="158" r="33"/>
-            <path d="M366 306 C358 248 372 210 390 190"/>
-            <path d="M434 184 C456 214 466 254 474 288 C506 300 566 302 618 298 C664 294 704 306 722 322"/>
-          </g>
-          <text x="404" y="72" class="svg-lab" text-anchor="middle">OCCUPANT ENVELOPE · 95th %ILE</text>
-
-          <!-- rear bumper hoop -->
-          <path d="M176 258 C142 258 130 274 130 294 L130 340 C130 360 146 370 174 370" stroke="var(--rubber)" stroke-width="16" fill="none" stroke-linecap="round"/>
-
-          <!-- floor pan / chassis rail -->
-          <path d="M168 330 L772 330 L772 352 L168 352 Z" fill="var(--rubber)" stroke="var(--ink)" stroke-width="1" stroke-opacity=".3"/>
-
-          <!-- battery pack, slung under the pan -->
-          <rect x="424" y="352" width="212" height="18" rx="5" fill="var(--foil)" stroke="var(--ink)" stroke-width="1" stroke-opacity=".3"/>
-
-          <!-- traction motor -->
-          <rect x="196" y="232" width="112" height="66" rx="10" fill="var(--rubber)" stroke="var(--ink)" stroke-width="1" stroke-opacity=".3"/>
-          <g stroke="var(--foil)" stroke-width="2.5" opacity=".7"><path d="M212 244 v42 M226 244 v42 M240 244 v42 M254 244 v42 M268 244 v42 M282 244 v42 M296 244 v42"/></g>
-
-          <!-- seat -->
-          <path d="M296 350 C282 298 282 242 294 214 C304 190 338 182 354 197 C367 209 358 230 350 248 C340 270 338 302 346 320 L440 320 C451 320 453 332 445 340 L434 350 Z"
-                fill="var(--rubber)" stroke="var(--ink)" stroke-width="1" stroke-opacity=".3"/>
-          <path d="M316 344 C306 296 308 248 320 220" stroke="var(--foil)" stroke-width="2" fill="none" opacity=".45"/>
-
-          <!-- side pod -->
-          <path d="M400 306 q-16 0 -16 16 l0 22 q0 12 14 12 l264 0 q14 0 14 -12 l0 -22 q0 -16 -16 -16 Z" fill="var(--flag)"/>
-          <rect x="418" y="316" width="214" height="18" rx="4" fill="var(--paper)" opacity=".26"/>
-          <text x="525" y="331" class="svg-lab" fill="var(--paper)" text-anchor="middle" opacity=".9">SPONSOR BLANK</text>
-
-          <!-- steering column and wheel -->
-          <line x1="398" y1="300" x2="558" y2="226" stroke="var(--rubber)" stroke-width="11" stroke-linecap="round"/>
-          <g transform="rotate(16 566 220)">
-            <ellipse cx="566" cy="220" rx="9" ry="35" fill="var(--rubber)"/>
-            <ellipse cx="566" cy="220" rx="3.5" ry="27" fill="var(--flag)"/>
-          </g>
-
-          <!-- nose cone and front bumper -->
-          <path d="M772 316 L834 316 C864 316 878 328 878 342 C878 356 866 362 850 362 L772 362 Z" fill="var(--flag)"/>
-          <path d="M880 328 C896 334 898 354 882 360" stroke="var(--rubber)" stroke-width="9" fill="none" stroke-linecap="round"/>
-
-          <!-- transponder -->
-          <rect x="690" y="300" width="32" height="22" rx="4" fill="var(--signal-ink)" stroke="var(--ink)" stroke-width="1" stroke-opacity=".3"/>
-
-          <!-- front spindle -->
-          <line x1="744" y1="348" x2="744" y2="366" stroke="var(--foil)" stroke-width="8"/>
-
-          <!-- wheels -->
-          <g>
-            <circle cx="232" cy="326" r="54" fill="var(--rubber)" stroke="var(--ink)" stroke-width="1" stroke-opacity=".4"/>
-            <circle cx="232" cy="326" r="26" fill="var(--foil)"/>
-            <circle cx="232" cy="326" r="9" fill="var(--rubber)"/>
-          </g>
-          <g>
-            <circle cx="744" cy="340" r="40" fill="var(--rubber)" stroke="var(--ink)" stroke-width="1" stroke-opacity=".4"/>
-            <circle cx="744" cy="340" r="19" fill="var(--foil)"/>
-            <circle cx="744" cy="340" r="7" fill="var(--rubber)"/>
-          </g>
-
-          <!-- wheelbase dimension -->
-          <line x1="232" y1="406" x2="744" y2="406" class="svg-dim"/>
-          <line x1="232" y1="398" x2="232" y2="414" class="svg-dim"/>
-          <line x1="744" y1="398" x2="744" y2="414" class="svg-dim"/>
-          <text x="566" y="432" class="svg-lab" text-anchor="middle">WHEELBASE 1 040 mm</text>
-
-          <!-- callouts -->
-          <g class="svg-lead">
-            <path d="M130 296 L74 258 L74 244"/>
-            <path d="M250 234 L250 158 L172 158"/>
-            <path d="M300 198 L300 110 L326 110"/>
-            <path d="M568 188 L568 96 L604 96"/>
-            <path d="M846 316 L846 172 L810 172"/>
-            <path d="M706 300 L706 250 L724 250"/>
-            <path d="M500 306 L500 254 L484 254"/>
-            <path d="M200 372 L160 440 L154 444"/>
-            <path d="M482 366 L400 440 L314 444"/>
-            <path d="M744 380 L708 440 L714 444"/>
-          </g>
-          <g>
-            <g><circle cx="58" cy="244" r="14" class="svg-numbg"/><text x="58" y="249" class="svg-num" text-anchor="middle">1</text></g>
-            <g><circle cx="156" cy="158" r="14" class="svg-numbg"/><text x="156" y="163" class="svg-num" text-anchor="middle">6</text></g>
-            <g><circle cx="342" cy="110" r="14" class="svg-numbg"/><text x="342" y="115" class="svg-num" text-anchor="middle">2</text></g>
-            <g><circle cx="620" cy="96" r="14" class="svg-numbg"/><text x="620" y="101" class="svg-num" text-anchor="middle">3</text></g>
-            <g><circle cx="794" cy="172" r="14" class="svg-numbg"/><text x="794" y="177" class="svg-num" text-anchor="middle">4</text></g>
-            <g><circle cx="740" cy="250" r="14" class="svg-numbg"/><text x="740" y="255" class="svg-num" text-anchor="middle">10</text></g>
-            <g><circle cx="468" cy="254" r="14" class="svg-numbg"/><text x="468" y="259" class="svg-num" text-anchor="middle">8</text></g>
-            <g><circle cx="140" cy="450" r="14" class="svg-numbg"/><text x="140" y="455" class="svg-num" text-anchor="middle">9</text></g>
-            <g><circle cx="300" cy="450" r="14" class="svg-numbg"/><text x="300" y="455" class="svg-num" text-anchor="middle">7</text></g>
-            <g><circle cx="700" cy="450" r="14" class="svg-numbg"/><text x="700" y="455" class="svg-num" text-anchor="middle">5</text></g>
-          </g>
-          <text x="870" y="478" class="svg-lab" text-anchor="end">JBP-2026-001 · FIG. 3 · REV C</text>
-        </svg>
-      </div>
-      <ol class="plate__key">
-        <li><span><b>Rear bumper hoop</b> — absorbs contact Ellis will describe as "racing"</span></li>
-        <li><span><b>Bucket seat</b>, fixed-back, non-adjustable — see 4.3 sizing</span></li>
-        <li><span><b>Steering wheel</b>, 320 mm, unassisted — 2.1 turns lock to lock</span></li>
-        <li><span><b>Nose cone</b>, compliant foam — Dave's primary contact surface</span></li>
-        <li><span><b>Front spindle</b> — no suspension; all load through the chassis</span></li>
-        <li><span><b>Traction motor</b>, 20 hp, pit-governed speed limiter</span></li>
-        <li><span><b>Battery pack</b>, floor-mounted — lowers CG, raises kerb weight</span></li>
-        <li><span><b>Side pod</b> — sponsor blank, structurally decorative</span></li>
-        <li><span><b>Slick tyre</b>, 4.5 in — 60 % of peak grip for laps 1–2</span></li>
-        <li><span><b>Transponder</b> — triggers timing loop at start/finish</span></li>
-      </ol>
-    </figure>
-
-    <!-- ── FIGURE 4: track map ── -->
-    <figure class="plate" style="margin:1.4rem 0 0;">
-      <div class="plate__bar">
-        <span>Figure 4 · Circuit plan</span>
-        <span><b>Indoor circuit</b> — 8 turns, 380 m lap, clockwise</span>
-        <span>Not to scale</span>
-      </div>
-      <div class="plate__art">
-        <svg viewBox="0 0 900 520" role="img" aria-labelledby="f4t f4d">
-          <title id="f4t">Plan view of the indoor karting circuit</title>
-          <desc id="f4d">A closed clockwise circuit with eight numbered turns, three marked braking zones, the racing line shown as a dashed centreline, a start-finish line on the top straight, and the pit lane.</desc>
-
-          <!-- building envelope -->
-          <rect x="30" y="30" width="840" height="460" fill="none" class="svg-thin" stroke-dasharray="8 6"/>
-          <text x="40" y="22" class="svg-lab">BUILDING ENVELOPE</text>
-
+    <div class="feat">
+      <div class="feat__art rv">
+        <svg viewBox="0 0 640 470" role="img" aria-label="Stylized indoor karting circuit map with glowing racing line">
+          <defs>
+            <linearGradient id="trkline" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ff5a3c"/>
+              <stop offset="100%" stop-color="#ffc425"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="640" height="470" fill="#11141f"/>
           <!-- track ribbon -->
-          <path id="circuit" d="M200 120 L640 120 C744 120 800 168 800 244 C800 328 716 366 632 366 L470 366 C412 366 392 396 392 424 C392 452 362 462 312 462 L212 462 C138 462 106 408 106 340 L106 218 C106 152 132 120 200 120 Z"
-                fill="none" stroke="var(--rubber)" stroke-width="66" stroke-linejoin="round"/>
-          <path d="M200 120 L640 120 C744 120 800 168 800 244 C800 328 716 366 632 366 L470 366 C412 366 392 396 392 424 C392 452 362 462 312 462 L212 462 C138 462 106 408 106 340 L106 218 C106 152 132 120 200 120 Z"
-                fill="none" stroke="var(--foil)" stroke-width="2" stroke-dasharray="10 12" opacity=".8"/>
-
-          <!-- braking zones -->
-          <g stroke="var(--flag)" stroke-width="10" stroke-linecap="round" opacity=".95">
-            <path d="M560 92 L600 92"/>
-            <path d="M700 392 L740 392"/>
-            <path d="M74 300 L74 340"/>
-          </g>
-
+          <path d="M150 96 L448 96 C520 96 566 130 566 190 C566 250 508 276 448 276 L336 276 C296 276 282 298 282 320 C282 342 260 352 224 352 L156 352 C104 352 82 314 82 264 L82 172 C82 122 102 96 150 96 Z"
+                fill="none" stroke="#181c2b" stroke-width="52" stroke-linejoin="round"/>
+          <path d="M150 96 L448 96 C520 96 566 130 566 190 C566 250 508 276 448 276 L336 276 C296 276 282 298 282 320 C282 342 260 352 224 352 L156 352 C104 352 82 314 82 264 L82 172 C82 122 102 96 150 96 Z"
+                fill="none" stroke="#262b3d" stroke-width="52" stroke-linejoin="round" stroke-dasharray="2 10" opacity=".5"/>
+          <!-- glowing racing line -->
+          <path class="raceline" d="M150 96 L448 96 C520 96 566 130 566 190 C566 250 508 276 448 276 L336 276 C296 276 282 298 282 320 C282 342 260 352 224 352 L156 352 C104 352 82 314 82 264 L82 172 C82 122 102 96 150 96 Z"
+                fill="none" stroke="url(#trkline)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
           <!-- start/finish -->
           <g>
-            <rect x="290" y="88" width="9" height="64" fill="var(--ink)"/>
-            <rect x="299" y="88" width="9" height="64" fill="var(--paper)"/>
-            <rect x="308" y="88" width="9" height="64" fill="var(--ink)"/>
-            <text x="303" y="76" class="svg-lab" text-anchor="middle" fill="var(--ink)">START / FINISH</text>
+            <rect x="236" y="74" width="7" height="44" fill="#f4efe4"/>
+            <rect x="243" y="74" width="7" height="44" fill="#0b0d14"/>
+            <rect x="250" y="74" width="7" height="44" fill="#f4efe4"/>
+            <text x="244" y="64" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="12" letter-spacing="2" fill="#b8b2a2">START / FINISH</text>
           </g>
-          <!-- direction arrows -->
-          <g fill="var(--paper)" opacity=".85">
-            <path d="M430 112 l22 8 l-22 8 Z"/>
-            <path d="M596 350 l-22 8 l22 8 Z"/>
-            <path d="M114 260 l-8 -22 l-8 22 Z" fill="var(--paper)"/>
+          <!-- corner chips -->
+          <g font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700">
+            <g><rect x="452" y="62" width="24" height="24" rx="5" fill="#ffc425"/><text x="464" y="79" text-anchor="middle" fill="#160b06">1</text></g>
+            <g><rect x="584" y="178" width="24" height="24" rx="5" fill="#ffc425"/><text x="596" y="195" text-anchor="middle" fill="#160b06">2</text></g>
+            <g><rect x="470" y="292" width="24" height="24" rx="5" fill="#ffc425"/><text x="482" y="309" text-anchor="middle" fill="#160b06">3</text></g>
+            <g><rect x="300" y="286" width="24" height="24" rx="5" fill="#ffc425"/><text x="312" y="303" text-anchor="middle" fill="#160b06">4</text></g>
+            <g><rect x="236" y="366" width="24" height="24" rx="5" fill="#ffc425"/><text x="248" y="383" text-anchor="middle" fill="#160b06">5</text></g>
+            <g><rect x="98" y="366" width="24" height="24" rx="5" fill="#ffc425"/><text x="110" y="383" text-anchor="middle" fill="#160b06">6</text></g>
+            <g><rect x="44" y="118" width="24" height="24" rx="5" fill="#ffc425"/><text x="56" y="135" text-anchor="middle" fill="#160b06">7</text></g>
           </g>
-          <!-- pit lane -->
-          <path d="M232 120 C186 120 168 140 168 178 L168 244" stroke="var(--surface-2)" stroke-width="22" fill="none" stroke-linecap="round"/>
-          <path d="M232 120 C186 120 168 140 168 178 L168 244" stroke="var(--rule-hard)" stroke-width="1" fill="none" stroke-dasharray="5 5"/>
-          <text x="186" y="268" class="svg-lab">PIT LANE</text>
-
-          <!-- corner markers -->
-          <g>
-            <g><rect x="646" y="86" width="26" height="26" fill="var(--signal-ink)"/><text x="659" y="105" class="svg-num" text-anchor="middle" fill="var(--rubber)">1</text></g>
-            <g><rect x="822" y="230" width="26" height="26" fill="var(--signal-ink)"/><text x="835" y="249" class="svg-num" text-anchor="middle" fill="var(--rubber)">2</text></g>
-            <g><rect x="668" y="398" width="26" height="26" fill="var(--signal-ink)"/><text x="681" y="417" class="svg-num" text-anchor="middle" fill="var(--rubber)">3</text></g>
-            <g><rect x="452" y="398" width="26" height="26" fill="var(--signal-ink)"/><text x="465" y="417" class="svg-num" text-anchor="middle" fill="var(--rubber)">4</text></g>
-            <g><rect x="412" y="452" width="26" height="26" fill="var(--signal-ink)"/><text x="425" y="471" class="svg-num" text-anchor="middle" fill="var(--rubber)">5</text></g>
-            <g><rect x="286" y="486" width="26" height="26" fill="var(--signal-ink)"/><text x="299" y="505" class="svg-num" text-anchor="middle" fill="var(--rubber)">6</text></g>
-            <g><rect x="46" y="376" width="26" height="26" fill="var(--signal-ink)"/><text x="59" y="395" class="svg-num" text-anchor="middle" fill="var(--rubber)">7</text></g>
-            <g><rect x="46" y="150" width="26" height="26" fill="var(--signal-ink)"/><text x="59" y="169" class="svg-num" text-anchor="middle" fill="var(--rubber)">8</text></g>
-          </g>
-
           <!-- legend -->
+          <g font-family="ui-monospace,Menlo,monospace" font-size="12" letter-spacing="2">
+            <line x1="368" y1="404" x2="404" y2="404" stroke="url(#trkline)" stroke-width="4" stroke-linecap="round"/>
+            <text x="414" y="409" fill="#b8b2a2">RACING LINE</text>
+            <rect x="368" y="428" width="14" height="14" rx="4" fill="#ffc425"/>
+            <text x="414" y="440" fill="#b8b2a2">TURNS 1–7</text>
+          </g>
+          <text x="82" y="440" font-family="ui-monospace,Menlo,monospace" font-size="12" letter-spacing="2" fill="#6f6f80">ELECTRIC · 45 MPH · NO MERCY</text>
+        </svg>
+      </div>
+      <div class="rv">
+        <h3>Three heats. <em>One champion.</em> A lifetime of trash talk.</h3>
+        <p>20-horsepower electric karts on a barrier-lined indoor circuit. We run a real race format: a qualifying heat to set the grid, a points heat, and a winner-takes-everything <b>Grand Prix final</b> — inverted grid, so the fast guys have to earn it through traffic.</p>
+        <p>Timing is transponder-based and printed, so when your kart was "definitely slower," we'll have the data.</p>
+        <ul class="specrow">
+          <li><span class="n">3</span><span class="k">Heats</span></li>
+          <li><span class="n">45</span><span class="k">MPH top speed</span></li>
+          <li><span class="n">~50</span><span class="k">Total laps</span></li>
+          <li><span class="n">1</span><span class="k">Trophy</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PADRES ════════════════════════════════════════════════ -->
+<section class="sec padres" id="padres">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <span class="lap">Nightcap · Sat evening</span>
+      <h2 class="disp sec__title">Padres <em>Under the Lights</em></h2>
+    </div>
+    <p class="lede rv">From the podium straight to <b>Petco Park</b>. Best ballpark in baseball, twenty minutes from the checkered flag, sunset over downtown, and a groom who has never once been quiet during a Padres rally. Ballpark churro dogs do not count against the burrito program.</p>
+    <div class="rv">
+      <div class="scorebug">
+        <span class="team">SD Padres</span>
+        <span class="vs">VS</span>
+        <span class="team">Their Problem</span>
+        <span class="meta">Sat Sept 26 · Petco Park · Evening first pitch</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BASECAMP ══════════════════════════════════════════════ -->
+<section class="sec" id="basecamp">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <span class="lap">Paddock</span>
+      <h2 class="disp sec__title">Base<em>camp</em></h2>
+    </div>
+    <div class="base">
+      <div class="base__card rv">
+        <p class="addr">8715 Blue Lake Drive<small>San Diego, CA 92119</small></p>
+        <p>Home for the weekend — San Carlos, on the flank of <b>Cowles Mountain</b> with <b>Lake Murray</b> down the street. Quiet enough to recover, close enough to everything that matters.</p>
+        <ul class="drive">
+          <li><span class="to">Cowles Mountain trailhead</span><span class="min">5 MIN</span></li>
+          <li><span class="to">Lake Murray loop</span><span class="min">4 MIN</span></li>
+          <li><span class="to">K1 Speed</span><span class="min">~20 MIN</span></li>
+          <li><span class="to">Petco Park</span><span class="min">~20 MIN</span></li>
+          <li><span class="to">Nearest California burrito</span><span class="min">8 MIN</span></li>
+        </ul>
+        <div>
+          <a class="btn btn--hot" href="https://www.google.com/maps/dir/?api=1&amp;destination=8715+Blue+Lake+Drive,+San+Diego,+CA+92119" target="_blank" rel="noopener"><span>Get directions</span></a>
+        </div>
+      </div>
+      <div class="base__map rv">
+        <svg viewBox="0 0 560 520" role="img" aria-label="Stylized map showing the Airbnb near Lake Murray and Cowles Mountain, with routes to K1 Speed and Petco Park">
+          <rect width="560" height="520" fill="#11141f"/>
+          <!-- water: Lake Murray -->
+          <path d="M96 210 C86 178 108 150 142 152 C176 154 186 178 176 204 C198 210 204 238 186 254 C160 278 108 268 98 244 C92 230 92 222 96 210 Z" fill="#1b2a44"/>
+          <text x="138" y="292" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="11" letter-spacing="2" fill="#5f7295">LAKE MURRAY</text>
+          <!-- Cowles Mountain contours -->
+          <g fill="none" stroke="#262b3d" stroke-width="1.5">
+            <ellipse cx="420" cy="140" rx="104" ry="66"/>
+            <ellipse cx="420" cy="140" rx="76" ry="46"/>
+            <ellipse cx="420" cy="140" rx="48" ry="28"/>
+            <ellipse cx="420" cy="140" rx="22" ry="12"/>
+          </g>
+          <text x="420" y="144" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="2" fill="#6f6f80">COWLES MTN · 1,593 FT</text>
+          <!-- roads -->
+          <g stroke="#262b3d" stroke-width="5" fill="none" stroke-linecap="round">
+            <path d="M40 360 C160 340 320 356 520 320"/>
+            <path d="M262 40 C270 180 258 340 268 490"/>
+            <path d="M40 448 L520 430"/>
+          </g>
+          <g stroke="#181c2b" stroke-width="1.6" fill="none" stroke-dasharray="6 6">
+            <path d="M40 360 C160 340 320 356 520 320"/>
+            <path d="M262 40 C270 180 258 340 268 490"/>
+          </g>
+          <!-- routes out -->
+          <g fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 9">
+            <path d="M282 258 C220 292 140 316 60 322" stroke="#ff5a3c"/>
+            <path d="M282 262 C260 340 200 420 60 452" stroke="#ffc425"/>
+          </g>
+          <g font-family="ui-monospace,Menlo,monospace" font-size="11" letter-spacing="2">
+            <text x="46" y="306" fill="#ff5a3c">← K1 SPEED · 20 MIN</text>
+            <text x="52" y="480" fill="#ffc425">← PETCO PARK · 20 MIN</text>
+          </g>
+          <!-- house pin -->
           <g>
-            <line x1="600" y1="452" x2="640" y2="452" stroke="var(--flag)" stroke-width="8" stroke-linecap="round"/>
-            <text x="650" y="457" class="svg-lab">BRAKING ZONE</text>
-            <line x1="600" y1="478" x2="640" y2="478" stroke="var(--foil)" stroke-width="2" stroke-dasharray="8 8"/>
-            <text x="650" y="483" class="svg-lab">RACING LINE</text>
+            <circle cx="286" cy="252" r="34" fill="#ff5a3c" opacity=".14"/>
+            <circle cx="286" cy="252" r="19" fill="#ff5a3c" opacity=".2"/>
+            <path d="M286 218 C270 218 258 230 258 246 C258 268 286 292 286 292 C286 292 314 268 314 246 C314 230 302 218 286 218 Z" fill="#ff5a3c"/>
+            <path d="M276 250 L286 240 L296 250 L296 262 L276 262 Z" fill="#f4efe4"/>
+          </g>
+          <text x="286" y="316" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="12" font-weight="700" letter-spacing="2" fill="#f4efe4">BASECAMP</text>
+          <text x="286" y="332" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="2" fill="#6f6f80">8715 BLUE LAKE DR</text>
+          <!-- compass -->
+          <g transform="translate(506,64)">
+            <circle r="18" fill="none" stroke="#262b3d" stroke-width="1.5"/>
+            <path d="M0 -13 L4 4 L0 1 L-4 4 Z" fill="#ff9a3c"/>
+            <text y="-24" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#b8b2a2">N</text>
           </g>
         </svg>
       </div>
-      <ol class="plate__key plate__key--plain">
-        <li><span><b>T1</b> — hardest braking point on the lap. Overtaking here is optimistic.</span></li>
-        <li><span><b>T2</b> — long right-hander, carries speed, rewards patience nobody has.</span></li>
-        <li><span><b>T3–T4</b> — the technical section. Lap time is made or lost here.</span></li>
-        <li><span><b>T5–T6</b> — the hairpin. Contact expected. See penalty schedule 4.6.</span></li>
-        <li><span><b>T7–T8</b> — sweeping left, full throttle from the exit of 8 to braking for 1.</span></li>
-      </ol>
-    </figure>
-    <p class="cap" style="margin-bottom:0">Figures 3 and 4 — Equipment and circuit. Kart numbers are assigned at check-in and are not negotiable, Tyler.</p>
-
-    <p class="clause"><b>4.1</b> — Heat structure</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Heat</th><th>Format</th><th class="num">Laps</th><th>Grid set by</th><th>Points</th></tr></thead>
-        <tbody>
-          <tr><td>Heat 1</td><td>Qualifying</td><td class="num">14</td><td>Random draw</td><td>None</td></tr>
-          <tr><td>Heat 2</td><td>Points race</td><td class="num">16</td><td>Heat 1 best lap</td><td>10-8-6-5-4-3-2-1-0</td></tr>
-          <tr><td>Final</td><td>Grand Prix</td><td class="num">20</td><td>Inverted points</td><td>Double</td></tr>
-        </tbody>
-        <tfoot><tr><td colspan="2">Total track time</td><td class="num">50</td><td colspan="2">laps · approx. 24 minutes wheel-to-wheel</td></tr></tfoot>
-      </table>
     </div>
+  </div>
+</section>
 
-    <p class="clause"><b>4.2</b> — Driver assignment &amp; predicted classification</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Driver</th><th class="num">Kart</th><th>Weight class</th><th class="num">Ballast</th><th class="num">Pred. finish</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td>Juan R.</td><td class="num">7</td><td>Medium</td><td class="num">0 kg</td><td class="num">P3</td><td>Guest of honour; will not be blocked</td></tr>
-          <tr><td>Tyler B.</td><td class="num">2</td><td>Light</td><td class="num">+9 kg</td><td class="num">P1</td><td>Owns a sim rig. Will mention it.</td></tr>
-          <tr><td>Marco V.</td><td class="num">11</td><td>Medium</td><td class="num">0 kg</td><td class="num">P2</td><td>Smooth, no heroics</td></tr>
-          <tr><td>Dave K.</td><td class="num">4</td><td>Heavy</td><td class="num">0 kg</td><td class="num">P6</td><td>Late braker by philosophy</td></tr>
-          <tr><td>Nate A.</td><td class="num">9</td><td>Medium</td><td class="num">0 kg</td><td class="num">P4</td><td>—</td></tr>
-          <tr><td>Sam O.</td><td class="num">3</td><td>Light</td><td class="num">+6 kg</td><td class="num">P5</td><td>Photographing from the kart. Discouraged.</td></tr>
-          <tr><td>Ro M.</td><td class="num">12</td><td>Medium</td><td class="num">0 kg</td><td class="num">P7</td><td>—</td></tr>
-          <tr><td>Kev L.</td><td class="num">8</td><td>Heavy</td><td class="num">0 kg</td><td class="num">P8</td><td>—</td></tr>
-          <tr><td>Ellis T.</td><td class="num">6</td><td>Medium</td><td class="num">0 kg</td><td class="num">DNF</td><td>See 4.6 and R-06</td></tr>
-        </tbody>
-      </table>
+<!-- ══ CREW ══════════════════════════════════════════════════ -->
+<section class="sec sec--alt" id="crew">
+  <div class="wrap">
+    <div class="sec__head rv">
+      <span class="lap">Grid</span>
+      <h2 class="disp sec__title">The <em>Crew</em></h2>
     </div>
-
-    <p class="clause"><b>4.3</b> — Telemetry targets</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Parameter</th><th class="num">Target</th><th class="num">Acceptable</th><th>Reference</th></tr></thead>
-        <tbody>
-          <tr><td>Best lap</td><td class="num">27.4 s</td><td class="num">&lt; 29.0 s</td><td>Track record 25.9 s</td></tr>
-          <tr><td>T1 entry speed</td><td class="num">31 mph</td><td class="num">28–33</td><td>Brake at the 40 m board</td></tr>
-          <tr><td>T5 apex speed</td><td class="num">19 mph</td><td class="num">17–21</td><td>Hairpin, single line</td></tr>
-          <tr><td>Throttle-on (lap %)</td><td class="num">78 %</td><td class="num">&gt; 70 %</td><td>Lifting costs more than it saves</td></tr>
-          <tr><td>Laps to peak grip</td><td class="num">3</td><td class="num">2–4</td><td>Cold tyres, see key item 9</td></tr>
-          <tr><td>Consistency (σ)</td><td class="num">0.45 s</td><td class="num">&lt; 0.90 s</td><td>Wins races. Nobody cares.</td></tr>
-        </tbody>
-      </table>
+    <p class="lede rv">Nine drivers. Kart numbers assigned at check-in. Predicted finishing order withheld to protect friendships.</p>
+    <div class="roster">
+      <div class="rost rost--groom rv"><span class="no">KART 07</span><div class="nm">Juan</div><span class="rl">The Groom</span></div>
+      <div class="rost rv"><span class="no">KART 04</span><div class="nm">Dave</div><span class="rl">Best Man</span></div>
+      <div class="rost rv"><span class="no">KART 11</span><div class="nm">Marco</div><span class="rl">Wheels</span></div>
+      <div class="rost rv"><span class="no">KART 02</span><div class="nm">Tyler</div><span class="rl">"Has a sim rig"</span></div>
+      <div class="rost rv"><span class="no">KART 09</span><div class="nm">Nate</div><span class="rl">Grill Ops</span></div>
+      <div class="rost rv"><span class="no">KART 03</span><div class="nm">Sam</div><span class="rl">Camera</span></div>
+      <div class="rost rv"><span class="no">KART 12</span><div class="nm">Ro</div><span class="rl">The Bank</span></div>
+      <div class="rost rv"><span class="no">KART 08</span><div class="nm">Kev</div><span class="rl">Waivers</span></div>
+      <div class="rost rv"><span class="no">KART 06</span><div class="nm">Ellis</div><span class="rl">Wildcard</span></div>
     </div>
+  </div>
+</section>
 
-    <p class="clause"><b>4.6</b> — Penalty schedule</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Infraction</th><th>Sanction</th><th>Escalation</th></tr></thead>
-        <tbody>
-          <tr><td>Contact, incidental</td><td>Warning</td><td>—</td></tr>
-          <tr><td>Contact, enthusiastic</td><td>+5 s</td><td>Repeat: drive-through</td></tr>
-          <tr><td>Blocking on the straight</td><td>Drive-through</td><td>—</td></tr>
-          <tr><td>Weaving</td><td>Black flag</td><td>Removal from kart</td></tr>
-          <tr><td>Reversing on circuit</td><td>Immediate removal</td><td>Ride home reviewed</td></tr>
-          <tr><td>Arguing with the marshal</td><td>+10 s</td><td>Written apology to marshal</td></tr>
-          <tr><td>Claiming "my kart was slow"</td><td>+1 s per mention</td><td>Cumulative, no cap</td></tr>
-          <tr><td>Bringing up your sim rig</td><td>+2 s per mention</td><td>Cumulative, no cap</td></tr>
-        </tbody>
-      </table>
-    </div>
+<div class="checkers" aria-hidden="true"></div>
 
-    <div class="note">
-      <b>4.7 Programme note</b>
-      Item 2 does not metabolise Item 1. The offset referenced in Table 3.4 is aspirational and was included at Ro's insistence.
-    </div>
-  </section>
-
-  <!-- ══ 5.0 RISK REGISTER ═══════════════════════════════════ -->
-  <section class="sec" id="s5">
-    <div class="sec__head">
-      <span class="sec__no mono">5.0</span>
-      <h2 class="disp sec__title">Risk Register</h2>
-    </div>
-    <p class="col">Likelihood (L) and impact (I) scored 1–5. Score = L × I. Items scoring ≥ 15 are owned personally by the Best Man and reviewed at mobilisation.</p>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>ID</th><th>Risk</th><th class="num">L</th><th class="num">I</th><th class="num">Score</th><th>Owner</th><th>Mitigation</th></tr></thead>
-        <tbody>
-          <tr><td>R-01</td><td>Vendor closed for a private event</td><td class="num">2</td><td class="num">5</td><td class="num">10</td><td>Dave</td><td>Secondary vendor held per 3.1</td></tr>
-          <tr><td>R-02</td><td>Extra guacamole unbudgeted</td><td class="num">5</td><td class="num">1</td><td class="num">5</td><td>Ro</td><td>$16 contingency in 7.0</td></tr>
-          <tr><td>R-03</td><td>Seam failure inside a vehicle</td><td class="num">3</td><td class="num">4</td><td class="num">12</td><td>All</td><td>50 % foil retention; no eating in Nate's car</td></tr>
-          <tr><td>R-04</td><td>Consumption overruns into transit</td><td class="num">4</td><td class="num">3</td><td class="num">12</td><td>Dave</td><td>15 min float in 2.4</td></tr>
-          <tr><td>R-05</td><td>Ballast assignment disputed</td><td class="num">4</td><td class="num">2</td><td class="num">8</td><td>Tyler</td><td>Scale photograph at check-in</td></tr>
-          <tr><td>R-06</td><td>Ellis proposes a third agenda item</td><td class="num">5</td><td class="num">5</td><td class="num">25</td><td>Best Man</td><td>Section 9.0; escalate to Groom only if he asks</td></tr>
-          <tr><td>R-07</td><td>Post-burrito karting discomfort</td><td class="num">4</td><td class="num">3</td><td class="num">12</td><td>Self</td><td>30 min settle window (3.0). Non-negotiable.</td></tr>
-          <tr><td>R-08</td><td>Kart underperformance alleged</td><td class="num">5</td><td class="num">1</td><td class="num">5</td><td>Marshal</td><td>Print the telemetry. Hand it to them.</td></tr>
-          <tr><td>R-09</td><td>Groom asks what the plan is</td><td class="num">5</td><td class="num">1</td><td class="num">5</td><td>All</td><td>Distribute this document</td></tr>
-          <tr><td>R-10</td><td>Rain</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td>—</td><td>Both items are indoors. No action.</td></tr>
-          <tr><td>R-11</td><td>Someone suggests bowling afterwards</td><td class="num">3</td><td class="num">5</td><td class="num">15</td><td>Best Man</td><td>Section 9.0. Do not engage on the merits.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cap">Table 5.0 — Risk register at Rev C. Two open items above threshold: R-06, R-11. Both are Ellis.</p>
-  </section>
-
-  <!-- ══ 6.0 RACI ════════════════════════════════════════════ -->
-  <section class="sec" id="s6">
-    <div class="sec__head">
-      <span class="sec__no mono">6.0</span>
-      <h2 class="disp sec__title">Responsibility Matrix</h2>
-    </div>
-    <p class="col">R = responsible, A = accountable, C = consulted, I = informed.</p>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>Activity</th><th>Dave</th><th>Marco</th><th>Tyler</th><th>Ro</th><th>Kev</th><th>Juan</th></tr></thead>
-        <tbody>
-          <tr><td>Schedule ownership</td><td>A/R</td><td>C</td><td>C</td><td>C</td><td>I</td><td>I</td></tr>
-          <tr><td>Vendor selection</td><td>A</td><td>R</td><td>I</td><td>C</td><td>I</td><td>I</td></tr>
-          <tr><td>Order placement</td><td>R</td><td>C</td><td>I</td><td>A</td><td>I</td><td>I</td></tr>
-          <tr><td>Napkin allocation</td><td>A/R</td><td>I</td><td>I</td><td>I</td><td>I</td><td>I</td></tr>
-          <tr><td>Ground transport</td><td>C</td><td>A/R</td><td>I</td><td>I</td><td>I</td><td>I</td></tr>
-          <tr><td>Waivers &amp; licences</td><td>C</td><td>I</td><td>I</td><td>I</td><td>A/R</td><td>I</td></tr>
-          <tr><td>Timing &amp; results</td><td>C</td><td>I</td><td>A/R</td><td>I</td><td>I</td><td>I</td></tr>
-          <tr><td>Budget &amp; settlement</td><td>C</td><td>I</td><td>I</td><td>A/R</td><td>C</td><td>I</td></tr>
-          <tr><td>Scope defence (Sec. 9.0)</td><td>A/R</td><td>C</td><td>C</td><td>C</td><td>C</td><td>I</td></tr>
-          <tr><td>Enjoying himself</td><td>C</td><td>C</td><td>C</td><td>C</td><td>C</td><td>A/R</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cap">Table 6.0 — The Groom is Informed on every line but one. This is deliberate.</p>
-  </section>
-
-  <!-- ══ 7.0 BUDGET ══════════════════════════════════════════ -->
-  <section class="sec" id="s7">
-    <div class="sec__head">
-      <span class="sec__no mono">7.0</span>
-      <h2 class="disp sec__title">Budget</h2>
-    </div>
-    <p class="col">All figures USD, inclusive of tax, exclusive of gratuity. Settlement is by single payer at each vendor with reconciliation the same evening. The Groom does not pay.</p>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>Line</th><th>Item</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Total</th></tr></thead>
-        <tbody>
-          <tr><td>7.1</td><td>California burrito</td><td class="num">9</td><td class="num">12.75</td><td class="num">114.75</td></tr>
-          <tr><td>7.2</td><td>Extra guacamole</td><td class="num">7</td><td class="num">2.25</td><td class="num">15.75</td></tr>
-          <tr><td>7.3</td><td>Horchata</td><td class="num">9</td><td class="num">3.50</td><td class="num">31.50</td></tr>
-          <tr><td>7.4</td><td>Chips, shared</td><td class="num">3</td><td class="num">4.00</td><td class="num">12.00</td></tr>
-          <tr><td>7.5</td><td>K1 annual licence</td><td class="num">9</td><td class="num">7.95</td><td class="num">71.55</td></tr>
-          <tr><td>7.6</td><td>Race entry, 3 heats</td><td class="num">27</td><td class="num">23.00</td><td class="num">621.00</td></tr>
-          <tr><td>7.7</td><td>Podium photo package</td><td class="num">1</td><td class="num">34.99</td><td class="num">34.99</td></tr>
-          <tr><td>7.8</td><td>Trophy, engraved “MID”</td><td class="num">1</td><td class="num">41.00</td><td class="num">41.00</td></tr>
-          <tr><td>7.9</td><td>Parking &amp; fuel</td><td class="num">2</td><td class="num">14.00</td><td class="num">28.00</td></tr>
-        </tbody>
-        <tfoot>
-          <tr><td colspan="4">Subtotal</td><td class="num">970.54</td></tr>
-          <tr><td colspan="4">Contingency @ 8 %</td><td class="num">77.64</td></tr>
-          <tr><td colspan="4">Programme total</td><td class="num">1,048.18</td></tr>
-          <tr><td colspan="4">Per attendee (÷ 8, Groom excluded)</td><td class="num">131.02</td></tr>
-        </tfoot>
-      </table>
-    </div>
-    <p class="cap">Table 7.0 — Cost per agenda item: $524.09. Cost per minute of programme: $3.18.</p>
-  </section>
-
-  <!-- ══ 8.0 CONTINGENCY ═════════════════════════════════════ -->
-  <section class="sec" id="s8">
-    <div class="sec__head">
-      <span class="sec__no mono">8.0</span>
-      <h2 class="disp sec__title">Contingency &amp; Abort Criteria</h2>
-    </div>
-
-    <p class="clause"><b>8.1</b> — Degraded modes</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Condition</th><th>Mode</th><th>Action</th><th>Authority</th></tr></thead>
-        <tbody>
-          <tr><td>Primary vendor unavailable</td><td>DEGRADED-1</td><td>Divert to Roberto's; schedule absorbs 6 min</td><td>Dave</td></tr>
-          <tr><td>Queue &gt; 25 min</td><td>DEGRADED-1</td><td>Phone the order ahead; hold 2.2</td><td>Dave</td></tr>
-          <tr><td>Karting session sold out</td><td>DEGRADED-2</td><td>Two heats, extended final</td><td>Kev</td></tr>
-          <tr><td>Attendee &lt; 58 in tall</td><td>N/A</td><td>Not applicable. Verified at Rev A.</td><td>—</td></tr>
-          <tr><td>Slip &gt; 45 min cumulative</td><td>DEGRADED-2</td><td>Drop 4.6 podium ceremony</td><td>Best Man</td></tr>
-          <tr><td>Groom unavailable</td><td>ABORT</td><td>Stand down. Reschedule. Eat anyway.</td><td>Groom</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="clause"><b>8.2</b> — Abort criteria</p>
-    <p class="col">The programme aborts only on 8.1 row 6. No other condition constitutes an abort. Weather, traffic, injury short of hospitalisation, and general reluctance are handled in degraded modes.</p>
-
-    <p class="clause"><b>8.3</b> — Post-programme</p>
-    <p class="col">Activity after 17:00 is <b>unscheduled and unsupported</b>. Attendees electing to continue do so as private individuals, outside the scope of this document, without planning support, and without the protection of Section 9.0. The Office of the Best Man will not be reachable.</p>
-  </section>
-
-  <!-- ══ 9.0 OUT OF SCOPE ════════════════════════════════════ -->
-  <section class="sec" id="s9">
-    <div class="sec__head">
-      <span class="sec__no mono">9.0</span>
-      <h2 class="disp sec__title">Out of Scope</h2>
-    </div>
-
-    <p class="col lead">The following were proposed, evaluated, and dispositioned. They are recorded here so that they are not proposed again. There are two agenda items.</p>
-
-    <ul class="reject">
-      <li><span class="what">Dinner</span><span class="why">Would constitute a third item. Item 1 is a meal.</span><span class="code">REJ-01</span></li>
-      <li><span class="what">Bar crawl</span><span class="why">Incompatible with 4.0 by state law and by common sense.</span><span class="code">REJ-02</span></li>
-      <li><span class="what">Las Vegas</span><span class="why">Rejected at Rev A. Proposer withdrew before the vote.</span><span class="code">REJ-03</span></li>
-      <li><span class="what">Golf</span><span class="why">Deferred indefinitely. Four hours for one item is poor value.</span><span class="code">DEF-01</span></li>
-      <li><span class="what">A boat</span><span class="why">No boat was ever identified. No costing was provided.</span><span class="code">REJ-04</span></li>
-      <li><span class="what">Bowling</span><span class="why">See R-11. Do not engage on the merits.</span><span class="code">REJ-05</span></li>
-      <li><span class="what">Paintball, then karting</span><span class="why">This is two items plus one item. That is three items.</span><span class="code">REJ-06</span></li>
-      <li><span class="what">“Just one more stop”</span><span class="why">Not a valid change request. No scope, no cost, no owner.</span><span class="code">REJ-07</span></li>
-      <li><span class="what">A second burrito</span><span class="why">Under review. Would not increase the item count.</span><span class="code">OPEN</span></li>
-    </ul>
-
-    <div class="note">
-      <b>9.2 Change control</b>
-      Any addition to scope requires a written change request, unanimous written consent of all nine attendees, a costed impact assessment against Section 7.0, and a revision to this document. The Office of the Best Man is not accepting change requests. Rev C is the final revision. The scope is two things.
-    </div>
-  </section>
-
-  <!-- ══ APPENDIX A ══════════════════════════════════════════ -->
-  <section class="sec" id="sa">
-    <div class="sec__head">
-      <span class="sec__no mono">A</span>
-      <h2 class="disp sec__title">Appendix A</h2>
-    </div>
-
-    <p class="clause"><b>A.1</b> — Glossary</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
-        <tbody>
-          <tr><td>Asada</td><td>Grilled, chopped beef. The reason for the whole thing.</td></tr>
-          <tr><td>Fry lattice</td><td>The internal arrangement of French fries. Load-bearing. Not a garnish.</td></tr>
-          <tr><td>Foil retention</td><td>The percentage of the foil sleeve kept in place during consumption.</td></tr>
-          <tr><td>Apex</td><td>The point of a corner closest to the inside barrier. Also, what Tyler will say.</td></tr>
-          <tr><td>Understeer</td><td>The kart goes straight while you turn the wheel. Usually your fault.</td></tr>
-          <tr><td>MID</td><td>The engraving on the trophy in line 7.8. Awarded to the median finisher.</td></tr>
-          <tr><td>The last three inches</td><td>The terminal fold of a burrito after pico migration. See 3.6.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="clause"><b>A.2</b> — Revision history</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Rev</th><th>Date</th><th>Change</th><th>Items</th></tr></thead>
-        <tbody>
-          <tr><td>A</td><td>02 JUN 2026</td><td>Initial issue. Vegas proposed and withdrawn same day.</td><td class="num">2</td></tr>
-          <tr><td>A.1–A.6</td><td>JUN 2026</td><td>Vendor trade study; six scoring revisions.</td><td class="num">2</td></tr>
-          <tr><td>B</td><td>14 JUL 2026</td><td>Karting added as Item 2. Golf deferred.</td><td class="num">2</td></tr>
-          <tr><td>B.1–B.5</td><td>JUL–AUG 2026</td><td>Figures 2–4 issued. Risk register opened.</td><td class="num">2</td></tr>
-          <tr><td>C</td><td>15 AUG 2026</td><td>Scope frozen. Section 9.0 added. Baselined.</td><td class="num">2</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cap">Fourteen revisions. The item count has never changed.</p>
-
-    <p class="clause"><b>A.3</b> — Approval</p>
-    <div class="sigs">
-      <div class="sig"><div class="line"></div><div class="who">D. Kessler</div><div class="role">Best Man · Document owner</div></div>
-      <div class="sig"><div class="line"></div><div class="who">R. Mendez</div><div class="role">Budget authority</div></div>
-      <div class="sig"><div class="line"></div><div class="who">M. Villalobos</div><div class="role">Transport &amp; logistics</div></div>
-      <div class="sig"><div class="line"></div><div class="who">Juan R.</div><div class="role">Groom · Informed only</div></div>
-    </div>
-  </section>
-
-  <footer>
-    <p>JBP-2026-001 · Rev C · Baselined 15 AUG 2026 · Office of the Best Man</p>
-    <p>Uncontrolled when printed · Destroy after 12 September 2026</p>
-    <p style="color:var(--flag)">Two things. That's the whole plan.</p>
-  </footer>
-
-</div>
+<footer>
+  <div class="wrap">
+    <p class="big">See you on the grid, <b>Juan</b>.</p>
+    <p>San Diego · Sept 25–27 2026 · Burritos · Karts · Padres</p>
+    <p>Questions → the group chat. Complaints → also the group chat.</p>
+  </div>
+</footer>
 
 <script>
-(function () {
-  var g = document.getElementById('gantt');
-  if (!g) return;
-  if (!('IntersectionObserver' in window)) { g.classList.add('is-in'); return; }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.2 });
-  io.observe(g);
+(function(){
+  /* countdown to Friday check-in, 4:00 PM PDT (UTC-7) */
+  var target = Date.parse('2026-09-25T16:00:00-07:00');
+  var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),
+      m=document.getElementById('cd-m'),s=document.getElementById('cd-s');
+  function pad(n){return n<10?'0'+n:''+n}
+  function tick(){
+    var ms = target - Date.now();
+    if (ms <= 0){
+      document.getElementById('count').innerHTML =
+        '<div><span class="n" style="font-size:clamp(1.8rem,5vw,3.2rem)">IT&rsquo;S GO TIME</span><span class="k">Lights out</span></div>';
+      return;
+    }
+    d.textContent = pad(Math.floor(ms/864e5));
+    h.textContent = pad(Math.floor(ms/36e5)%24);
+    m.textContent = pad(Math.floor(ms/6e4)%60);
+    s.textContent = pad(Math.floor(ms/1e3)%60);
+    setTimeout(tick, 1000 - (Date.now()%1000));
+  }
+  tick();
+
+  /* scroll reveals */
+  var els = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target);} });
+    },{threshold:.14});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('is-in'); });
+  }
+
+  /* racing-line draw-in */
+  var rl = document.querySelector('.raceline');
+  if (rl && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var len = rl.getTotalLength();
+    rl.style.strokeDasharray = len;
+    rl.style.strokeDashoffset = len;
+    var io2 = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          rl.style.transition = 'stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1)';
+          requestAnimationFrame(function(){ rl.style.strokeDashoffset = '0'; });
+          io2.disconnect();
+        }
+      });
+    },{threshold:.4});
+    io2.observe(rl);
+  }
 })();
 </script>
 
